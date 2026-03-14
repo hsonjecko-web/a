@@ -8,55 +8,43 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
 :root {
---primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --primary-blue-light: #4a9eff;
---white: #ffffff; --bg-light: #f0f4f8; --bg-dark: #0d1117;
+--primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --white: #ffffff;
+--bg-light: #f0f4f8; --bg-dark: #0d1117;
 --card-light: rgba(255, 255, 255, 0.85); --card-dark: rgba(13, 17, 23, 0.9);
 --border-light: rgba(26, 115, 232, 0.2); --border-dark: rgba(255, 255, 255, 0.1);
 --text-primary-light: #1f2937; --text-secondary-light: #6b7280;
 --text-primary-dark: #f9fafb; --text-secondary-dark: #9ca3af;
---shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.4);
---blur: blur(16px);
+--shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --blur: blur(16px);
 }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
 body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); display: flex; align-items: center; justify-content: center; padding: 20px; transition: all 0.3s ease; }
 [data-theme="dark"] body { background: var(--bg-dark); color: var(--text-primary-dark); }
-.auth-container { background: var(--card-light); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 24px; padding: 32px 24px; width: 100%; max-width: 420px; box-shadow: var(--shadow); }
-[data-theme="dark"] .auth-container { background: var(--card-dark); border-color: var(--border-dark); box-shadow: var(--shadow-dark); }
+.auth-container { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 24px; padding: 32px 24px; width: 100%; max-width: 420px; box-shadow: var(--shadow); }
+[data-theme="dark"] .auth-container { background: var(--card-dark); border-color: var(--border-dark); }
 .auth-header { text-align: center; margin-bottom: 28px; }
 .auth-logo { width: 70px; height: 70px; background: var(--primary-blue); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; color: white; }
-.auth-title { font-size: 22px; font-weight: 800; color: inherit; margin-bottom: 6px; }
+.auth-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
 .auth-subtitle { font-size: 13px; color: var(--text-secondary-light); }
 [data-theme="dark"] .auth-subtitle { color: var(--text-secondary-dark); }
 .auth-tabs { display: flex; gap: 8px; margin-bottom: 24px; background: rgba(26, 115, 232, 0.1); border-radius: 12px; padding: 4px; }
-.auth-tab { flex: 1; padding: 12px; border: none; background: transparent; border-radius: 10px; font-weight: 700; font-size: 14px; color: var(--text-secondary-light); cursor: pointer; transition: all 0.3s ease; }
+.auth-tab { flex: 1; padding: 12px; border: none; background: transparent; border-radius: 10px; font-weight: 700; font-size: 14px; color: var(--text-secondary-light); cursor: pointer; }
 .auth-tab.active { background: var(--primary-blue); color: white; }
-.auth-tab:hover:not(.active) { color: var(--primary-blue); }
 .form-group { margin-bottom: 18px; }
-.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: inherit; }
-.form-input { width: 100%; padding: 14px 16px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.6); font-size: 14px; color: inherit; transition: all 0.3s ease; }
+.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.form-input { width: 100%; padding: 14px 16px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.6); font-size: 14px; }
 [data-theme="dark"] .form-input { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
-.form-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2); }
-.form-input::placeholder { color: var(--text-secondary-light); }
-[data-theme="dark"] .form-input::placeholder { color: var(--text-secondary-dark); }
-.country-select { display: flex; gap: 10px; }
-.country-flag { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: rgba(26, 115, 232, 0.1); border: 1px solid var(--border-light); }
-.country-info { flex: 1; }
-.country-code { font-size: 12px; color: var(--text-secondary-light); margin-bottom: 4px; }
-[data-theme="dark"] .country-code { color: var(--text-secondary-dark); }
-.btn-primary { width: 100%; padding: 16px; border: none; border-radius: 14px; background: var(--primary-blue); color: white; font-weight: 800; font-size: 15px; cursor: pointer; transition: all 0.3s ease; margin-top: 8px; }
-.btn-primary:hover { background: var(--primary-blue-dark); transform: translateY(-2px); }
-.btn-primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.form-input:focus { outline: none; border-color: var(--primary-blue); }
+.btn-primary { width: 100%; padding: 16px; border: none; border-radius: 14px; background: var(--primary-blue); color: white; font-weight: 800; font-size: 15px; cursor: pointer; }
+.btn-primary:hover { background: var(--primary-blue-dark); }
+.btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
 .auth-footer { text-align: center; margin-top: 24px; font-size: 13px; color: var(--text-secondary-light); }
-[data-theme="dark"] .auth-footer { color: var(--text-secondary-dark); }
-.auth-footer a { color: var(--primary-blue); text-decoration: none; font-weight: 700; }
-.theme-toggle { position: absolute; top: 20px; left: 20px; width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; position: fixed; }
+.theme-toggle { position: fixed; top: 20px; left: 20px; width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; }
 [data-theme="dark"] .theme-toggle { background: #374151; }
 .theme-slider { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; right: 3px; transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--primary-blue); }
 [data-theme="dark"] .theme-slider { transform: translateX(-22px); color: #374151; }
-.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; color: inherit; font-weight: 700; z-index: 10000; box-shadow: 0 20px 40px rgba(0,0,0,0.2); display: none; }
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; font-weight: 700; z-index: 10000; display: none; }
 [data-theme="dark"] .toast { background: var(--card-dark); border-color: var(--border-dark); }
-.toast.show { display: block; animation: fadeInOut 2s ease; }
-@keyframes fadeInOut { 0%,100%{opacity:0} 10%,90%{opacity:1} }
+.toast.show { display: block; }
 .loading { display: none; text-align: center; padding: 12px; color: var(--primary-blue); font-weight: 600; }
 .loading.show { display: block; }
 .error-msg { color: #ea4335; font-size: 12px; margin-top: 6px; display: none; }
@@ -76,22 +64,20 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
     <button class="auth-tab" onclick="switchAuth('register')">إنشاء حساب</button>
   </div>
   
-  <!-- Login Form -->
   <form id="login-form" onsubmit="handleLogin(event)">
     <div class="form-group">
-      <label class="form-label">اسم المستخدم أو البريد</label>
-      <input type="text" class="form-input" id="login-username" placeholder="أدخل اسم المستخدم" required>
+      <label class="form-label">اسم المستخدم</label>
+      <input type="text" class="form-input" id="login-username" placeholder="@ahmed_m" required>
     </div>
     <div class="form-group">
       <label class="form-label">كلمة المرور</label>
-      <input type="password" class="form-input" id="login-password" placeholder="أدخل كلمة المرور" required>
+      <input type="password" class="form-input" id="login-password" placeholder="••••••••" required>
     </div>
     <div class="error-msg" id="login-error"></div>
     <div class="loading" id="login-loading">جاري التسجيل...</div>
     <button type="submit" class="btn-primary">دخول <i class="fas fa-arrow-left"></i></button>
   </form>
   
-  <!-- Register Form -->
   <form id="register-form" onsubmit="handleRegister(event)" style="display:none">
     <div class="form-group">
       <label class="form-label">الاسم الكامل</label>
@@ -99,48 +85,25 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
     </div>
     <div class="form-group">
       <label class="form-label">اسم المستخدم</label>
-      <input type="text" class="form-input" id="reg-username" placeholder="@ahmed_m" pattern="^@[a-zA-Z0-9_]+$" title="يجب أن يبدأ بـ @" required>
+      <input type="text" class="form-input" id="reg-username" placeholder="@ahmed_m" pattern="^@[a-zA-Z0-9_]+$" required>
     </div>
     <div class="form-group">
       <label class="form-label">الدولة</label>
-      <select class="form-input" id="reg-country" onchange="updateCountryCode()" required>
-        <option value="">اختر الدولة</option>
-        <option value="SA|🇸🇦|+966">السعودية 🇸🇦</option>
-        <option value="EG|🇪🇬|+20">مصر 🇪🇬</option>
-        <option value="AE|🇦🇪|+971">الإمارات 🇦🇪</option>
-        <option value="KW|🇰🇼|+965">الكويت 🇰🇼</option>
-        <option value="QA|🇶🇦|+974">قطر 🇶🇦</option>
-        <option value="BH|🇧🇭|+973">البحرين 🇧🇭</option>
-        <option value="OM|🇴🇲|+968">عمان 🇴🇲</option>
-        <option value="JO|🇯🇴|+962">الأردن 🇯🇴</option>
-        <option value="LB|🇱🇧|+961">لبنان 🇱🇧</option>
-        <option value="PS|🇵🇸|+970">فلسطين 🇵🇸</option>
-        <option value="IQ|🇮🇶|+964">العراق 🇮🇶</option>
-        <option value="SY|🇸🇾|+963">سوريا 🇸🇾</option>
-        <option value="YE|🇾🇪|+967">اليمن 🇾🇪</option>
-        <option value="MA|🇲🇦|+212">المغرب 🇲🇦</option>
-        <option value="DZ|🇩🇿|+213">الجزائر 🇩🇿</option>
-        <option value="TN|🇹🇳|+216">تونس 🇹🇳</option>
-        <option value="LY|🇱🇾|+218">ليبيا 🇱🇾</option>
-        <option value="SD|🇸🇩|+249">السودان 🇸🇩</option>
-        <option value="SO|🇸🇴|+252">الصومال 🇸🇴</option>
-        <option value="other|🌍|">أخرى</option>
+      <select class="form-input" id="reg-country" required>
+        <option value="SA|🇸🇦">السعودية 🇸🇦</option>
+        <option value="EG|🇪🇬">مصر 🇪🇬</option>
+        <option value="AE|🇦🇪">الإمارات 🇦🇪</option>
+        <option value="KW|🇰🇼">الكويت 🇰🇼</option>
+        <option value="other|🌍">أخرى 🌍</option>
       </select>
-    </div>
-    <div class="form-group country-select">
-      <div class="country-flag" id="country-flag">🇸🇦</div>
-      <div class="country-info">
-        <div class="country-code" id="country-code">+966</div>
-        <input type="tel" class="form-input" id="reg-phone" placeholder="5xxxxxxxx" pattern="^[0-9]{8,10}$" required>
-      </div>
     </div>
     <div class="form-group">
       <label class="form-label">كلمة المرور</label>
-      <input type="password" class="form-input" id="reg-password" placeholder="8 أحرف على الأقل" minlength="8" required>
+      <input type="password" class="form-input" id="reg-password" minlength="6" required>
     </div>
     <div class="form-group">
       <label class="form-label">تأكيد كلمة المرور</label>
-      <input type="password" class="form-input" id="reg-confirm" placeholder="أعد إدخال كلمة المرور" required>
+      <input type="password" class="form-input" id="reg-confirm" required>
     </div>
     <div class="error-msg" id="reg-error"></div>
     <div class="loading" id="reg-loading">جاري إنشاء الحساب...</div>
@@ -148,16 +111,14 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   </form>
   
   <div class="auth-footer">
-    <p>بالتسجيل توافق على <a href="#">شروط الاستخدام</a> و<a href="#">سياسة الخصوصية</a></p>
+    <p>بالتسجيل توافق على <a href="#" style="color:var(--primary-blue)">شروط الاستخدام</a></p>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, query, where, getDocs, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7Ya_TIQj4_VFnAWydj5Xzq2zFjJsN-a4",
@@ -171,11 +132,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
-const auth = getAuth(app);
 
-// Theme Toggle
 window.toggleTheme = function() {
   const html = document.documentElement;
   const current = html.getAttribute('data-theme');
@@ -185,6 +143,7 @@ window.toggleTheme = function() {
   icon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
   localStorage.setItem('theme', next);
 }
+
 window.addEventListener('load', () => {
   const saved = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', saved);
@@ -192,7 +151,6 @@ window.addEventListener('load', () => {
   icon.className = saved === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
 });
 
-// Auth Tabs
 window.switchAuth = function(tab) {
   document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
   event.target.classList.add('active');
@@ -200,17 +158,6 @@ window.switchAuth = function(tab) {
   document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
 }
 
-// Country Code
-window.updateCountryCode = function() {
-  const val = document.getElementById('reg-country').value;
-  if(val) {
-    const [code, flag, phone] = val.split('|');
-    document.getElementById('country-flag').textContent = flag;
-    document.getElementById('country-code').textContent = phone;
-  }
-}
-
-// Toast
 window.showToast = function(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -218,7 +165,6 @@ window.showToast = function(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-// Login
 window.handleLogin = async function(e) {
   e.preventDefault();
   const username = document.getElementById('login-username').value.trim();
@@ -229,52 +175,35 @@ window.handleLogin = async function(e) {
   errorEl.classList.remove('show');
   errorEl.textContent = '';
   
-  // Admin login
   if(username === 'admin' && password === '002200') {
-    localStorage.setItem('currentUser', JSON.stringify({id: 'admin', name: 'المدير', username: '@admin', isAdmin: true}));
+    localStorage.setItem('currentUser', JSON.stringify({id: 'admin', name: 'المدير', username: '@admin', isAdmin: true, avatar: 'https://ui-avatars.com/api/?name=المدير&background=1a73e8&color=fff'}));
     window.location.href = 'admin.html';
     return;
   }
   
   loading.classList.add('show');
   try {
-    // Search user by username in Firestore
-    const q = query(collection(db, 'users'), where('username', '==', username.startsWith('@') ? username : '@'+username));
+    const q = query(collection(db, 'users'), where('username', '==', username));
     const snapshot = await getDocs(q);
-    if(snapshot.empty) {
-      throw new Error('المستخدم غير موجود');
-    }
+    if(snapshot.empty) throw new Error('المستخدم غير موجود');
+    
     const userData = snapshot.docs[0].data();
     const userId = snapshot.docs[0].id;
     
-    // Simple password check (in production use Firebase Auth properly)
-    if(userData.password !== password) {
-      throw new Error('كلمة المرور غير صحيحة');
-    }
+    if(userData.password !== password) throw new Error('كلمة المرور غير صحيحة');
+    if(userData.isBanned) throw new Error('حسابك محظور');
     
-    // Save user session
     const userObj = {
-      id: userId,
-      name: userData.name,
-      username: userData.username,
-      avatar: userData.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop',
-      bio: userData.bio || '',
-      country: userData.country,
-      phone: userData.phone,
-      points: userData.points || 0,
-      balance: userData.balance || 0,
-      roomCodes: userData.roomCodes || [],
-      isBanned: userData.isBanned || false
+      id: userId, name: userData.name, username: userData.username,
+      avatar: userData.avatar, bio: userData.bio, country: userData.country,
+      points: userData.points || 0, balance: userData.balance || 0,
+      friends: userData.friends || [], roomCodes: userData.roomCodes || [],
+      isBanned: false, isAdmin: userData.isAdmin || false
     };
     
-    if(userObj.isBanned) {
-      throw new Error('حسابك محظور، يرجى التواصل مع الدعم');
-    }
-    
     localStorage.setItem('currentUser', JSON.stringify(userObj));
-    localStorage.setItem('theme', document.documentElement.getAttribute('data-theme'));
     showToast('تم تسجيل الدخول بنجاح ✓');
-    setTimeout(() => window.location.href = 'home.html', 1000);
+    setTimeout(() => window.location.href = userObj.isAdmin ? 'admin.html' : 'home.html', 1000);
     
   } catch(err) {
     errorEl.textContent = err.message;
@@ -284,13 +213,11 @@ window.handleLogin = async function(e) {
   }
 }
 
-// Register
 window.handleRegister = async function(e) {
   e.preventDefault();
   const fullname = document.getElementById('reg-fullname').value.trim();
   const username = document.getElementById('reg-username').value.trim();
   const country = document.getElementById('reg-country').value;
-  const phone = document.getElementById('reg-phone').value;
   const password = document.getElementById('reg-password').value;
   const confirm = document.getElementById('reg-confirm').value;
   const errorEl = document.getElementById('reg-error');
@@ -299,69 +226,39 @@ window.handleRegister = async function(e) {
   errorEl.classList.remove('show');
   errorEl.textContent = '';
   
-  if(password !== confirm) {
-    errorEl.textContent = 'كلمات المرور غير متطابقة';
-    errorEl.classList.add('show');
-    return;
-  }
-  if(password.length < 8) {
-    errorEl.textContent = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
-    errorEl.classList.add('show');
-    return;
-  }
+  if(password !== confirm) { errorEl.textContent = 'كلمات المرور غير متطابقة'; errorEl.classList.add('show'); return; }
+  if(password.length < 6) { errorEl.textContent = 'كلمة المرور 6 أحرف على الأقل'; errorEl.classList.add('show'); return; }
   
   loading.classList.add('show');
   try {
-    // Check if username exists
     const q = query(collection(db, 'users'), where('username', '==', username));
     const snapshot = await getDocs(q);
-    if(!snapshot.empty) {
-      throw new Error('اسم المستخدم موجود مسبقاً');
-    }
+    if(!snapshot.empty) throw new Error('اسم المستخدم موجود مسبقاً');
     
     const [countryCode, flag] = country.split('|');
     
-    // Create user
     const userRef = await addDoc(collection(db, 'users'), {
-      name: fullname,
-      username: username,
-      password: password, // ⚠️ In production: hash this!
-      country: countryCode,
-      countryFlag: flag,
-      phone: phone,
+      name: fullname, username: username, password: password,
+      country: countryCode, countryFlag: flag,
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(fullname)}&background=1a73e8&color=fff`,
-      bio: '',
-      points: 100, // Welcome bonus
-      balance: 2, // 100 points = $2
-      roomCodes: [],
-      friends: [],
-      blocked: [],
-      isBanned: false,
-      createdAt: serverTimestamp(),
-      lastActive: serverTimestamp()
+      bio: '', points: 100, balance: 2, roomCodes: [], friends: [],
+      blocked: [], isBanned: false, isAdmin: false,
+      createdAt: serverTimestamp(), lastActive: serverTimestamp()
     });
     
     const userObj = {
-      id: userRef.id,
-      name: fullname,
-      username: username,
+      id: userRef.id, name: fullname, username: username,
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(fullname)}&background=1a73e8&color=fff`,
-      bio: '',
-      country: countryCode,
-      phone: phone,
-      points: 100,
-      balance: 2,
-      roomCodes: [],
-      isBanned: false
+      bio: '', country: countryCode, points: 100, balance: 2,
+      roomCodes: [], friends: [], isBanned: false, isAdmin: false
     };
     
     localStorage.setItem('currentUser', JSON.stringify(userObj));
-    localStorage.setItem('theme', document.documentElement.getAttribute('data-theme'));
     showToast('تم إنشاء الحساب بنجاح 🎉');
     setTimeout(() => window.location.href = 'home.html', 1500);
     
   } catch(err) {
-    errorEl.textContent = err.message || 'حدث خطأ، حاول مرة أخرى';
+    errorEl.textContent = err.message || 'حدث خطأ';
     errorEl.classList.add('show');
   } finally {
     loading.classList.remove('show');

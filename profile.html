@@ -8,107 +8,90 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
 :root {
---primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --primary-blue-light: #4a9eff;
---white: #ffffff; --bg-light: #f0f4f8; --bg-dark: #0d1117;
+--primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --white: #ffffff;
+--bg-light: #f0f4f8; --bg-dark: #0d1117;
 --card-light: rgba(255, 255, 255, 0.7); --card-dark: rgba(13, 17, 23, 0.8);
 --border-light: rgba(26, 115, 232, 0.2); --border-dark: rgba(255, 255, 255, 0.1);
 --text-primary-light: #1f2937; --text-secondary-light: #6b7280;
 --text-primary-dark: #f9fafb; --text-secondary-dark: #9ca3af;
---shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.4);
---blur: blur(12px); --success: #10b981; --warning: #f59e0b; --danger: #ea4335;
+--shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --blur: blur(12px);
+--success: #10b981; --warning: #f59e0b; --danger: #ea4335;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
-body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; padding-bottom: 100px; transition: all 0.3s ease; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; padding-bottom: 100px; }
 [data-theme="dark"] body { background: var(--bg-dark); color: var(--text-primary-dark); }
 
-/* Header */
 .header { position: sticky; top: 0; z-index: 1000; padding: 12px 20px; background: var(--card-light); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; }
 [data-theme="dark"] .header { background: var(--card-dark); border-bottom: 1px solid var(--border-dark); box-shadow: var(--shadow-dark); }
-.header-title { font-weight: 800; font-size: 18px; color: inherit; }
+.header-title { font-weight: 800; font-size: 18px; }
 .header-actions { display: flex; gap: 10px; }
-.theme-toggle { width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; }
+.theme-toggle { width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; position: relative; }
 [data-theme="dark"] .theme-toggle { background: #374151; }
 .theme-slider { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; right: 3px; transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--primary-blue); }
 [data-theme="dark"] .theme-slider { transform: translateX(-22px); color: #374151; }
 
-/* Profile Header */
 .profile-header { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 20px; padding: 24px; margin: 20px; text-align: center; box-shadow: var(--shadow); position: relative; }
 [data-theme="dark"] .profile-header { background: var(--card-dark); border-color: var(--border-dark); box-shadow: var(--shadow-dark); }
 .edit-btn { position: absolute; top: 16px; left: 16px; width: 36px; height: 36px; border-radius: 50%; background: var(--primary-blue); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .profile-avatar-lg { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary-blue); object-fit: cover; margin-bottom: 12px; }
-.profile-name-lg { font-size: 22px; font-weight: 800; color: inherit; margin-bottom: 4px; }
+.profile-name-lg { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
 .profile-username { color: var(--text-secondary-light); font-size: 13px; margin-bottom: 8px; }
-[data-theme="dark"] .profile-username { color: var(--text-secondary-dark); }
 .profile-bio { color: var(--text-secondary-light); font-size: 13px; margin-bottom: 16px; line-height: 1.5; }
-[data-theme="dark"] .profile-bio { color: var(--text-secondary-dark); }
 
-/* Wallet Card */
 .wallet-card { background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark)); border-radius: 16px; padding: 20px; color: white; margin: 0 20px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
 .wallet-info h4 { font-size: 14px; opacity: 0.9; margin-bottom: 4px; }
 .wallet-balance { font-size: 24px; font-weight: 800; }
 .wallet-points { font-size: 12px; opacity: 0.8; margin-top: 4px; }
 .wallet-icon { font-size: 32px; opacity: 0.3; }
 
-/* Stats */
 .profile-stats { display: flex; justify-content: center; gap: 30px; padding: 20px; background: var(--card-light); border: 1px solid var(--border-light); border-radius: 16px; margin: 0 20px 20px; }
 [data-theme="dark"] .profile-stats { background: var(--card-dark); border-color: var(--border-dark); }
-.profile-stat { text-align: center; }
+.profile-stat { text-align: center; cursor: pointer; }
+.profile-stat:hover { transform: scale(1.05); }
 .profile-stat-value { font-size: 20px; font-weight: 800; color: var(--primary-blue); }
 .profile-stat-label { font-size: 11px; color: var(--text-secondary-light); margin-top: 4px; }
-[data-theme="dark"] .profile-stat-label { color: var(--text-secondary-dark); }
 
-/* Tabs */
 .profile-tabs { display: flex; gap: 8px; padding: 0 20px 15px; overflow-x: auto; scrollbar-width: none; }
 .profile-tabs::-webkit-scrollbar { display: none; }
-.tab-btn { padding: 10px 20px; border: none; border-radius: 20px; background: var(--card-light); color: inherit; font-weight: 600; font-size: 13px; cursor: pointer; white-space: nowrap; transition: all 0.3s ease; }
+.tab-btn { padding: 10px 20px; border: none; border-radius: 20px; background: var(--card-light); font-weight: 600; font-size: 13px; cursor: pointer; white-space: nowrap; }
 [data-theme="dark"] .tab-btn { background: var(--card-dark); }
 .tab-btn.active { background: var(--primary-blue); color: white; }
 
-/* Posts Grid */
 .posts-grid { padding: 0 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .post-thumb { aspect-ratio: 1; border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; }
 .post-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.post-thumb::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s; }
-.post-thumb:hover::after { opacity: 1; }
-.post-actions-thumb { position: absolute; bottom: 8px; right: 8px; display: flex; gap: 8px; opacity: 0; transition: opacity 0.3s; }
-.post-thumb:hover .post-actions-thumb { opacity: 1; }
+.post-actions-thumb { position: absolute; bottom: 8px; right: 8px; display: flex; gap: 8px; }
 .thumb-btn { width: 32px; height: 32px; border-radius: 50%; background: white; color: var(--primary-blue); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; }
 
-/* Room Codes */
 .room-codes { padding: 0 20px; }
 .room-code-card { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 16px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); }
 [data-theme="dark"] .room-code-card { background: var(--card-dark); border-color: var(--border-dark); box-shadow: var(--shadow-dark); }
 .room-code-info { flex: 1; }
-.room-code-name { font-weight: 700; font-size: 14px; color: inherit; margin-bottom: 4px; }
+.room-code-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
 .room-code-val { font-family: monospace; font-size: 13px; color: var(--primary-blue); background: rgba(26,115,232,0.1); padding: 4px 10px; border-radius: 6px; display: inline-block; }
-[data-theme="dark"] .room-code-val { background: rgba(26,115,232,0.2); }
 .copy-btn { padding: 8px 16px; background: var(--primary-blue); color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; }
 
-/* Settings List */
 .settings-list { padding: 0 20px; }
-.setting-item { background: var(--card-light); border: 1px solid var(--border-light); border-radius: 16px; padding: 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.3s ease; }
+.setting-item { background: var(--card-light); border: 1px solid var(--border-light); border-radius: 16px; padding: 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
 [data-theme="dark"] .setting-item { background: var(--card-dark); border-color: var(--border-dark); }
 .setting-item:hover { border-color: var(--primary-blue); }
 .setting-left { display: flex; align-items: center; gap: 12px; }
 .setting-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(26,115,232,0.1); display: flex; align-items: center; justify-content: center; color: var(--primary-blue); font-size: 18px; }
-[data-theme="dark"] .setting-icon { background: rgba(26,115,232,0.2); color: var(--primary-blue-light); }
-.setting-text { font-weight: 600; font-size: 14px; color: inherit; }
+.setting-text { font-weight: 600; font-size: 14px; }
 .setting-arrow { color: var(--text-secondary-light); font-size: 14px; }
-[data-theme="dark"] .setting-arrow { color: var(--text-secondary-dark); }
 .setting-danger { color: var(--danger); }
 .setting-danger .setting-icon { background: rgba(234,67,53,0.1); color: var(--danger); }
 
-/* Modal */
 .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.active { display: flex; }
 .modal-card { background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 24px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 25px 50px rgba(0,0,0,0.25); }
 [data-theme="dark"] .modal-card { background: var(--card-dark); border-color: var(--border-dark); }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.modal-title { font-size: 18px; font-weight: 800; color: inherit; }
+.modal-title { font-size: 18px; font-weight: 800; }
 .close-modal { width: 32px; height: 32px; border-radius: 50%; background: rgba(234,67,53,0.1); border: none; color: #ea4335; cursor: pointer; }
 .form-group { margin-bottom: 16px; }
-.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: inherit; }
-.form-input, .form-textarea { width: 100%; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.6); font-size: 14px; color: inherit; }
+.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.form-input, .form-textarea { width: 100%; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.6); font-size: 14px; }
 [data-theme="dark"] .form-input, .form-textarea { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
 .form-textarea { min-height: 80px; resize: none; }
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
@@ -116,11 +99,10 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 .btn-primary { background: var(--primary-blue); color: white; }
 .btn-secondary { background: transparent; color: inherit; border: 1px solid var(--border-light); }
 
-/* Wallet Modal */
 .wallet-modal-content { text-align: center; }
 .wallet-balance-lg { font-size: 32px; font-weight: 800; color: var(--primary-blue); margin: 20px 0; }
 .wallet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
-.wallet-action-btn { padding: 16px; border-radius: 16px; border: 1px solid var(--border-light); background: var(--card-light); color: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: all 0.3s ease; }
+.wallet-action-btn { padding: 16px; border-radius: 16px; border: 1px solid var(--border-light); background: var(--card-light); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 [data-theme="dark"] .wallet-action-btn { background: var(--card-dark); border-color: var(--border-dark); }
 .wallet-action-btn:hover { border-color: var(--primary-blue); }
 .wallet-action-btn i { font-size: 24px; color: var(--primary-blue); }
@@ -131,40 +113,36 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 .transaction-amount.positive { color: var(--success); }
 .transaction-amount.negative { color: var(--danger); }
 
-/* Footer */
-.footer-glass { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px 20px 25px; background: var(--card-light); backdrop-filter: var(--blur); border-top: 1px solid var(--border-light); box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000; }
+.footer-glass { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px 20px 25px; background: var(--card-light); backdrop-filter: var(--blur); border-top: 1px solid var(--border-light); box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 999; display: flex; justify-content: center; }
 [data-theme="dark"] .footer-glass { background: var(--card-dark); border-color: var(--border-dark); box-shadow: 0 -4px 20px rgba(0,0,0,0.3); }
-.footer-nav { display: flex; justify-content: space-around; align-items: flex-end; max-width: 500px; margin: 0 auto; }
-.footer-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-secondary-light); text-decoration: none; font-size: 11px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.footer-nav { display: flex; justify-content: space-around; align-items: flex-end; width: 100%; max-width: 500px; }
+.footer-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-secondary-light); text-decoration: none; font-size: 11px; font-weight: 600; padding: 8px 16px; border-radius: 16px; }
 [data-theme="dark"] .footer-item { color: var(--text-secondary-dark); }
 .footer-item i { font-size: 20px; }
 .footer-item.active { color: var(--primary-blue); transform: translateY(-12px); background: var(--white); box-shadow: 0 8px 20px rgba(26, 115, 232, 0.25); }
-[data-theme="dark"] .footer-item.active { color: var(--primary-blue-light); background: rgba(26, 115, 232, 0.2); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+[data-theme="dark"] .footer-item.active { color: var(--primary-blue-light); background: rgba(26, 115, 232, 0.2); }
 
-/* Toast */
-.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; color: inherit; font-weight: 700; z-index: 10000; display: none; }
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; font-weight: 700; z-index: 10000; display: none; }
 [data-theme="dark"] .toast { background: var(--card-dark); border-color: var(--border-dark); }
 .toast.show { display: block; }
 </style>
 </head>
 <body>
-<!-- Header -->
+
 <header class="header">
-  <div class="header-title">الملف الشخصي</div>
+  <div class="header-title" id="page-title">الملف الشخصي</div>
   <div class="header-actions">
     <div class="theme-toggle" onclick="toggleTheme()"><div class="theme-slider"><i class="fas fa-sun"></i></div></div>
   </div>
 </header>
 
-<!-- Profile Header -->
 <div class="profile-header">
-  <button class="edit-btn" onclick="openEditModal()"><i class="fas fa-pen"></i></button>
+  <button class="edit-btn" id="edit-btn" onclick="openEditModal()" style="display:none"><i class="fas fa-pen"></i></button>
   <img src="" class="profile-avatar-lg" id="profile-avatar">
   <div class="profile-name-lg" id="profile-name">...</div>
   <div class="profile-username" id="profile-username">...</div>
   <div class="profile-bio" id="profile-bio">...</div>
   
-  <!-- Wallet Preview -->
   <div class="wallet-card" onclick="openWalletModal()">
     <div class="wallet-info">
       <h4>محفظتي</h4>
@@ -175,34 +153,29 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   </div>
 </div>
 
-<!-- Stats -->
 <div class="profile-stats">
-  <div class="profile-stat"><div class="profile-stat-value" id="stat-posts">0</div><div class="profile-stat-label">منشور</div></div>
-  <div class="profile-stat"><div class="profile-stat-value" id="stat-friends">0</div><div class="profile-stat-label">صديق</div></div>
-  <div class="profile-stat"><div class="profile-stat-value" id="stat-followers">0</div><div class="profile-stat-label">متابع</div></div>
+  <div class="profile-stat" onclick="switchTab('posts')"><div class="profile-stat-value" id="stat-posts">0</div><div class="profile-stat-label">منشور</div></div>
+  <div class="profile-stat" onclick="switchTab('friends')"><div class="profile-stat-value" id="stat-friends">0</div><div class="profile-stat-label">صديق</div></div>
+  <div class="profile-stat" onclick="switchTab('followers')"><div class="profile-stat-value" id="stat-followers">0</div><div class="profile-stat-label">متابع</div></div>
 </div>
 
-<!-- Tabs -->
 <div class="profile-tabs">
   <button class="tab-btn active" onclick="switchTab('posts')">منشوراتي</button>
   <button class="tab-btn" onclick="switchTab('rooms')">كود الغرف</button>
   <button class="tab-btn" onclick="switchTab('settings')">إعدادات</button>
 </div>
 
-<!-- Posts Tab -->
 <div id="posts-tab" class="tab-content">
   <div class="posts-grid" id="my-posts"></div>
 </div>
 
-<!-- Rooms Tab -->
 <div id="rooms-tab" class="tab-content" style="display:none">
   <div class="room-codes" id="room-codes-list"></div>
 </div>
 
-<!-- Settings Tab -->
 <div id="settings-tab" class="tab-content" style="display:none">
   <div class="settings-list">
-    <div class="setting-item" onclick="showToast('قائمة المحظورين')">
+    <div class="setting-item" onclick="showBlockedUsers()">
       <div class="setting-left">
         <div class="setting-icon"><i class="fas fa-ban"></i></div>
         <span class="setting-text">المحظورون</span>
@@ -223,17 +196,16 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
       </div>
       <span class="setting-arrow"><i class="fas fa-chevron-left"></i></span>
     </div>
-    <div class="setting-item" onclick="logout()">
+    <div class="setting-item setting-danger" onclick="logout()">
       <div class="setting-left">
-        <div class="setting-icon setting-danger"><i class="fas fa-sign-out-alt"></i></div>
-        <span class="setting-text setting-danger">تسجيل الخروج</span>
+        <div class="setting-icon"><i class="fas fa-sign-out-alt"></i></div>
+        <span class="setting-text">تسجيل الخروج</span>
       </div>
       <span class="setting-arrow"><i class="fas fa-chevron-left"></i></span>
     </div>
   </div>
 </div>
 
-<!-- Edit Profile Modal -->
 <div class="modal-overlay" id="edit-modal">
   <div class="modal-card">
     <div class="modal-header">
@@ -249,7 +221,7 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
       <textarea class="form-textarea" id="edit-bio"></textarea>
     </div>
     <div class="form-group">
-      <label class="form-label">الصورة</label>
+      <label class="form-label">الصورة الشخصية</label>
       <input type="file" class="form-input" id="edit-avatar" accept="image/*">
     </div>
     <div class="modal-actions">
@@ -259,7 +231,6 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   </div>
 </div>
 
-<!-- Wallet Modal -->
 <div class="modal-overlay" id="wallet-modal">
   <div class="modal-card">
     <div class="modal-header">
@@ -274,12 +245,12 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
       <div class="wallet-actions">
         <button class="wallet-action-btn" onclick="showToast('شحن الرصيد')"><i class="fas fa-plus-circle"></i><span>شحن</span></button>
         <button class="wallet-action-btn" onclick="showToast('سحب الرصيد')"><i class="fas fa-minus-circle"></i><span>سحب</span></button>
-        <button class="wallet-action-btn" onclick="showToast('سجل العمليات')"><i class="fas fa-history"></i><span>السجل</span></button>
+        <button class="wallet-action-btn" onclick="showTransactionHistory()"><i class="fas fa-history"></i><span>السجل</span></button>
         <button class="wallet-action-btn" onclick="showToast('تحويل نقاط')"><i class="fas fa-exchange-alt"></i><span>تحويل</span></button>
       </div>
       
-      <div style="text-align:right;font-weight:700;margin-bottom:10px;color:inherit">آخر العمليات</div>
-      <div class="transaction-list">
+      <div style="text-align:right;font-weight:700;margin-bottom:10px">آخر العمليات</div>
+      <div class="transaction-list" id="transaction-list">
         <div class="transaction-item"><span class="transaction-type">إيداع</span><span class="transaction-amount positive">+$2.00</span></div>
         <div class="transaction-item"><span class="transaction-type">هدية</span><span class="transaction-amount positive">+$1.00</span></div>
         <div class="transaction-item"><span class="transaction-type">سحب</span><span class="transaction-amount negative">-$0.50</span></div>
@@ -288,23 +259,21 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Footer -->
 <footer class="footer-glass">
   <nav class="footer-nav">
-    <div class="footer-item" onclick="window.location.href='home.html'"><i class="fas fa-home"></i><span>الرئيسية</span></div>
-    <div class="footer-item" onclick="window.location.href='posts.html'"><i class="fas fa-newspaper"></i><span>المنشورات</span></div>
-    <div class="footer-item" onclick="window.location.href='friends.html'"><i class="fas fa-user-friends"></i><span>الأصدقاء</span></div>
-    <div class="footer-item" onclick="window.location.href='chat.html'"><i class="fas fa-comment-dots"></i><span>الدردشة</span></div>
-    <div class="footer-item active" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><span>الملف</span></div>
+    <a href="home.html" class="footer-item"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+    <a href="posts.html" class="footer-item"><i class="fas fa-newspaper"></i><span>المنشورات</span></a>
+    <a href="friends.html" class="footer-item"><i class="fas fa-user-friends"></i><span>الأصدقاء</span></a>
+    <a href="chat.html" class="footer-item"><i class="fas fa-comment-dots"></i><span>الدردشة</span></a>
+    <a href="profile.html" class="footer-item active"><i class="fas fa-user"></i><span>الملف</span></a>
   </nav>
 </footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, updateDoc, deleteDoc, serverTimestamp, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7Ya_TIQj4_VFnAWydj5Xzq2zFjJsN-a4",
@@ -316,39 +285,96 @@ const firebaseConfig = {
   appId: "1:325594152614:web:cf5fb37660a0c33b5afe67",
   measurementId: "G-9VMJ193S9R"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 if(!currentUser) { window.location.href = 'index.html'; }
 
-// Load profile
-document.getElementById('profile-avatar').src = currentUser.avatar;
-document.getElementById('profile-name').textContent = currentUser.name;
-document.getElementById('profile-username').textContent = currentUser.username;
-document.getElementById('profile-bio').textContent = currentUser.bio || 'لا يوجد وصف';
-document.getElementById('balance-val').textContent = currentUser.balance?.toFixed(2) || '0.00';
-document.getElementById('points-val').textContent = currentUser.points || 0;
-document.getElementById('wallet-balance-lg').textContent = currentUser.balance?.toFixed(2) || '0.00';
-document.getElementById('wallet-points-lg').textContent = currentUser.points || 0;
-document.getElementById('stat-friends').textContent = currentUser.friends?.length || 0;
+// ✅ التحقق إذا كان عرض ملف مستخدم آخر
+let viewingOtherProfile = false;
+let viewingUserId = null;
 
-// Theme
 window.toggleTheme = function() {
   const html = document.documentElement;
   const current = html.getAttribute('data-theme');
   const next = current === 'light' ? 'dark' : 'light';
   html.setAttribute('data-theme', next);
+  const icon = document.querySelector('.theme-slider i');
+  icon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
   localStorage.setItem('theme', next);
 }
-window.addEventListener('load', () => {
-  const saved = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', saved);
-  loadMyPosts();
-  loadRoomCodes();
-});
 
-// Tabs
+window.showToast = function(msg) {
+  const t = document.getElementById('toast');
+  if(t) { t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+}
+
+async function loadProfile() {
+  // ✅ التحقق من عرض ملف مستخدم آخر
+  const viewUserId = localStorage.getItem('viewUserProfile');
+  
+  if(viewUserId && viewUserId !== currentUser.id) {
+    viewingOtherProfile = true;
+    viewingUserId = viewUserId;
+    localStorage.removeItem('viewUserProfile');
+    
+    document.getElementById('page-title').textContent = 'الملف الشخصي';
+    document.getElementById('edit-btn').style.display = 'none';
+    
+    try {
+      const userDoc = await getDoc(doc(db, 'users', viewUserId));
+      if(!userDoc.exists()) {
+        showToast('المستخدم غير موجود');
+        window.location.href = 'profile.html';
+        return;
+      }
+      
+      const user = userDoc.data();
+      document.getElementById('profile-avatar').src = user.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
+      document.getElementById('profile-name').textContent = user.name;
+      document.getElementById('profile-username').textContent = user.username || '';
+      document.getElementById('profile-bio').textContent = user.bio || 'لا يوجد وصف';
+      document.getElementById('stat-friends').textContent = user.friends?.length || 0;
+      document.getElementById('stat-followers').textContent = user.followers || '0';
+      document.getElementById('stat-posts').textContent = user.posts || '0';
+      
+      // إخفاء المحفظة عند عرض ملف آخر
+      document.querySelector('.wallet-card').style.display = 'none';
+      
+      // تحميل منشورات المستخدم
+      loadUserPosts(viewUserId);
+      
+    } catch(error) {
+      console.error(error);
+      showToast('خطأ في تحميل البيانات');
+    }
+  } else {
+    // ✅ عرض ملفي الشخصي
+    viewingOtherProfile = false;
+    viewingUserId = null;
+    document.getElementById('page-title').textContent = 'ملفي الشخصي';
+    document.getElementById('edit-btn').style.display = 'flex';
+    document.querySelector('.wallet-card').style.display = 'flex';
+    
+    document.getElementById('profile-avatar').src = currentUser.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentUser.name);
+    document.getElementById('profile-name').textContent = currentUser.name;
+    document.getElementById('profile-username').textContent = currentUser.username || '';
+    document.getElementById('profile-bio').textContent = currentUser.bio || 'لا يوجد وصف';
+    document.getElementById('balance-val').textContent = currentUser.balance?.toFixed(2) || '0.00';
+    document.getElementById('points-val').textContent = currentUser.points || 0;
+    document.getElementById('wallet-balance-lg').textContent = currentUser.balance?.toFixed(2) || '0.00';
+    document.getElementById('wallet-points-lg').textContent = currentUser.points || 0;
+    document.getElementById('stat-friends').textContent = currentUser.friends?.length || 0;
+    document.getElementById('stat-followers').textContent = currentUser.followers || '0';
+    document.getElementById('stat-posts').textContent = currentUser.posts || '0';
+    
+    loadMyPosts();
+    loadRoomCodes();
+  }
+}
+
 window.switchTab = function(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
@@ -356,7 +382,6 @@ window.switchTab = function(tab) {
   document.getElementById(tab + '-tab').style.display = 'block';
 }
 
-// Load My Posts
 async function loadMyPosts() {
   const container = document.getElementById('my-posts');
   const q = query(collection(db, 'posts'), where('userId', '==', currentUser.id));
@@ -367,20 +392,32 @@ async function loadMyPosts() {
     return;
   }
   
-  container.innerHTML = snapshot.docs.map(docSnap => {
-    const post = docSnap.data();
-    return `
-    <div class="post-thumb" onclick="viewPost('${docSnap.id}')">
-      <img src="${post.image || 'https://via.placeholder.com/200'}">
-      <div class="post-actions-thumb">
-        <button class="thumb-btn" onclick="event.stopPropagation(); editPost('${docSnap.id}')"><i class="fas fa-pen"></i></button>
-        <button class="thumb-btn" onclick="event.stopPropagation(); deletePost('${docSnap.id}')"><i class="fas fa-trash"></i></button>
-      </div>
-    </div>`;
-  }).join('');
+  container.innerHTML = snapshot.docs.map(docSnap => `
+  <div class="post-thumb" onclick="viewPost('${docSnap.id}')">
+    <img src="${docSnap.data().image || 'https://via.placeholder.com/200'}">
+    <div class="post-actions-thumb">
+      <button class="thumb-btn" onclick="event.stopPropagation(); editPost('${docSnap.id}')"><i class="fas fa-pen"></i></button>
+      <button class="thumb-btn" onclick="event.stopPropagation(); deletePost('${docSnap.id}')"><i class="fas fa-trash"></i></button>
+    </div>
+  </div>`).join('');
 }
 
-// Load Room Codes
+async function loadUserPosts(userId) {
+  const container = document.getElementById('my-posts');
+  const q = query(collection(db, 'posts'), where('userId', '==', userId));
+  const snapshot = await getDocs(q);
+  
+  if(snapshot.empty) {
+    container.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-secondary-light)">لا توجد منشورات</p>';
+    return;
+  }
+  
+  container.innerHTML = snapshot.docs.map(docSnap => `
+  <div class="post-thumb">
+    <img src="${docSnap.data().image || 'https://via.placeholder.com/200'}">
+  </div>`).join('');
+}
+
 async function loadRoomCodes() {
   const container = document.getElementById('room-codes-list');
   const codes = currentUser.roomCodes || [];
@@ -400,7 +437,6 @@ async function loadRoomCodes() {
   </div>`).join('');
 }
 
-// Edit Profile
 window.openEditModal = function() {
   document.getElementById('edit-name').value = currentUser.name;
   document.getElementById('edit-bio').value = currentUser.bio || '';
@@ -428,17 +464,18 @@ window.saveProfile = async function() {
   showToast('تم حفظ التغييرات ✓');
 }
 
-// Wallet
-window.openWalletModal = function() { document.getElementById('wallet-modal').classList.add('active'); }
+window.openWalletModal = function() { 
+  document.getElementById('wallet-balance-lg').textContent = currentUser.balance?.toFixed(2) || '0.00';
+  document.getElementById('wallet-points-lg').textContent = currentUser.points || 0;
+  document.getElementById('wallet-modal').classList.add('active'); 
+}
 window.closeWalletModal = function() { document.getElementById('wallet-modal').classList.remove('active'); }
 
-// Copy Code
 window.copyCode = function(code) {
   navigator.clipboard.writeText(code);
   showToast('تم نسخ كود الغرفة ✓');
 }
 
-// Post Actions
 window.viewPost = function(postId) { window.location.href = `posts.html?post=${postId}`; }
 window.editPost = function(postId) { showToast('خاصية التعديل قريباً'); }
 window.deletePost = async function(postId) {
@@ -449,19 +486,22 @@ window.deletePost = async function(postId) {
   }
 }
 
-// Logout
+window.showBlockedUsers = function() { showToast('قائمة المحظورين قريباً'); }
+window.showTransactionHistory = function() { showToast('سجل العمليات قريباً'); }
+
 window.logout = function() {
   localStorage.removeItem('currentUser');
   window.location.href = 'index.html';
 }
 
-// Toast
-window.showToast = function(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  const icon = document.querySelector('.theme-slider i');
+  icon.className = saved === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+  
+  loadProfile();
+});
 </script>
 </body>
 </html>

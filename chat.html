@@ -8,65 +8,59 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
 :root {
---primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --primary-blue-light: #4a9eff;
---white: #ffffff; --bg-light: #f0f4f8; --bg-dark: #0d1117;
+--primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --white: #ffffff;
+--bg-light: #f0f4f8; --bg-dark: #0d1117;
 --card-light: rgba(255, 255, 255, 0.7); --card-dark: rgba(13, 17, 23, 0.8);
 --border-light: rgba(26, 115, 232, 0.2); --border-dark: rgba(255, 255, 255, 0.1);
 --text-primary-light: #1f2937; --text-secondary-light: #6b7280;
 --text-primary-dark: #f9fafb; --text-secondary-dark: #9ca3af;
---shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.4);
---blur: blur(12px); --success: #10b981;
+--shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --blur: blur(12px);
+--success: #10b981; --warning: #f59e0b; --danger: #ea4335;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
-body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; padding-bottom: 100px; transition: all 0.3s ease; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; padding-bottom: 100px; }
 [data-theme="dark"] body { background: var(--bg-dark); color: var(--text-primary-dark); }
 
-/* Header */
-.header { position: sticky; top: 0; z-index: 1000; padding: 12px 20px; background: var(--card-light); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; }
+.header { position: sticky; top: 0; z-index: 1000; padding: 12px 20px; background: var(--card-light); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow); }
 [data-theme="dark"] .header { background: var(--card-dark); border-bottom: 1px solid var(--border-dark); box-shadow: var(--shadow-dark); }
-.header-title { font-weight: 800; font-size: 18px; color: inherit; display: flex; align-items: center; gap: 10px; }
-.header-title i { color: var(--primary-blue); cursor: pointer; }
+.header-content { display: flex; justify-content: space-between; align-items: center; }
+.user-info { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.user-avatar { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--primary-blue); object-fit: cover; }
+.user-name { font-weight: 700; font-size: 16px; }
 .header-actions { display: flex; gap: 10px; }
-.theme-toggle { width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; }
+.theme-toggle { width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; position: relative; }
 [data-theme="dark"] .theme-toggle { background: #374151; }
 .theme-slider { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; right: 3px; transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--primary-blue); }
 [data-theme="dark"] .theme-slider { transform: translateX(-22px); color: #374151; }
 
-/* Search */
-.chat-search { padding: 15px 20px; }
-.search-box { position: relative; }
-.search-box input { width: 100%; padding: 14px 20px 14px 45px; border: 1px solid var(--border-light); border-radius: 16px; background: var(--card-light); backdrop-filter: var(--blur); font-size: 14px; color: inherit; }
+.chat-header { padding: 15px 20px; display: flex; gap: 10px; }
+.search-box { flex: 1; position: relative; }
+.search-box input { width: 100%; padding: 14px 20px 14px 45px; border: 1px solid var(--border-light); border-radius: 16px; background: var(--card-light); backdrop-filter: var(--blur); font-size: 14px; }
 [data-theme="dark"] .search-box input { background: var(--card-dark); border-color: var(--border-dark); }
 .search-box i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary-light); }
 
-/* Tabs */
 .chat-tabs { display: flex; gap: 8px; padding: 0 20px 15px; overflow-x: auto; scrollbar-width: none; }
 .chat-tabs::-webkit-scrollbar { display: none; }
-.tab-btn { padding: 10px 20px; border: none; border-radius: 20px; background: var(--card-light); color: inherit; font-weight: 600; font-size: 13px; cursor: pointer; white-space: nowrap; transition: all 0.3s ease; }
+.tab-btn { padding: 10px 20px; border: none; border-radius: 20px; background: var(--card-light); font-weight: 600; font-size: 13px; cursor: pointer; white-space: nowrap; }
 [data-theme="dark"] .tab-btn { background: var(--card-dark); }
 .tab-btn.active { background: var(--primary-blue); color: white; }
 
-/* Chat List */
 .chat-list { padding: 0 20px; }
-.chat-item { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.3s ease; }
-[data-theme="dark"] .chat-item { background: var(--card-dark); border-color: var(--border-dark); }
-.chat-item:hover { border-color: var(--primary-blue); transform: translateY(-2px); }
+.chat-item { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; cursor: pointer; box-shadow: var(--shadow); }
+[data-theme="dark"] .chat-item { background: var(--card-dark); border-color: var(--border-dark); box-shadow: var(--shadow-dark); }
+.chat-item:hover { transform: translateY(-2px); border-color: var(--primary-blue); }
 .chat-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary-blue); object-fit: cover; }
 .chat-info { flex: 1; min-width: 0; }
-.chat-name { font-weight: 700; font-size: 15px; color: inherit; margin-bottom: 4px; }
+.chat-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
 .chat-last-msg { font-size: 12px; color: var(--text-secondary-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
-[data-theme="dark"] .chat-last-msg { color: var(--text-secondary-dark); }
 .chat-time { font-size: 11px; color: var(--text-secondary-light); }
 .chat-badge { background: var(--primary-blue); color: white; padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; }
-.room-badge { background: rgba(26,115,232,0.1); color: var(--primary-blue); padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; }
-[data-theme="dark"] .room-badge { background: rgba(26,115,232,0.2); color: var(--primary-blue-light); }
 
-/* Create Room */
-.create-room-card { background: var(--card-light); border: 2px dashed var(--border-light); border-radius: 16px; padding: 20px; margin: 0 20px 15px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+.create-room-card { background: var(--card-light); border: 2px dashed var(--border-light); border-radius: 16px; padding: 20px; margin: 0 20px 15px; text-align: center; cursor: pointer; }
 [data-theme="dark"] .create-room-card { background: var(--card-dark); border-color: var(--border-dark); }
 .create-room-card:hover { border-color: var(--primary-blue); }
 .create-room-card i { font-size: 24px; color: var(--primary-blue); margin-bottom: 8px; }
-.create-room-card span { font-weight: 600; font-size: 13px; color: inherit; }
+.create-room-card span { font-weight: 600; font-size: 13px; }
 
 /* Chat Window */
 .chat-window { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-light); z-index: 3000; display: none; flex-direction: column; }
@@ -77,50 +71,53 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 .back-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-light); background: transparent; color: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .chat-window-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-blue); }
 .chat-window-info { flex: 1; }
-.chat-window-name { font-weight: 700; font-size: 16px; color: inherit; }
+.chat-window-name { font-weight: 700; font-size: 16px; }
 .chat-window-status { font-size: 11px; color: var(--text-secondary-light); }
-[data-theme="dark"] .chat-window-status { color: var(--text-secondary-dark); }
 .chat-window-actions { display: flex; gap: 8px; }
 .chat-window-actions button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-light); background: transparent; color: var(--primary-blue); cursor: pointer; }
-[data-theme="dark"] .chat-window-actions button { border-color: var(--border-dark); color: var(--primary-blue-light); }
 
-/* Messages */
 .messages-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
 .message { display: flex; gap: 10px; max-width: 80%; }
 .message.mine { margin-right: auto; flex-direction: row-reverse; }
 .message-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
-.message-bubble { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
+.message-bubble { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; position: relative; }
 .message.mine .message-bubble { background: var(--primary-blue); color: white; border-bottom-left-radius: 4px; }
-.message:not(.mine) .message-bubble { background: var(--card-light); border: 1px solid var(--border-light); border-bottom-right-radius: 4px; color: inherit; }
+.message:not(.mine) .message-bubble { background: var(--card-light); border: 1px solid var(--border-light); border-bottom-right-radius: 4px; }
 [data-theme="dark"] .message:not(.mine) .message-bubble { background: var(--card-dark); border-color: var(--border-dark); }
 .message-time { font-size: 10px; opacity: 0.7; margin-top: 4px; text-align: right; }
 .message-image { max-width: 200px; border-radius: 12px; margin-top: 8px; }
 
-/* Input Area */
+/* Comment/Reply System */
+.message-actions { display: flex; gap: 8px; margin-top: 4px; opacity: 0; transition: opacity 0.3s; }
+.message:hover .message-actions { opacity: 1; }
+.message-action { font-size: 11px; color: var(--text-secondary-light); cursor: pointer; }
+.message-action:hover { color: var(--primary-blue); }
+.replies-container { margin-top: 8px; padding-right: 46px; }
+.reply { display: flex; gap: 8px; margin-top: 8px; }
+.reply .message-bubble { background: rgba(26,115,232,0.1); font-size: 13px; padding: 8px 12px; }
+
 .chat-input-area { padding: 12px 20px; background: var(--card-light); border-top: 1px solid var(--border-light); display: flex; gap: 10px; align-items: center; }
 [data-theme="dark"] .chat-input-area { background: var(--card-dark); border-top: 1px solid var(--border-dark); }
 .input-actions { display: flex; gap: 8px; }
 .input-actions button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-light); background: transparent; color: var(--primary-blue); cursor: pointer; }
-[data-theme="dark"] .input-actions button { border-color: var(--border-dark); color: var(--primary-blue-light); }
-.message-input { flex: 1; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 24px; background: rgba(255,255,255,0.6); font-size: 14px; color: inherit; }
+.message-input { flex: 1; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 24px; background: rgba(255,255,255,0.6); font-size: 14px; }
 [data-theme="dark"] .message-input { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
 .send-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--primary-blue); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-/* Create Room Modal */
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
-.modal-overlay.active { display: flex; }
-.modal-card { background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 24px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 25px 50px rgba(0,0,0,0.25); }
-[data-theme="dark"] .modal-card { background: var(--card-dark); border-color: var(--border-dark); }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.modal-title { font-size: 18px; font-weight: 800; color: inherit; }
-.close-modal { width: 32px; height: 32px; border-radius: 50%; background: rgba(234,67,53,0.1); border: none; color: #ea4335; cursor: pointer; }
+.create-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.create-modal.active { display: flex; }
+.create-card { background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 24px; padding: 24px; width: 100%; max-width: 400px; }
+[data-theme="dark"] .create-card { background: var(--card-dark); border-color: var(--border-dark); }
+.create-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.create-header h3 { font-size: 18px; font-weight: 800; }
+.close-create { width: 32px; height: 32px; border-radius: 50%; background: rgba(234,67,53,0.1); border: none; color: #ea4335; cursor: pointer; }
 .form-group { margin-bottom: 16px; }
-.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: inherit; }
-.form-input, .form-textarea, .form-select { width: 100%; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.6); font-size: 14px; color: inherit; }
-[data-theme="dark"] .form-input, .form-textarea, .form-select { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
+.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.form-input, .form-textarea { width: 100%; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.6); font-size: 14px; }
+[data-theme="dark"] .form-input, .form-textarea { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
 .form-textarea { min-height: 80px; resize: none; }
 .privacy-options { display: flex; gap: 10px; margin-top: 8px; }
-.privacy-option { flex: 1; padding: 10px; border: 1px solid var(--border-light); border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; transition: all 0.3s ease; }
+.privacy-option { flex: 1; padding: 10px; border: 1px solid var(--border-light); border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; }
 [data-theme="dark"] .privacy-option { border-color: var(--border-dark); }
 .privacy-option.active { border-color: var(--primary-blue); background: rgba(26,115,232,0.1); font-weight: 700; }
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
@@ -128,53 +125,57 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 .btn-primary { background: var(--primary-blue); color: white; }
 .btn-secondary { background: transparent; color: inherit; border: 1px solid var(--border-light); }
 
-/* Footer */
-.footer-glass { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px 20px 25px; background: var(--card-light); backdrop-filter: var(--blur); border-top: 1px solid var(--border-light); box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000; }
+.footer-glass { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px 20px 25px; background: var(--card-light); backdrop-filter: var(--blur); border-top: 1px solid var(--border-light); box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 999; display: flex; justify-content: center; }
 [data-theme="dark"] .footer-glass { background: var(--card-dark); border-color: var(--border-dark); box-shadow: 0 -4px 20px rgba(0,0,0,0.3); }
-.footer-nav { display: flex; justify-content: space-around; align-items: flex-end; max-width: 500px; margin: 0 auto; }
-.footer-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-secondary-light); text-decoration: none; font-size: 11px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.footer-nav { display: flex; justify-content: space-around; align-items: flex-end; width: 100%; max-width: 500px; }
+.footer-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-secondary-light); text-decoration: none; font-size: 11px; font-weight: 600; padding: 8px 16px; border-radius: 16px; }
 [data-theme="dark"] .footer-item { color: var(--text-secondary-dark); }
 .footer-item i { font-size: 20px; }
 .footer-item.active { color: var(--primary-blue); transform: translateY(-12px); background: var(--white); box-shadow: 0 8px 20px rgba(26, 115, 232, 0.25); }
-[data-theme="dark"] .footer-item.active { color: var(--primary-blue-light); background: rgba(26, 115, 232, 0.2); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+[data-theme="dark"] .footer-item.active { color: var(--primary-blue-light); background: rgba(26, 115, 232, 0.2); }
 
-/* Toast */
-.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; color: inherit; font-weight: 700; z-index: 10000; display: none; }
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; font-weight: 700; z-index: 10000; display: none; }
 [data-theme="dark"] .toast { background: var(--card-dark); border-color: var(--border-dark); }
 .toast.show { display: block; }
+
+/* Points Transfer Modal */
+.points-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.points-modal.active { display: flex; }
+.points-card { background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 24px; padding: 24px; width: 100%; max-width: 350px; }
+[data-theme="dark"] .points-card { background: var(--card-dark); border-color: var(--border-dark); }
+.points-balance { font-size: 24px; font-weight: 800; color: var(--primary-blue); margin: 16px 0; }
 </style>
 </head>
 <body>
-<!-- Header -->
+
 <header class="header">
-  <div class="header-title">
-    <i class="fas fa-arrow-right" onclick="window.history.back()" style="display:none" id="back-icon"></i>
-    <span id="page-title">الدردشة</span>
-  </div>
-  <div class="header-actions">
-    <div class="theme-toggle" onclick="toggleTheme()"><div class="theme-slider"><i class="fas fa-sun"></i></div></div>
+  <div class="header-content">
+    <div class="user-info" onclick="window.location.href='profile.html'">
+      <img src="" class="user-avatar" id="header-avatar">
+      <span class="user-name" id="header-name">...</span>
+    </div>
+    <div class="header-actions">
+      <div class="theme-toggle" onclick="toggleTheme()"><div class="theme-slider"><i class="fas fa-sun"></i></div></div>
+    </div>
   </div>
 </header>
 
-<!-- Search -->
-<div class="chat-search">
+<div class="chat-header">
   <div class="search-box">
     <input type="text" id="chat-search" placeholder="بحث عن صديق أو غرفة..." onkeyup="searchChats()">
     <i class="fas fa-search"></i>
   </div>
 </div>
 
-<!-- Tabs -->
 <div class="chat-tabs">
   <button class="tab-btn active" onclick="switchTab('chats')">المحادثات</button>
   <button class="tab-btn" onclick="switchTab('rooms')">الغرف</button>
-  <button class="tab-btn" onclick="switchTab('invites')">الدعوات</button>
 </div>
 
-<!-- Chat List -->
-<div class="chat-list" id="chat-list"></div>
+<div class="chat-list" id="chat-list">
+  <p style="padding:40px;text-align:center;color:var(--text-secondary-light)">جاري التحميل...</p>
+</div>
 
-<!-- Create Room Card -->
 <div class="create-room-card" onclick="openCreateRoomModal()">
   <i class="fas fa-plus-circle"></i>
   <span>إنشاء غرفة جديدة</span>
@@ -190,9 +191,8 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
       <div class="chat-window-status" id="chat-status">متصل الآن</div>
     </div>
     <div class="chat-window-actions">
-      <button onclick="showToast('مكالمة صوتية')"><i class="fas fa-phone"></i></button>
-      <button onclick="showToast('مكالمة فيديو')"><i class="fas fa-video"></i></button>
-      <button onclick="showToast('معلومات')"><i class="fas fa-info-circle"></i></button>
+      <button onclick="openPointsModal()"><i class="fas fa-coins"></i></button>
+      <button onclick="showChatInfo()"><i class="fas fa-info-circle"></i></button>
     </div>
   </div>
   
@@ -210,11 +210,11 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 </div>
 
 <!-- Create Room Modal -->
-<div class="modal-overlay" id="create-room-modal">
-  <div class="modal-card">
-    <div class="modal-header">
-      <div class="modal-title">إنشاء غرفة جديدة</div>
-      <button class="close-modal" onclick="closeCreateRoomModal()"><i class="fas fa-times"></i></button>
+<div class="create-modal" id="create-room-modal">
+  <div class="create-card">
+    <div class="create-header">
+      <h3>إنشاء غرفة جديدة</h3>
+      <button class="close-create" onclick="closeCreateRoomModal()"><i class="fas fa-times"></i></button>
     </div>
     <div class="form-group">
       <label class="form-label">اسم الغرفة</label>
@@ -242,23 +242,44 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   </div>
 </div>
 
-<!-- Toast -->
+<!-- Points Transfer Modal -->
+<div class="points-modal" id="points-modal">
+  <div class="points-card">
+    <div class="create-header">
+      <h3>إرسال نقاط</h3>
+      <button class="close-create" onclick="closePointsModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="text-align:center;margin-bottom:16px;">
+      <div style="color:var(--text-secondary-light);font-size:13px;">رصيدك الحالي</div>
+      <div class="points-balance"><span id="user-points">0</span> نقطة</div>
+      <div style="font-size:11px;color:var(--text-secondary-light);">كل 100 نقطة = $2</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">عدد النقاط</label>
+      <input type="number" class="form-input" id="points-amount" placeholder="100" min="1">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn btn-secondary" onclick="closePointsModal()">إلغاء</button>
+      <button class="modal-btn btn-primary" onclick="sendPoints()">إرسال</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
-<!-- Footer -->
 <footer class="footer-glass">
   <nav class="footer-nav">
-    <div class="footer-item" onclick="window.location.href='home.html'"><i class="fas fa-home"></i><span>الرئيسية</span></div>
-    <div class="footer-item" onclick="window.location.href='posts.html'"><i class="fas fa-newspaper"></i><span>المنشورات</span></div>
-    <div class="footer-item" onclick="window.location.href='friends.html'"><i class="fas fa-user-friends"></i><span>الأصدقاء</span></div>
-    <div class="footer-item active" onclick="window.location.href='chat.html'"><i class="fas fa-comment-dots"></i><span>الدردشة</span></div>
-    <div class="footer-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><span>الملف</span></div>
+    <a href="home.html" class="footer-item"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+    <a href="posts.html" class="footer-item"><i class="fas fa-newspaper"></i><span>المنشورات</span></a>
+    <a href="friends.html" class="footer-item"><i class="fas fa-user-friends"></i><span>الأصدقاء</span></a>
+    <a href="chat.html" class="footer-item active"><i class="fas fa-comment-dots"></i><span>الدردشة</span></a>
+    <a href="profile.html" class="footer-item"><i class="fas fa-user"></i><span>الملف</span></a>
   </nav>
 </footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, query, where, getDocs, doc, updateDoc, arrayUnion, serverTimestamp, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, query, where, updateDoc, arrayUnion, serverTimestamp, orderBy, limit, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7Ya_TIQj4_VFnAWydj5Xzq2zFjJsN-a4",
@@ -270,45 +291,42 @@ const firebaseConfig = {
   appId: "1:325594152614:web:cf5fb37660a0c33b5afe67",
   measurementId: "G-9VMJ193S9R"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 if(!currentUser) { window.location.href = 'index.html'; }
 
-let currentChat = null;
-let currentRoomType = 'public';
+document.getElementById('header-avatar').src = currentUser.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentUser.name);
+document.getElementById('header-name').textContent = currentUser.name.split(' ')[0];
 
-// Theme
 window.toggleTheme = function() {
   const html = document.documentElement;
   const current = html.getAttribute('data-theme');
   const next = current === 'light' ? 'dark' : 'light';
   html.setAttribute('data-theme', next);
+  const icon = document.querySelector('.theme-slider i');
+  icon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
   localStorage.setItem('theme', next);
 }
-window.addEventListener('load', () => {
-  const saved = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', saved);
-  loadChats();
-  
-  // Check if opening specific chat
-  const chatWith = localStorage.getItem('chatWith');
-  if(chatWith) {
-    localStorage.removeItem('chatWith');
-    openChat(chatWith);
-  }
-});
 
-// Load Chats/Rooms
+window.showToast = function(msg) {
+  const t = document.getElementById('toast');
+  if(t) { t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+}
+
+let currentChat = null;
+let currentRoomType = 'public';
+let currentRoomId = null;
+
 async function loadChats(tab = 'chats') {
   const container = document.getElementById('chat-list');
   
   if(tab === 'chats') {
-    // Load friends conversations
     const friends = currentUser.friends || [];
     if(friends.length === 0) {
-      container.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-secondary-light)">ابدأ محادثة بإضافة أصدقاء</p>';
+      container.innerHTML = '<p style="padding:40px;text-align:center;color:var(--text-secondary-light)">ابدأ محادثة بإضافة أصدقاء</p>';
       return;
     }
     
@@ -323,26 +341,23 @@ async function loadChats(tab = 'chats') {
     </div>`).join('');
     
   } else if(tab === 'rooms') {
-    // Load rooms
-    const q = query(collection(db, 'rooms'));
-    const snapshot = await getDocs(q);
+    const snapshot = await getDocs(collection(db, 'rooms'));
     
     container.innerHTML = snapshot.docs.map(docSnap => {
       const room = docSnap.data();
       const isPrivate = room.isPrivate;
+      const isMember = room.members?.includes(currentUser.id);
       return `
-      <div class="chat-item" onclick="joinRoom('${docSnap.id}', ${isPrivate})">
+      <div class="chat-item" onclick="joinRoom('${docSnap.id}', ${isPrivate}, '${room.code || ''}')">
         <img src="${room.image || 'https://via.placeholder.com/100'}" class="chat-avatar">
         <div class="chat-info">
           <div class="chat-name">${room.name}</div>
           <div class="chat-last-msg">${room.desc || 'لا يوجد وصف'}</div>
         </div>
-        <span class="${isPrivate ? 'room-badge' : 'chat-badge'}">${isPrivate ? 'خاصة' : 'عامة'}</span>
+        <span class="chat-badge">${isPrivate ? 'خاصة' : 'عامة'}</span>
+        ${isMember ? '<span style="font-size:10px;color:var(--success)">✓ عضو</span>' : ''}
       </div>`;
     }).join('');
-    
-  } else if(tab === 'invites') {
-    container.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-secondary-light)">لا توجد دعوات جديدة</p>';
   }
 }
 
@@ -357,72 +372,192 @@ window.searchChats = function() {
   // Filter logic here
 }
 
-// Open Chat Window
-window.openChat = function(userId) {
+window.openChat = async function(userId) {
   currentChat = { type: 'user', id: userId };
-  document.getElementById('chat-name').textContent = 'صديق';
-  document.getElementById('chat-avatar').src = 'https://ui-avatars.com/api/?name=Friend&background=1a73e8&color=fff';
-  document.getElementById('chat-window').classList.add('active');
-  document.getElementById('back-icon').style.display = 'block';
-  document.getElementById('page-title').textContent = 'محادثة';
-  loadMessages();
+  currentRoomId = null;
+  
+  try {
+    const userDoc = await getDoc(doc(db, 'users', userId));
+    const user = userDoc.data();
+    
+    document.getElementById('chat-name').textContent = user.name;
+    document.getElementById('chat-avatar').src = user.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name);
+    document.getElementById('chat-status').textContent = user.isOnline ? 'متصل الآن' : 'غير متصل';
+    document.getElementById('chat-window').classList.add('active');
+    
+    loadMessages();
+  } catch(error) {
+    showToast('خطأ في فتح المحادثة');
+  }
 }
 
 window.closeChatWindow = function() {
   document.getElementById('chat-window').classList.remove('active');
-  document.getElementById('back-icon').style.display = 'none';
-  document.getElementById('page-title').textContent = 'الدردشة';
   currentChat = null;
+  currentRoomId = null;
 }
 
-// Load Messages
 async function loadMessages() {
   const container = document.getElementById('messages-container');
-  // In production: query messages collection with chatId
-  container.innerHTML = `
-  <div class="message"><img src="${currentUser.avatar}" class="message-avatar"><div class="message-bubble">مرحباً! 👋<div class="message-time">الآن</div></div></div>
-  <div class="message mine"><img src="https://ui-avatars.com/api/?name=Friend" class="message-avatar"><div class="message-bubble">أهلاً وسهلاً! كيف حالك؟<div class="message-time">الآن</div></div></div>
-  `;
-  container.scrollTop = container.scrollHeight;
+  container.innerHTML = '<p style="text-align:center;color:var(--text-secondary-light);padding:20px;">جاري تحميل الرسائل...</p>';
+  
+  try {
+    let q;
+    if(currentChat?.type === 'user') {
+      const chatId = [currentUser.id, currentChat.id].sort().join('_');
+      q = query(collection(db, 'messages'), where('chatId', '==', chatId), orderBy('createdAt', 'asc'));
+    } else if(currentRoomId) {
+      q = query(collection(db, 'messages'), where('roomId', '==', currentRoomId), orderBy('createdAt', 'asc'));
+    }
+    
+    const snapshot = await getDocs(q);
+    
+    if(snapshot.empty) {
+      container.innerHTML = '<p style="text-align:center;color:var(--text-secondary-light);padding:20px;">لا توجد رسائل بعد</p>';
+      return;
+    }
+    
+    container.innerHTML = snapshot.docs.map(docSnap => {
+      const msg = docSnap.data();
+      const isMine = msg.senderId === currentUser.id;
+      return `
+      <div class="message ${isMine ? 'mine' : ''}">
+        <img src="${msg.senderAvatar}" class="message-avatar">
+        <div>
+          <div class="message-bubble">
+            ${msg.image ? `<img src="${msg.image}" class="message-image">` : ''}
+            ${msg.text || ''}
+            <div class="message-time">${msg.createdAt ? new Date(msg.createdAt.seconds * 1000).toLocaleTimeString('ar', {hour:'2-digit', minute:'2-digit'}) : 'الآن'}</div>
+          </div>
+          <div class="message-actions">
+            <span class="message-action" onclick="replyToMessage('${docSnap.id}')"><i class="fas fa-reply"></i> رد</span>
+            ${isMine ? `<span class="message-action" onclick="deleteMessage('${docSnap.id}')"><i class="fas fa-trash"></i></span>` : ''}
+          </div>
+          ${msg.replies?.length > 0 ? `
+            <div class="replies-container">
+              ${msg.replies.map(r => `
+                <div class="reply">
+                  <img src="${r.avatar}" style="width:28px;height:28px;border-radius:50%">
+                  <div class="message-bubble">${r.text}</div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      </div>`;
+    }).join('');
+    
+    container.scrollTop = container.scrollHeight;
+  } catch(error) {
+    console.error(error);
+    container.innerHTML = '<p style="text-align:center;color:#ea4335;padding:20px;">خطأ في تحميل الرسائل</p>';
+  }
 }
 
-// Send Message
-window.sendMessage = function() {
+window.sendMessage = async function() {
   const input = document.getElementById('message-input');
   const text = input.value.trim();
   if(!text || !currentChat) return;
   
-  // Add to UI
-  const container = document.getElementById('messages-container');
-  container.innerHTML += `
-  <div class="message mine"><img src="${currentUser.avatar}" class="message-avatar"><div class="message-bubble">${text}<div class="message-time">الآن</div></div></div>`;
-  
-  // Save to Firebase
-  // await addDoc(collection(db, 'messages'), { ... });
-  
-  input.value = '';
-  container.scrollTop = container.scrollHeight;
+  try {
+    let chatId, roomId;
+    if(currentChat?.type === 'user') {
+      chatId = [currentUser.id, currentChat.id].sort().join('_');
+    } else {
+      roomId = currentRoomId;
+    }
+    
+    await addDoc(collection(db, 'messages'), {
+      chatId: chatId || null,
+      roomId: roomId || null,
+      senderId: currentUser.id,
+      senderName: currentUser.name,
+      senderAvatar: currentUser.avatar,
+      text: text,
+      type: 'text',
+      replies: [],
+      createdAt: serverTimestamp()
+    });
+    
+    input.value = '';
+    loadMessages();
+  } catch(error) {
+    showToast('فشل إرسال الرسالة');
+  }
 }
 
-// Send Image
-window.sendImage = function(e) {
+window.sendImage = async function(e) {
   const file = e.target.files[0];
   if(!file) return;
+  
   const reader = new FileReader();
-  reader.onload = (ev) => {
-    const container = document.getElementById('messages-container');
-    container.innerHTML += `
-    <div class="message mine"><img src="${currentUser.avatar}" class="message-avatar"><div class="message-bubble"><img src="${ev.target.result}" class="message-image"><div class="message-time">الآن</div></div></div>`;
-    container.scrollTop = container.scrollHeight;
+  reader.onload = async (ev) => {
+    try {
+      let chatId, roomId;
+      if(currentChat?.type === 'user') {
+        chatId = [currentUser.id, currentChat.id].sort().join('_');
+      } else {
+        roomId = currentRoomId;
+      }
+      
+      await addDoc(collection(db, 'messages'), {
+        chatId: chatId || null,
+        roomId: roomId || null,
+        senderId: currentUser.id,
+        senderName: currentUser.name,
+        senderAvatar: currentUser.avatar,
+        image: ev.target.result,
+        type: 'image',
+        replies: [],
+        createdAt: serverTimestamp()
+      });
+      
+      loadMessages();
+    } catch(error) {
+      showToast('فشل إرسال الصورة');
+    }
   };
   reader.readAsDataURL(file);
   e.target.value = '';
 }
 
-// Record Voice
-window.recordVoice = function() { showToast('خاصية التسجيل الصوتي قريباً'); }
+window.recordVoice = function() {
+  showToast('خاصية التسجيل الصوتي قريباً');
+}
 
-// Create Room
+window.replyToMessage = async function(messageId) {
+  const text = prompt('اكتب ردك:');
+  if(!text) return;
+  
+  try {
+    const msgRef = doc(db, 'messages', messageId);
+    await updateDoc(msgRef, {
+      replies: arrayUnion({
+        userId: currentUser.id,
+        userName: currentUser.name,
+        avatar: currentUser.avatar,
+        text: text,
+        createdAt: serverTimestamp()
+      })
+    });
+    
+    loadMessages();
+  } catch(error) {
+    showToast('فشل إرسال الرد');
+  }
+}
+
+window.deleteMessage = async function(messageId) {
+  if(confirm('هل تريد حذف هذه الرسالة؟')) {
+    try {
+      await deleteDoc(doc(db, 'messages', messageId));
+      loadMessages();
+    } catch(error) {
+      showToast('فشل الحذف');
+    }
+  }
+}
+
 window.openCreateRoomModal = function() { document.getElementById('create-room-modal').classList.add('active'); }
 window.closeCreateRoomModal = function() { document.getElementById('create-room-modal').classList.remove('active'); }
 
@@ -441,61 +576,180 @@ window.createRoom = async function() {
   
   let imageUrl = '';
   if(imageFile) {
-    // Upload to Firebase Storage in production
     imageUrl = URL.createObjectURL(imageFile);
   }
   
   const roomCode = currentRoomType === 'private' ? Math.random().toString(36).substring(2, 10).toUpperCase() : null;
   
-  await addDoc(collection(db, 'rooms'), {
+  const roomRef = await addDoc(collection(db, 'rooms'), {
     name: name,
     desc: desc,
     image: imageUrl,
     isPrivate: currentRoomType === 'private',
     code: roomCode,
     adminId: currentUser.id,
+    adminName: currentUser.name,
     members: [currentUser.id],
+    pendingRequests: [],
+    banned: [],
     createdAt: serverTimestamp()
   });
   
-  // Save code to user profile if private
+  // ✅ حفظ كود الغرفة في ملف المستخدم
   if(roomCode) {
     await updateDoc(doc(db, 'users', currentUser.id), {
-      roomCodes: arrayUnion({ name: name, code: roomCode })
+      roomCodes: arrayUnion({ name: name, code: roomCode, roomId: roomRef.id })
     });
+    showToast(`تم إنشاء الغرفة! كود الدخول: ${roomCode}`);
+  } else {
+    showToast('تم إنشاء الغرفة العامة ✓');
   }
   
-  showToast(currentRoomType === 'private' ? `تم إنشاء الغرفة! كود الدخول: ${roomCode}` : 'تم إنشاء الغرفة العامة ✓');
   closeCreateRoomModal();
   loadChats('rooms');
   
-  // Reset form
   document.getElementById('room-name').value = '';
   document.getElementById('room-desc').value = '';
   document.getElementById('room-image').value = '';
   selectPrivacy('public', document.querySelector('.privacy-option'));
 }
 
-// Join Room
-window.joinRoom = function(roomId, isPrivate) {
+window.joinRoom = async function(roomId, isPrivate, roomCode) {
   if(isPrivate) {
     const code = prompt('أدخل كود الغرفة:');
-    if(code) {
-      // Verify code in Firebase
+    if(code && code === roomCode) {
+      await updateDoc(doc(db, 'rooms', roomId), {
+        members: arrayUnion(currentUser.id)
+      });
+      currentRoomId = roomId;
+      openRoomChat(roomId);
       showToast('تم الانضمام للغرفة ✓');
+    } else {
+      showToast('كود خاطئ');
     }
   } else {
-    showToast('تم إرسال طلب الانضمام');
+    // ✅ طلب انضمام للغرفة العامة
+    const roomDoc = await getDoc(doc(db, 'rooms', roomId));
+    const room = roomDoc.data();
+    
+    if(room.members?.includes(currentUser.id)) {
+      currentRoomId = roomId;
+      openRoomChat(roomId);
+    } else {
+      await updateDoc(doc(db, 'rooms', roomId), {
+        pendingRequests: arrayUnion({ userId: currentUser.id, userName: currentUser.name, avatar: currentUser.avatar })
+      });
+      
+      // ✅ إشعار لصاحب الغرفة
+      await addDoc(collection(db, 'notifications'), {
+        userId: room.adminId,
+        text: `${currentUser.name} يريد الانضمام لغرفتك ${room.name}`,
+        type: 'room_join_request',
+        roomId: roomId,
+        fromUser: currentUser.id,
+        read: false,
+        createdAt: serverTimestamp()
+      });
+      
+      showToast('تم إرسال طلب الانضمام');
+    }
   }
 }
 
-// Toast
-window.showToast = function(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+function openRoomChat(roomId) {
+  currentRoomId = roomId;
+  getDoc(doc(db, 'rooms', roomId)).then(docSnap => {
+    const room = docSnap.data();
+    document.getElementById('chat-name').textContent = room.name;
+    document.getElementById('chat-avatar').src = room.image || 'https://via.placeholder.com/100';
+    document.getElementById('chat-status').textContent = `${room.members?.length || 0} عضو`;
+    document.getElementById('chat-window').classList.add('active');
+    loadMessages();
+  });
 }
+
+// ✅ Points System
+window.openPointsModal = function() {
+  document.getElementById('user-points').textContent = currentUser.points || 0;
+  document.getElementById('points-modal').classList.add('active');
+}
+
+window.closePointsModal = function() {
+  document.getElementById('points-modal').classList.remove('active');
+}
+
+window.sendPoints = async function() {
+  const amount = parseInt(document.getElementById('points-amount').value);
+  if(!amount || amount <= 0) { showToast('أدخل رقم صحيح'); return; }
+  if(amount > (currentUser.points || 0)) { showToast('رصيدك غير كافي'); return; }
+  
+  try {
+    let targetId;
+    if(currentChat?.type === 'user') {
+      targetId = currentChat.id;
+    } else if(currentRoomId) {
+      targetId = currentRoomId;
+    }
+    
+    // ✅ خصم من المرسل
+    await updateDoc(doc(db, 'users', currentUser.id), {
+      points: (currentUser.points || 0) - amount
+    });
+    
+    // ✅ إضافة للمستقبل
+    if(currentChat?.type === 'user') {
+      await updateDoc(doc(db, 'users', targetId), {
+        points: serverTimestamp()
+      });
+      
+      // ✅ إشعار
+      await addDoc(collection(db, 'notifications'), {
+        userId: targetId,
+        text: `${currentUser.name} أرسل لك ${amount} نقطة`,
+        type: 'points_received',
+        fromUser: currentUser.id,
+        points: amount,
+        read: false,
+        createdAt: serverTimestamp()
+      });
+    }
+    
+    // ✅ سجل العملية
+    await addDoc(collection(db, 'transactions'), {
+      fromUser: currentUser.id,
+      toUser: targetId,
+      amount: amount,
+      type: 'points_transfer',
+      createdAt: serverTimestamp()
+    });
+    
+    currentUser.points = (currentUser.points || 0) - amount;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    showToast(`تم إرسال ${amount} نقطة ✓`);
+    closePointsModal();
+  } catch(error) {
+    showToast('حدث خطأ');
+  }
+}
+
+window.showChatInfo = function() {
+  showToast('معلومات المحادثة قريباً');
+}
+
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  const icon = document.querySelector('.theme-slider i');
+  icon.className = saved === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+  loadChats();
+  
+  const chatWith = localStorage.getItem('chatWith');
+  if(chatWith) {
+    localStorage.removeItem('chatWith');
+    openChat(chatWith);
+  }
+});
 </script>
 </body>
 </html>

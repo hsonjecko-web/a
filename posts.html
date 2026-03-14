@@ -6,90 +6,62 @@
 <title>المنشورات - تطبيقي الاجتماعي</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <style>
-/* Same CSS variables as home.html - copy from above */
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
 :root {
---primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --primary-blue-light: #4a9eff;
---white: #ffffff; --bg-light: #f0f4f8; --bg-dark: #0d1117;
+--primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --white: #ffffff;
+--bg-light: #f0f4f8; --bg-dark: #0d1117;
 --card-light: rgba(255, 255, 255, 0.7); --card-dark: rgba(13, 17, 23, 0.8);
 --border-light: rgba(26, 115, 232, 0.2); --border-dark: rgba(255, 255, 255, 0.1);
 --text-primary-light: #1f2937; --text-secondary-light: #6b7280;
 --text-primary-dark: #f9fafb; --text-secondary-dark: #9ca3af;
---shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.4);
---blur: blur(12px);
+--shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --blur: blur(12px);
 }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
-body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; padding-bottom: 100px; transition: all 0.3s ease; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; padding-bottom: 100px; }
 [data-theme="dark"] body { background: var(--bg-dark); color: var(--text-primary-dark); }
 
-/* Header & Footer - Same as home.html */
 .header { position: sticky; top: 0; z-index: 1000; padding: 12px 20px; background: var(--card-light); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow); }
 [data-theme="dark"] .header { background: var(--card-dark); border-bottom: 1px solid var(--border-dark); box-shadow: var(--shadow-dark); }
 .header-content { display: flex; justify-content: space-between; align-items: center; }
 .user-info { display: flex; align-items: center; gap: 12px; cursor: pointer; }
 .user-avatar { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--primary-blue); object-fit: cover; }
-.user-name { font-weight: 700; font-size: 16px; color: inherit; }
-.header-actions { display: flex; gap: 10px; align-items: center; }
-.theme-toggle { width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; }
+.user-name { font-weight: 700; font-size: 16px; }
+.header-actions { display: flex; gap: 10px; }
+.theme-toggle { width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; position: relative; }
 [data-theme="dark"] .theme-toggle { background: #374151; }
 .theme-slider { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; right: 3px; transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--primary-blue); }
 [data-theme="dark"] .theme-slider { transform: translateX(-22px); color: #374151; }
-.icon-btn { width: 38px; height: 38px; border-radius: 50%; background: transparent; border: 1px solid var(--border-light); color: var(--primary-blue); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-[data-theme="dark"] .icon-btn { border-color: var(--border-dark); color: var(--primary-blue-light); }
 
-/* Posts Page Specific */
-.posts-header { padding: 20px; display: flex; gap: 12px; align-items: center; }
+.posts-header { padding: 15px 20px; display: flex; gap: 10px; }
 .search-box { flex: 1; position: relative; }
-.search-box input { width: 100%; padding: 14px 20px 14px 45px; border: 1px solid var(--border-light); border-radius: 16px; background: var(--card-light); backdrop-filter: var(--blur); font-size: 14px; color: inherit; }
+.search-box input { width: 100%; padding: 14px 20px 14px 45px; border: 1px solid var(--border-light); border-radius: 16px; background: var(--card-light); backdrop-filter: var(--blur); font-size: 14px; }
 [data-theme="dark"] .search-box input { background: var(--card-dark); border-color: var(--border-dark); }
 .search-box i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary-light); }
 .btn-create { padding: 14px 20px; background: var(--primary-blue); color: white; border: none; border-radius: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; }
 .btn-create:hover { background: var(--primary-blue-dark); }
 
-/* Create Post Modal */
-.create-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
-.create-modal.active { display: flex; }
-.create-card { background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 24px; padding: 24px; width: 100%; max-width: 500px; }
-[data-theme="dark"] .create-card { background: var(--card-dark); border-color: var(--border-dark); }
-.create-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.create-header h3 { font-size: 18px; font-weight: 800; color: inherit; }
-.close-create { width: 32px; height: 32px; border-radius: 50%; background: rgba(234,67,53,0.1); border: none; color: #ea4335; cursor: pointer; }
-.create-form textarea { width: 100%; min-height: 120px; padding: 16px; border: 1px solid var(--border-light); border-radius: 16px; background: rgba(255,255,255,0.6); font-size: 14px; color: inherit; resize: none; margin-bottom: 16px; }
-[data-theme="dark"] .create-form textarea { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
-.image-preview { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 16px; }
-.preview-item { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; border: 2px solid var(--primary-blue); }
-.add-image { width: 80px; height: 80px; border-radius: 12px; border: 2px dashed var(--border-light); display: flex; align-items: center; justify-content: center; color: var(--text-secondary-light); cursor: pointer; }
-.add-image:hover { border-color: var(--primary-blue); color: var(--primary-blue); }
-.create-actions { display: flex; gap: 10px; }
-.btn-cancel { flex: 1; padding: 14px; border: 1px solid var(--border-light); border-radius: 12px; background: transparent; color: inherit; font-weight: 700; cursor: pointer; }
-.btn-publish { flex: 1; padding: 14px; border: none; border-radius: 12px; background: var(--primary-blue); color: white; font-weight: 700; cursor: pointer; }
-
-/* Post Card */
 .posts-container { padding: 0 20px; }
 .post-card { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow); }
 [data-theme="dark"] .post-card { background: var(--card-dark); border-color: var(--border-dark); box-shadow: var(--shadow-dark); }
 .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .post-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--primary-blue); }
-.post-author { font-weight: 700; font-size: 14px; color: inherit; }
+.post-author { font-weight: 700; font-size: 14px; }
 .post-time { font-size: 11px; color: var(--text-secondary-light); }
-[data-theme="dark"] .post-time { color: var(--text-secondary-dark); }
-.post-content { color: inherit; line-height: 1.6; font-size: 14px; margin-bottom: 12px; }
+.post-content { line-height: 1.6; font-size: 14px; margin-bottom: 12px; }
 .post-image { width: 100%; border-radius: 12px; margin-bottom: 12px; max-height: 400px; object-fit: cover; }
 .post-actions { display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border-light); }
 [data-theme="dark"] .post-actions { border-color: var(--border-dark); }
-.post-action { display: flex; align-items: center; gap: 5px; color: var(--text-secondary-light); font-size: 13px; cursor: pointer; transition: all 0.3s ease; }
-[data-theme="dark"] .post-action { color: var(--text-secondary-dark); }
+.post-action { display: flex; align-items: center; gap: 5px; color: var(--text-secondary-light); font-size: 13px; cursor: pointer; }
 .post-action:hover, .post-action.active { color: var(--primary-blue); }
 .post-action.liked { color: #ea4335; }
 .post-action.favorited { color: #f59e0b; }
 .post-menu { position: relative; cursor: pointer; }
-.post-dropdown { position: absolute; top: 100%; right: 0; background: var(--card-light); border: 1px solid var(--border-light); border-radius: 12px; padding: 8px 0; min-width: 150px; display: none; z-index: 100; box-shadow: var(--shadow); }
+.post-dropdown { position: absolute; top: 100%; right: 0; background: var(--card-light); border: 1px solid var(--border-light); border-radius: 12px; padding: 8px 0; min-width: 150px; display: none; z-index: 100; }
 [data-theme="dark"] .post-dropdown { background: var(--card-dark); border-color: var(--border-dark); }
 .post-dropdown.show { display: block; }
-.post-dropdown button { width: 100%; padding: 10px 16px; text-align: right; background: none; border: none; color: inherit; font-size: 13px; cursor: pointer; }
+.post-dropdown button { width: 100%; padding: 10px 16px; text-align: right; background: none; border: none; font-size: 13px; cursor: pointer; }
 .post-dropdown button:hover { background: rgba(26,115,232,0.1); }
 
-/* Comments */
 .comments-section { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-light); display: none; }
 [data-theme="dark"] .comments-section { border-color: var(--border-dark); }
 .comments-section.show { display: block; }
@@ -97,29 +69,46 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 .comment-avatar { width: 32px; height: 32px; border-radius: 50%; }
 .comment-content { flex: 1; background: rgba(26,115,232,0.08); border-radius: 12px; padding: 10px 14px; }
 [data-theme="dark"] .comment-content { background: rgba(26,115,232,0.2); }
-.comment-author { font-weight: 700; font-size: 13px; margin-bottom: 4px; color: inherit; }
-.comment-text { font-size: 13px; color: inherit; }
+.comment-author { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+.comment-text { font-size: 13px; }
 .comment-form { display: flex; gap: 10px; margin-top: 12px; }
-.comment-form input { flex: 1; padding: 10px 16px; border: 1px solid var(--border-light); border-radius: 20px; background: rgba(255,255,255,0.6); font-size: 13px; color: inherit; }
+.comment-form input { flex: 1; padding: 10px 16px; border: 1px solid var(--border-light); border-radius: 20px; background: rgba(255,255,255,0.6); font-size: 13px; }
 [data-theme="dark"] .comment-form input { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
 .comment-form button { padding: 10px 20px; background: var(--primary-blue); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; }
 
-/* Footer - Same as home.html */
-.footer-glass { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px 20px 25px; background: var(--card-light); backdrop-filter: var(--blur); border-top: 1px solid var(--border-light); box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000; }
+.create-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.create-modal.active { display: flex; }
+.create-card { background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 24px; padding: 24px; width: 100%; max-width: 500px; }
+[data-theme="dark"] .create-card { background: var(--card-dark); border-color: var(--border-dark); }
+.create-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.create-header h3 { font-size: 18px; font-weight: 800; }
+.close-create { width: 32px; height: 32px; border-radius: 50%; background: rgba(234,67,53,0.1); border: none; color: #ea4335; cursor: pointer; }
+.create-form textarea { width: 100%; min-height: 120px; padding: 16px; border: 1px solid var(--border-light); border-radius: 16px; background: rgba(255,255,255,0.6); font-size: 14px; resize: none; margin-bottom: 16px; }
+[data-theme="dark"] .create-form textarea { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
+.image-preview { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 16px; }
+.preview-item { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; border: 2px solid var(--primary-blue); }
+.add-image { width: 80px; height: 80px; border-radius: 12px; border: 2px dashed var(--border-light); display: flex; align-items: center; justify-content: center; color: var(--text-secondary-light); cursor: pointer; }
+.add-image:hover { border-color: var(--primary-blue); color: var(--primary-blue); }
+.create-actions { display: flex; gap: 10px; }
+.btn-cancel { flex: 1; padding: 14px; border: 1px solid var(--border-light); border-radius: 12px; background: transparent; cursor: pointer; }
+.btn-publish { flex: 1; padding: 14px; border: none; border-radius: 12px; background: var(--primary-blue); color: white; font-weight: 700; cursor: pointer; }
+
+.footer-glass { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px 20px 25px; background: var(--card-light); backdrop-filter: var(--blur); border-top: 1px solid var(--border-light); box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 999; display: flex; justify-content: center; }
 [data-theme="dark"] .footer-glass { background: var(--card-dark); border-color: var(--border-dark); box-shadow: 0 -4px 20px rgba(0,0,0,0.3); }
-.footer-nav { display: flex; justify-content: space-around; align-items: flex-end; max-width: 500px; margin: 0 auto; }
-.footer-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-secondary-light); text-decoration: none; font-size: 11px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 16px; }
+.footer-nav { display: flex; justify-content: space-around; align-items: flex-end; width: 100%; max-width: 500px; }
+.footer-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-secondary-light); text-decoration: none; font-size: 11px; font-weight: 600; padding: 8px 16px; border-radius: 16px; }
 [data-theme="dark"] .footer-item { color: var(--text-secondary-dark); }
 .footer-item i { font-size: 20px; }
 .footer-item.active { color: var(--primary-blue); transform: translateY(-12px); background: var(--white); box-shadow: 0 8px 20px rgba(26, 115, 232, 0.25); }
-[data-theme="dark"] .footer-item.active { color: var(--primary-blue-light); background: rgba(26, 115, 232, 0.2); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; color: inherit; font-weight: 700; z-index: 10000; display: none; }
+[data-theme="dark"] .footer-item.active { color: var(--primary-blue-light); background: rgba(26, 115, 232, 0.2); }
+
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; font-weight: 700; z-index: 10000; display: none; }
 [data-theme="dark"] .toast { background: var(--card-dark); border-color: var(--border-dark); }
 .toast.show { display: block; }
 </style>
 </head>
 <body>
-<!-- Header -->
+
 <header class="header">
   <div class="header-content">
     <div class="user-info" onclick="window.location.href='profile.html'">
@@ -132,7 +121,6 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   </div>
 </header>
 
-<!-- Posts Header -->
 <div class="posts-header">
   <div class="search-box">
     <input type="text" id="search-posts" placeholder="بحث في المنشورات..." onkeyup="searchPosts()">
@@ -141,10 +129,10 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   <button class="btn-create" onclick="openCreateModal()"><i class="fas fa-plus"></i> جديد</button>
 </div>
 
-<!-- Posts Container -->
-<div class="posts-container" id="posts-container"></div>
+<div class="posts-container" id="posts-container">
+  <p style="padding:40px;text-align:center;color:var(--text-secondary-light)">جاري التحميل...</p>
+</div>
 
-<!-- Create Post Modal -->
 <div class="create-modal" id="create-modal">
   <div class="create-card">
     <div class="create-header">
@@ -156,7 +144,7 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
       <div class="image-preview" id="image-preview"></div>
       <label class="add-image" for="post-image">
         <i class="fas fa-image"></i>
-        <input type="file" id="post-image" accept="image/*" multiple style="display:none" onchange="previewImages(event)">
+        <input type="file" id="post-image" accept="image/*" style="display:none" onchange="previewImages(event)">
       </label>
       <div class="create-actions">
         <button type="button" class="btn-cancel" onclick="closeCreateModal()">إلغاء</button>
@@ -166,23 +154,21 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Footer -->
 <footer class="footer-glass">
   <nav class="footer-nav">
-    <div class="footer-item" onclick="window.location.href='home.html'"><i class="fas fa-home"></i><span>الرئيسية</span></div>
-    <div class="footer-item active" onclick="window.location.href='posts.html'"><i class="fas fa-newspaper"></i><span>المنشورات</span></div>
-    <div class="footer-item" onclick="window.location.href='friends.html'"><i class="fas fa-user-friends"></i><span>الأصدقاء</span></div>
-    <div class="footer-item" onclick="window.location.href='chat.html'"><i class="fas fa-comment-dots"></i><span>الدردشة</span></div>
-    <div class="footer-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><span>الملف</span></div>
+    <a href="home.html" class="footer-item"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+    <a href="posts.html" class="footer-item active"><i class="fas fa-newspaper"></i><span>المنشورات</span></a>
+    <a href="friends.html" class="footer-item"><i class="fas fa-user-friends"></i><span>الأصدقاء</span></a>
+    <a href="chat.html" class="footer-item"><i class="fas fa-comment-dots"></i><span>الدردشة</span></a>
+    <a href="profile.html" class="footer-item"><i class="fas fa-user"></i><span>الملف</span></a>
   </nav>
 </footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, query, where, getDocs, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, orderBy, getDocs, doc, updateDoc, arrayUnion, arrayRemove, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7Ya_TIQj4_VFnAWydj5Xzq2zFjJsN-a4",
@@ -194,99 +180,111 @@ const firebaseConfig = {
   appId: "1:325594152614:web:cf5fb37660a0c33b5afe67",
   measurementId: "G-9VMJ193S9R"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 if(!currentUser) { window.location.href = 'index.html'; }
 
-document.getElementById('header-avatar').src = currentUser.avatar;
+document.getElementById('header-avatar').src = currentUser.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentUser.name);
 document.getElementById('header-name').textContent = currentUser.name.split(' ')[0];
 
-// Theme
 window.toggleTheme = function() {
   const html = document.documentElement;
   const current = html.getAttribute('data-theme');
   const next = current === 'light' ? 'dark' : 'light';
   html.setAttribute('data-theme', next);
+  const icon = document.querySelector('.theme-slider i');
+  icon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
   localStorage.setItem('theme', next);
 }
-window.addEventListener('load', () => {
-  const saved = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', saved);
-  loadPosts();
-});
 
-// Load Posts
-async function loadPosts(searchTerm = '') {
+window.showToast = function(msg) {
+  const t = document.getElementById('toast');
+  if(t) { t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+}
+
+async function loadPosts() {
   const container = document.getElementById('posts-container');
-  let q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-  
-  if(searchTerm) {
-    // Note: For real search, use Algolia or Firestore composite indexes
-  }
-  
-  const snapshot = await getDocs(q);
-  container.innerHTML = snapshot.docs.map(docSnap => {
-    const post = docSnap.data();
-    const isOwner = post.userId === currentUser.id;
-    return `
-    <div class="post-card" data-id="${docSnap.id}">
-      <div class="post-header">
-        <img src="${post.userAvatar}" class="post-avatar">
-        <div>
-          <div class="post-author">${post.userName}</div>
-          <div class="post-time">${formatTime(post.createdAt)}</div>
-        </div>
-        ${isOwner ? `<div class="post-menu" onclick="togglePostMenu('${docSnap.id}')">
-          <i class="fas fa-ellipsis-v"></i>
-          <div class="post-dropdown" id="menu-${docSnap.id}">
-            <button onclick="editPost('${docSnap.id}')"><i class="fas fa-edit"></i> تعديل</button>
-            <button onclick="deletePost('${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button>
+  try {
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(q);
+    
+    if(snapshot.empty) {
+      container.innerHTML = '<p style="padding:40px;text-align:center;color:var(--text-secondary-light)">لا توجد منشورات بعد</p>';
+      return;
+    }
+    
+    container.innerHTML = snapshot.docs.map(docSnap => {
+      const post = docSnap.data();
+      const isOwner = post.userId === currentUser.id;
+      const liked = post.likes?.includes(currentUser.id);
+      const favorited = post.favorites?.includes(currentUser.id);
+      
+      return `
+      <div class="post-card" data-id="${docSnap.id}">
+        <div class="post-header">
+          <img src="${post.userAvatar}" class="post-avatar">
+          <div style="flex:1">
+            <div class="post-author">${post.userName}</div>
+            <div class="post-time">${formatTime(post.createdAt)}</div>
           </div>
-        </div>` : ''}
-      </div>
-      <div class="post-content">${post.content}</div>
-      ${post.image ? `<img src="${post.image}" class="post-image" onclick="viewImage('${post.image}')">` : ''}
-      <div class="post-actions">
-        <div class="post-action ${post.likes?.includes(currentUser.id) ? 'liked' : ''}" onclick="toggleLike('${docSnap.id}')">
-          <i class="fas fa-heart"></i><span>${post.likes?.length || 0}</span>
-        </div>
-        <div class="post-action" onclick="toggleComments('${docSnap.id}')">
-          <i class="fas fa-comment"></i><span>${post.comments?.length || 0}</span>
-        </div>
-        <div class="post-action ${post.favorites?.includes(currentUser.id) ? 'favorited' : ''}" onclick="toggleFavorite('${docSnap.id}')">
-          <i class="fas fa-bookmark"></i>
-        </div>
-        <div class="post-action" onclick="sharePost('${docSnap.id}')">
-          <i class="fas fa-share"></i>
-        </div>
-      </div>
-      <div class="comments-section" id="comments-${docSnap.id}">
-        ${post.comments?.map(c => `
-          <div class="comment">
-            <img src="${c.avatar}" class="comment-avatar">
-            <div class="comment-content">
-              <div class="comment-author">${c.userName}</div>
-              <div class="comment-text">${c.text}</div>
+          ${isOwner ? `<div class="post-menu" onclick="togglePostMenu('${docSnap.id}')">
+            <i class="fas fa-ellipsis-v"></i>
+            <div class="post-dropdown" id="menu-${docSnap.id}">
+              <button onclick="editPost('${docSnap.id}')"><i class="fas fa-edit"></i> تعديل</button>
+              <button onclick="deletePost('${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button>
             </div>
+          </div>` : ''}
+        </div>
+        <div class="post-content">${post.content}</div>
+        ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
+        <div class="post-actions">
+          <div class="post-action ${liked ? 'liked' : ''}" onclick="toggleLike('${docSnap.id}')">
+            <i class="fas fa-heart"></i><span>${post.likes?.length || 0}</span>
           </div>
-        `).join('') || ''}
-        <form class="comment-form" onsubmit="addComment(event, '${docSnap.id}')">
-          <input type="text" placeholder="اكتب تعليقاً..." required>
-          <button type="submit">إرسال</button>
-        </form>
-      </div>
-    </div>`;
-  }).join('') || '<p style="text-align:center;padding:40px;color:var(--text-secondary-light)">لا توجد منشورات بعد</p>';
+          <div class="post-action" onclick="toggleComments('${docSnap.id}')">
+            <i class="fas fa-comment"></i><span>${post.comments?.length || 0}</span>
+          </div>
+          <div class="post-action ${favorited ? 'favorited' : ''}" onclick="toggleFavorite('${docSnap.id}')">
+            <i class="fas fa-bookmark"></i>
+          </div>
+          <div class="post-action" onclick="sharePost('${docSnap.id}')">
+            <i class="fas fa-share"></i>
+          </div>
+        </div>
+        <div class="comments-section" id="comments-${docSnap.id}">
+          ${post.comments?.map(c => `
+            <div class="comment">
+              <img src="${c.avatar}" class="comment-avatar">
+              <div class="comment-content">
+                <div class="comment-author">${c.userName}</div>
+                <div class="comment-text">${c.text}</div>
+              </div>
+            </div>
+          `).join('') || ''}
+          <form class="comment-form" onsubmit="addComment(event, '${docSnap.id}')">
+            <input type="text" placeholder="اكتب تعليقاً..." required>
+            <button type="submit">إرسال</button>
+          </form>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(error) {
+    console.error(error);
+    container.innerHTML = '<p style="padding:40px;text-align:center;color:#ea4335">خطأ في التحميل</p>';
+  }
 }
 
 window.searchPosts = function() {
   const term = document.getElementById('search-posts').value.toLowerCase();
-  loadPosts(term);
+  document.querySelectorAll('.post-card').forEach(card => {
+    const content = card.querySelector('.post-content')?.textContent.toLowerCase() || '';
+    card.style.display = content.includes(term) ? 'block' : 'none';
+  });
 }
 
-// Create Post
 window.openCreateModal = function() { document.getElementById('create-modal').classList.add('active'); }
 window.closeCreateModal = function() { 
   document.getElementById('create-modal').classList.remove('active');
@@ -316,7 +314,6 @@ window.createPost = async function(e) {
   
   let imageUrl = '';
   if(imageFile) {
-    // In production: upload to Firebase Storage
     imageUrl = URL.createObjectURL(imageFile);
   }
   
@@ -337,13 +334,13 @@ window.createPost = async function(e) {
   loadPosts();
 }
 
-// Post Actions
 window.toggleLike = async function(postId) {
   const postRef = doc(db, 'posts', postId);
-  const post = (await getDocs(query(collection(db, 'posts'), where('__name__', '==', postId)))).docs[0]?.data();
+  const postDoc = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc')));
+  const post = postDoc.docs.find(d => d.id === postId)?.data();
   
   if(post?.likes?.includes(currentUser.id)) {
-    await updateDoc(postRef, { likes: post.likes.filter(id => id !== currentUser.id) });
+    await updateDoc(postRef, { likes: arrayRemove(currentUser.id) });
   } else {
     await updateDoc(postRef, { likes: arrayUnion(currentUser.id) });
   }
@@ -352,15 +349,17 @@ window.toggleLike = async function(postId) {
 
 window.toggleFavorite = async function(postId) {
   const postRef = doc(db, 'posts', postId);
-  const post = (await getDocs(query(collection(db, 'posts'), where('__name__', '==', postId)))).docs[0]?.data();
+  const postDoc = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc')));
+  const post = postDoc.docs.find(d => d.id === postId)?.data();
   
   if(post?.favorites?.includes(currentUser.id)) {
-    await updateDoc(postRef, { favorites: post.favorites.filter(id => id !== currentUser.id) });
-    showToast('تم الإزالة من المفضلة');
+    await updateDoc(postRef, { favorites: arrayRemove(currentUser.id) });
+    showToast('تمت الإزالة من المفضلة');
   } else {
     await updateDoc(postRef, { favorites: arrayUnion(currentUser.id) });
     showToast('تمت الإضافة للمفضلة ✓');
   }
+  loadPosts();
 }
 
 window.toggleComments = function(postId) {
@@ -406,8 +405,7 @@ window.togglePostMenu = function(id) {
   document.getElementById(`menu-${id}`).classList.toggle('show');
 }
 
-// Utilities
-window.formatTime = function(ts) {
+function formatTime(ts) {
   if(!ts) return '';
   const date = ts.toDate ? ts.toDate() : new Date(ts);
   const now = new Date();
@@ -418,14 +416,14 @@ window.formatTime = function(ts) {
   return `منذ ${Math.floor(diff/86400)} يوم`;
 }
 
-window.showToast = function(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  const icon = document.querySelector('.theme-slider i');
+  icon.className = saved === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+  loadPosts();
+});
 
-// Close dropdowns when clicking outside
 document.addEventListener('click', (e) => {
   if(!e.target.closest('.post-menu')) {
     document.querySelectorAll('.post-dropdown').forEach(d => d.classList.remove('show'));
