@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدردشة - تطبيقي الاجتماعي</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+:root {
+--primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --primary-blue-light: #4a9eff;
+--white: #ffffff; --bg-light: #f0f4f8; --bg-dark: #0d1117;
+--card-light: rgba(255, 255, 255, 0.7); --card-dark: rgba(13, 17, 23, 0.8);
+--border-light: rgba(26, 115, 232, 0.2); --border-dark: rgba(255, 255, 255, 0.1);
+--text-primary-light: #1f2937; --text-secondary-light: #6b7280;
+--text-primary-dark: #f9fafb; --text-secondary-dark: #9ca3af;
+--shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.4);
+--blur: blur(12px); --success: #10b981;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; padding-bottom: 100px; transition: all 0.3s ease; }
+[data-theme="dark"] body { background: var(--bg-dark); color: var(--text-primary-dark); }
+
+/* Header */
+.header { position: sticky; top: 0; z-index: 1000; padding: 12px 20px; background: var(--card-light); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; }
+[data-theme="dark"] .header { background: var(--card-dark); border-bottom: 1px solid var(--border-dark); box-shadow: var(--shadow-dark); }
+.header-title { font-weight: 800; font-size: 18px; color: inherit; display: flex; align-items: center; gap: 10px; }
+.header-title i { color: var(--primary-blue); cursor: pointer; }
+.header-actions { display: flex; gap: 10px; }
+.theme-toggle { width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; }
+[data-theme="dark"] .theme-toggle { background: #374151; }
+.theme-slider { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; right: 3px; transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--primary-blue); }
+[data-theme="dark"] .theme-slider { transform: translateX(-22px); color: #374151; }
+
+/* Search */
+.chat-search { padding: 15px 20px; }
+.search-box { position: relative; }
+.search-box input { width: 100%; padding: 14px 20px 14px 45px; border: 1px solid var(--border-light); border-radius: 16px; background: var(--card-light); backdrop-filter: var(--blur); font-size: 14px; color: inherit; }
+[data-theme="dark"] .search-box input { background: var(--card-dark); border-color: var(--border-dark); }
+.search-box i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary-light); }
+
+/* Tabs */
+.chat-tabs { display: flex; gap: 8px; padding: 0 20px 15px; overflow-x: auto; scrollbar-width: none; }
+.chat-tabs::-webkit-scrollbar { display: none; }
+.tab-btn { padding: 10px 20px; border: none; border-radius: 20px; background: var(--card-light); color: inherit; font-weight: 600; font-size: 13px; cursor: pointer; white-space: nowrap; transition: all 0.3s ease; }
+[data-theme="dark"] .tab-btn { background: var(--card-dark); }
+.tab-btn.active { background: var(--primary-blue); color: white; }
+
+/* Chat List */
+.chat-list { padding: 0 20px; }
+.chat-item { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.3s ease; }
+[data-theme="dark"] .chat-item { background: var(--card-dark); border-color: var(--border-dark); }
+.chat-item:hover { border-color: var(--primary-blue); transform: translateY(-2px); }
+.chat-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--primary-blue); object-fit: cover; }
+.chat-info { flex: 1; min-width: 0; }
+.chat-name { font-weight: 700; font-size: 15px; color: inherit; margin-bottom: 4px; }
+.chat-last-msg { font-size: 12px; color: var(--text-secondary-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+[data-theme="dark"] .chat-last-msg { color: var(--text-secondary-dark); }
+.chat-time { font-size: 11px; color: var(--text-secondary-light); }
+.chat-badge { background: var(--primary-blue); color: white; padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.room-badge { background: rgba(26,115,232,0.1); color: var(--primary-blue); padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+[data-theme="dark"] .room-badge { background: rgba(26,115,232,0.2); color: var(--primary-blue-light); }
+
+/* Create Room */
+.create-room-card { background: var(--card-light); border: 2px dashed var(--border-light); border-radius: 16px; padding: 20px; margin: 0 20px 15px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+[data-theme="dark"] .create-room-card { background: var(--card-dark); border-color: var(--border-dark); }
+.create-room-card:hover { border-color: var(--primary-blue); }
+.create-room-card i { font-size: 24px; color: var(--primary-blue); margin-bottom: 8px; }
+.create-room-card span { font-weight: 600; font-size: 13px; color: inherit; }
+
+/* Chat Window */
+.chat-window { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-light); z-index: 3000; display: none; flex-direction: column; }
+[data-theme="dark"] .chat-window { background: var(--bg-dark); }
+.chat-window.active { display: flex; }
+.chat-window-header { padding: 12px 20px; background: var(--card-light); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 12px; }
+[data-theme="dark"] .chat-window-header { background: var(--card-dark); border-bottom: 1px solid var(--border-dark); }
+.back-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-light); background: transparent; color: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.chat-window-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-blue); }
+.chat-window-info { flex: 1; }
+.chat-window-name { font-weight: 700; font-size: 16px; color: inherit; }
+.chat-window-status { font-size: 11px; color: var(--text-secondary-light); }
+[data-theme="dark"] .chat-window-status { color: var(--text-secondary-dark); }
+.chat-window-actions { display: flex; gap: 8px; }
+.chat-window-actions button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-light); background: transparent; color: var(--primary-blue); cursor: pointer; }
+[data-theme="dark"] .chat-window-actions button { border-color: var(--border-dark); color: var(--primary-blue-light); }
+
+/* Messages */
+.messages-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.message { display: flex; gap: 10px; max-width: 80%; }
+.message.mine { margin-right: auto; flex-direction: row-reverse; }
+.message-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.message-bubble { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
+.message.mine .message-bubble { background: var(--primary-blue); color: white; border-bottom-left-radius: 4px; }
+.message:not(.mine) .message-bubble { background: var(--card-light); border: 1px solid var(--border-light); border-bottom-right-radius: 4px; color: inherit; }
+[data-theme="dark"] .message:not(.mine) .message-bubble { background: var(--card-dark); border-color: var(--border-dark); }
+.message-time { font-size: 10px; opacity: 0.7; margin-top: 4px; text-align: right; }
+.message-image { max-width: 200px; border-radius: 12px; margin-top: 8px; }
+
+/* Input Area */
+.chat-input-area { padding: 12px 20px; background: var(--card-light); border-top: 1px solid var(--border-light); display: flex; gap: 10px; align-items: center; }
+[data-theme="dark"] .chat-input-area { background: var(--card-dark); border-top: 1px solid var(--border-dark); }
+.input-actions { display: flex; gap: 8px; }
+.input-actions button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-light); background: transparent; color: var(--primary-blue); cursor: pointer; }
+[data-theme="dark"] .input-actions button { border-color: var(--border-dark); color: var(--primary-blue-light); }
+.message-input { flex: 1; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 24px; background: rgba(255,255,255,0.6); font-size: 14px; color: inherit; }
+[data-theme="dark"] .message-input { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
+.send-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--primary-blue); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+/* Create Room Modal */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.active { display: flex; }
+.modal-card { background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 24px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 25px 50px rgba(0,0,0,0.25); }
+[data-theme="dark"] .modal-card { background: var(--card-dark); border-color: var(--border-dark); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-title { font-size: 18px; font-weight: 800; color: inherit; }
+.close-modal { width: 32px; height: 32px; border-radius: 50%; background: rgba(234,67,53,0.1); border: none; color: #ea4335; cursor: pointer; }
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: inherit; }
+.form-input, .form-textarea, .form-select { width: 100%; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.6); font-size: 14px; color: inherit; }
+[data-theme="dark"] .form-input, .form-textarea, .form-select { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
+.form-textarea { min-height: 80px; resize: none; }
+.privacy-options { display: flex; gap: 10px; margin-top: 8px; }
+.privacy-option { flex: 1; padding: 10px; border: 1px solid var(--border-light); border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; transition: all 0.3s ease; }
+[data-theme="dark"] .privacy-option { border-color: var(--border-dark); }
+.privacy-option.active { border-color: var(--primary-blue); background: rgba(26,115,232,0.1); font-weight: 700; }
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+.modal-btn { flex: 1; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; border: none; font-size: 14px; }
+.btn-primary { background: var(--primary-blue); color: white; }
+.btn-secondary { background: transparent; color: inherit; border: 1px solid var(--border-light); }
+
+/* Footer */
+.footer-glass { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px 20px 25px; background: var(--card-light); backdrop-filter: var(--blur); border-top: 1px solid var(--border-light); box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000; }
+[data-theme="dark"] .footer-glass { background: var(--card-dark); border-color: var(--border-dark); box-shadow: 0 -4px 20px rgba(0,0,0,0.3); }
+.footer-nav { display: flex; justify-content: space-around; align-items: flex-end; max-width: 500px; margin: 0 auto; }
+.footer-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-secondary-light); text-decoration: none; font-size: 11px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+[data-theme="dark"] .footer-item { color: var(--text-secondary-dark); }
+.footer-item i { font-size: 20px; }
+.footer-item.active { color: var(--primary-blue); transform: translateY(-12px); background: var(--white); box-shadow: 0 8px 20px rgba(26, 115, 232, 0.25); }
+[data-theme="dark"] .footer-item.active { color: var(--primary-blue-light); background: rgba(26, 115, 232, 0.2); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+
+/* Toast */
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; color: inherit; font-weight: 700; z-index: 10000; display: none; }
+[data-theme="dark"] .toast { background: var(--card-dark); border-color: var(--border-dark); }
+.toast.show { display: block; }
+</style>
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+  <div class="header-title">
+    <i class="fas fa-arrow-right" onclick="window.history.back()" style="display:none" id="back-icon"></i>
+    <span id="page-title">الدردشة</span>
+  </div>
+  <div class="header-actions">
+    <div class="theme-toggle" onclick="toggleTheme()"><div class="theme-slider"><i class="fas fa-sun"></i></div></div>
+  </div>
+</header>
+
+<!-- Search -->
+<div class="chat-search">
+  <div class="search-box">
+    <input type="text" id="chat-search" placeholder="بحث عن صديق أو غرفة..." onkeyup="searchChats()">
+    <i class="fas fa-search"></i>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="chat-tabs">
+  <button class="tab-btn active" onclick="switchTab('chats')">المحادثات</button>
+  <button class="tab-btn" onclick="switchTab('rooms')">الغرف</button>
+  <button class="tab-btn" onclick="switchTab('invites')">الدعوات</button>
+</div>
+
+<!-- Chat List -->
+<div class="chat-list" id="chat-list"></div>
+
+<!-- Create Room Card -->
+<div class="create-room-card" onclick="openCreateRoomModal()">
+  <i class="fas fa-plus-circle"></i>
+  <span>إنشاء غرفة جديدة</span>
+</div>
+
+<!-- Chat Window -->
+<div class="chat-window" id="chat-window">
+  <div class="chat-window-header">
+    <button class="back-btn" onclick="closeChatWindow()"><i class="fas fa-arrow-right"></i></button>
+    <img src="" class="chat-window-avatar" id="chat-avatar">
+    <div class="chat-window-info">
+      <div class="chat-window-name" id="chat-name">...</div>
+      <div class="chat-window-status" id="chat-status">متصل الآن</div>
+    </div>
+    <div class="chat-window-actions">
+      <button onclick="showToast('مكالمة صوتية')"><i class="fas fa-phone"></i></button>
+      <button onclick="showToast('مكالمة فيديو')"><i class="fas fa-video"></i></button>
+      <button onclick="showToast('معلومات')"><i class="fas fa-info-circle"></i></button>
+    </div>
+  </div>
+  
+  <div class="messages-container" id="messages-container"></div>
+  
+  <div class="chat-input-area">
+    <div class="input-actions">
+      <button onclick="document.getElementById('msg-image').click()"><i class="fas fa-image"></i></button>
+      <button onclick="recordVoice()"><i class="fas fa-microphone"></i></button>
+      <input type="file" id="msg-image" accept="image/*" style="display:none" onchange="sendImage(event)">
+    </div>
+    <input type="text" class="message-input" id="message-input" placeholder="اكتب رسالة..." onkeypress="if(event.key==='Enter')sendMessage()">
+    <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- Create Room Modal -->
+<div class="modal-overlay" id="create-room-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">إنشاء غرفة جديدة</div>
+      <button class="close-modal" onclick="closeCreateRoomModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">اسم الغرفة</label>
+      <input type="text" class="form-input" id="room-name" placeholder="مثال: مجلس القرآن">
+    </div>
+    <div class="form-group">
+      <label class="form-label">صورة الغرفة</label>
+      <input type="file" class="form-input" id="room-image" accept="image/*">
+    </div>
+    <div class="form-group">
+      <label class="form-label">نبذة عن الغرفة</label>
+      <textarea class="form-textarea" id="room-desc" placeholder="وصف مختصر..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">نوع الغرفة</label>
+      <div class="privacy-options">
+        <div class="privacy-option active" onclick="selectPrivacy('public', this)">🌍 عامة</div>
+        <div class="privacy-option" onclick="selectPrivacy('private', this)">🔐 خاصة</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn btn-secondary" onclick="closeCreateRoomModal()">إلغاء</button>
+      <button class="modal-btn btn-primary" onclick="createRoom()">إنشاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Footer -->
+<footer class="footer-glass">
+  <nav class="footer-nav">
+    <div class="footer-item" onclick="window.location.href='home.html'"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+    <div class="footer-item" onclick="window.location.href='posts.html'"><i class="fas fa-newspaper"></i><span>المنشورات</span></div>
+    <div class="footer-item" onclick="window.location.href='friends.html'"><i class="fas fa-user-friends"></i><span>الأصدقاء</span></div>
+    <div class="footer-item active" onclick="window.location.href='chat.html'"><i class="fas fa-comment-dots"></i><span>الدردشة</span></div>
+    <div class="footer-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><span>الملف</span></div>
+  </nav>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, query, where, getDocs, doc, updateDoc, arrayUnion, serverTimestamp, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD7Ya_TIQj4_VFnAWydj5Xzq2zFjJsN-a4",
+  authDomain: "cahtai.firebaseapp.com",
+  databaseURL: "https://cahtai-default-rtdb.firebaseio.com",
+  projectId: "cahtai",
+  storageBucket: "cahtai.firebasestorage.app",
+  messagingSenderId: "325594152614",
+  appId: "1:325594152614:web:cf5fb37660a0c33b5afe67",
+  measurementId: "G-9VMJ193S9R"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+if(!currentUser) { window.location.href = 'index.html'; }
+
+let currentChat = null;
+let currentRoomType = 'public';
+
+// Theme
+window.toggleTheme = function() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+}
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  loadChats();
+  
+  // Check if opening specific chat
+  const chatWith = localStorage.getItem('chatWith');
+  if(chatWith) {
+    localStorage.removeItem('chatWith');
+    openChat(chatWith);
+  }
+});
+
+// Load Chats/Rooms
+async function loadChats(tab = 'chats') {
+  const container = document.getElementById('chat-list');
+  
+  if(tab === 'chats') {
+    // Load friends conversations
+    const friends = currentUser.friends || [];
+    if(friends.length === 0) {
+      container.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-secondary-light)">ابدأ محادثة بإضافة أصدقاء</p>';
+      return;
+    }
+    
+    container.innerHTML = friends.map(friendId => `
+    <div class="chat-item" onclick="openChat('${friendId}')">
+      <img src="https://ui-avatars.com/api/?name=Friend&background=1a73e8&color=fff" class="chat-avatar">
+      <div class="chat-info">
+        <div class="chat-name">صديق</div>
+        <div class="chat-last-msg">اضغط لبدء المحادثة...</div>
+      </div>
+      <div class="chat-time">الآن</div>
+    </div>`).join('');
+    
+  } else if(tab === 'rooms') {
+    // Load rooms
+    const q = query(collection(db, 'rooms'));
+    const snapshot = await getDocs(q);
+    
+    container.innerHTML = snapshot.docs.map(docSnap => {
+      const room = docSnap.data();
+      const isPrivate = room.isPrivate;
+      return `
+      <div class="chat-item" onclick="joinRoom('${docSnap.id}', ${isPrivate})">
+        <img src="${room.image || 'https://via.placeholder.com/100'}" class="chat-avatar">
+        <div class="chat-info">
+          <div class="chat-name">${room.name}</div>
+          <div class="chat-last-msg">${room.desc || 'لا يوجد وصف'}</div>
+        </div>
+        <span class="${isPrivate ? 'room-badge' : 'chat-badge'}">${isPrivate ? 'خاصة' : 'عامة'}</span>
+      </div>`;
+    }).join('');
+    
+  } else if(tab === 'invites') {
+    container.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-secondary-light)">لا توجد دعوات جديدة</p>';
+  }
+}
+
+window.switchTab = function(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  loadChats(tab);
+}
+
+window.searchChats = function() {
+  const term = document.getElementById('chat-search').value.toLowerCase();
+  // Filter logic here
+}
+
+// Open Chat Window
+window.openChat = function(userId) {
+  currentChat = { type: 'user', id: userId };
+  document.getElementById('chat-name').textContent = 'صديق';
+  document.getElementById('chat-avatar').src = 'https://ui-avatars.com/api/?name=Friend&background=1a73e8&color=fff';
+  document.getElementById('chat-window').classList.add('active');
+  document.getElementById('back-icon').style.display = 'block';
+  document.getElementById('page-title').textContent = 'محادثة';
+  loadMessages();
+}
+
+window.closeChatWindow = function() {
+  document.getElementById('chat-window').classList.remove('active');
+  document.getElementById('back-icon').style.display = 'none';
+  document.getElementById('page-title').textContent = 'الدردشة';
+  currentChat = null;
+}
+
+// Load Messages
+async function loadMessages() {
+  const container = document.getElementById('messages-container');
+  // In production: query messages collection with chatId
+  container.innerHTML = `
+  <div class="message"><img src="${currentUser.avatar}" class="message-avatar"><div class="message-bubble">مرحباً! 👋<div class="message-time">الآن</div></div></div>
+  <div class="message mine"><img src="https://ui-avatars.com/api/?name=Friend" class="message-avatar"><div class="message-bubble">أهلاً وسهلاً! كيف حالك؟<div class="message-time">الآن</div></div></div>
+  `;
+  container.scrollTop = container.scrollHeight;
+}
+
+// Send Message
+window.sendMessage = function() {
+  const input = document.getElementById('message-input');
+  const text = input.value.trim();
+  if(!text || !currentChat) return;
+  
+  // Add to UI
+  const container = document.getElementById('messages-container');
+  container.innerHTML += `
+  <div class="message mine"><img src="${currentUser.avatar}" class="message-avatar"><div class="message-bubble">${text}<div class="message-time">الآن</div></div></div>`;
+  
+  // Save to Firebase
+  // await addDoc(collection(db, 'messages'), { ... });
+  
+  input.value = '';
+  container.scrollTop = container.scrollHeight;
+}
+
+// Send Image
+window.sendImage = function(e) {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const container = document.getElementById('messages-container');
+    container.innerHTML += `
+    <div class="message mine"><img src="${currentUser.avatar}" class="message-avatar"><div class="message-bubble"><img src="${ev.target.result}" class="message-image"><div class="message-time">الآن</div></div></div>`;
+    container.scrollTop = container.scrollHeight;
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+}
+
+// Record Voice
+window.recordVoice = function() { showToast('خاصية التسجيل الصوتي قريباً'); }
+
+// Create Room
+window.openCreateRoomModal = function() { document.getElementById('create-room-modal').classList.add('active'); }
+window.closeCreateRoomModal = function() { document.getElementById('create-room-modal').classList.remove('active'); }
+
+window.selectPrivacy = function(type, el) {
+  currentRoomType = type;
+  document.querySelectorAll('.privacy-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+}
+
+window.createRoom = async function() {
+  const name = document.getElementById('room-name').value.trim();
+  const desc = document.getElementById('room-desc').value.trim();
+  const imageFile = document.getElementById('room-image').files[0];
+  
+  if(!name) { showToast('يرجى إدخال اسم الغرفة'); return; }
+  
+  let imageUrl = '';
+  if(imageFile) {
+    // Upload to Firebase Storage in production
+    imageUrl = URL.createObjectURL(imageFile);
+  }
+  
+  const roomCode = currentRoomType === 'private' ? Math.random().toString(36).substring(2, 10).toUpperCase() : null;
+  
+  await addDoc(collection(db, 'rooms'), {
+    name: name,
+    desc: desc,
+    image: imageUrl,
+    isPrivate: currentRoomType === 'private',
+    code: roomCode,
+    adminId: currentUser.id,
+    members: [currentUser.id],
+    createdAt: serverTimestamp()
+  });
+  
+  // Save code to user profile if private
+  if(roomCode) {
+    await updateDoc(doc(db, 'users', currentUser.id), {
+      roomCodes: arrayUnion({ name: name, code: roomCode })
+    });
+  }
+  
+  showToast(currentRoomType === 'private' ? `تم إنشاء الغرفة! كود الدخول: ${roomCode}` : 'تم إنشاء الغرفة العامة ✓');
+  closeCreateRoomModal();
+  loadChats('rooms');
+  
+  // Reset form
+  document.getElementById('room-name').value = '';
+  document.getElementById('room-desc').value = '';
+  document.getElementById('room-image').value = '';
+  selectPrivacy('public', document.querySelector('.privacy-option'));
+}
+
+// Join Room
+window.joinRoom = function(roomId, isPrivate) {
+  if(isPrivate) {
+    const code = prompt('أدخل كود الغرفة:');
+    if(code) {
+      // Verify code in Firebase
+      showToast('تم الانضمام للغرفة ✓');
+    }
+  } else {
+    showToast('تم إرسال طلب الانضمام');
+  }
+}
+
+// Toast
+window.showToast = function(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+</script>
+</body>
+</html>

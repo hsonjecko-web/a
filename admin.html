@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم - تطبيقي الاجتماعي</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+:root {
+--primary-blue: #1a73e8; --primary-blue-dark: #1557b0; --primary-blue-light: #4a9eff;
+--white: #ffffff; --bg-light: #f0f4f8; --bg-dark: #0d1117;
+--card-light: rgba(255, 255, 255, 0.7); --card-dark: rgba(13, 17, 23, 0.8);
+--border-light: rgba(26, 115, 232, 0.2); --border-dark: rgba(255, 255, 255, 0.1);
+--text-primary-light: #1f2937; --text-secondary-light: #6b7280;
+--text-primary-dark: #f9fafb; --text-secondary-dark: #9ca3af;
+--shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.4);
+--blur: blur(12px); --success: #10b981; --warning: #f59e0b; --danger: #ea4335;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; transition: all 0.3s ease; }
+[data-theme="dark"] body { background: var(--bg-dark); color: var(--text-primary-dark); }
+
+/* Header */
+.admin-header { position: sticky; top: 0; z-index: 1000; padding: 12px 20px; background: var(--card-light); backdrop-filter: var(--blur); border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; }
+[data-theme="dark"] .admin-header { background: var(--card-dark); border-bottom: 1px solid var(--border-dark); box-shadow: var(--shadow-dark); }
+.admin-title { font-weight: 800; font-size: 18px; color: inherit; display: flex; align-items: center; gap: 10px; }
+.admin-title i { color: var(--danger); }
+.header-actions { display: flex; gap: 10px; }
+.theme-toggle { width: 48px; height: 26px; background: var(--primary-blue); border-radius: 13px; cursor: pointer; padding: 3px; }
+[data-theme="dark"] .theme-toggle { background: #374151; }
+.theme-slider { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; right: 3px; transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--primary-blue); }
+[data-theme="dark"] .theme-slider { transform: translateX(-22px); color: #374151; }
+.logout-btn { padding: 10px 20px; background: var(--danger); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; }
+
+/* Stats Grid */
+.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
+.stat-card { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+[data-theme="dark"] .stat-card { background: var(--card-dark); border-color: var(--border-dark); box-shadow: var(--shadow-dark); }
+.stat-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(26,115,232,0.1); display: flex; align-items: center; justify-content: center; color: var(--primary-blue); font-size: 20px; margin-bottom: 12px; }
+[data-theme="dark"] .stat-icon { background: rgba(26,115,232,0.2); color: var(--primary-blue-light); }
+.stat-value { font-size: 24px; font-weight: 800; color: inherit; margin-bottom: 4px; }
+.stat-label { font-size: 12px; color: var(--text-secondary-light); }
+[data-theme="dark"] .stat-label { color: var(--text-secondary-dark); }
+
+/* Admin Sections */
+.admin-section { padding: 0 20px 20px; }
+.section-card { background: var(--card-light); backdrop-filter: var(--blur); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; margin-bottom: 15px; box-shadow: var(--shadow); }
+[data-theme="dark"] .section-card { background: var(--card-dark); border-color: var(--border-dark); box-shadow: var(--shadow-dark); }
+.section-title { font-size: 16px; font-weight: 800; color: inherit; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.section-title i { color: var(--primary-blue); }
+
+/* Form Styles */
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: inherit; }
+.form-input, .form-textarea, .form-select { width: 100%; padding: 12px 16px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.6); font-size: 14px; color: inherit; }
+[data-theme="dark"] .form-input, .form-textarea, .form-select { background: rgba(255,255,255,0.1); border-color: var(--border-dark); }
+.form-textarea { min-height: 80px; resize: none; }
+.btn-primary { width: 100%; padding: 14px; border: none; border-radius: 12px; background: var(--primary-blue); color: white; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.3s ease; }
+.btn-primary:hover { background: var(--primary-blue-dark); }
+
+/* Users Table */
+.table-container { overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; }
+.admin-table th { text-align: right; padding: 12px; font-size: 12px; font-weight: 700; color: var(--text-secondary-light); border-bottom: 1px solid var(--border-light); }
+[data-theme="dark"] .admin-table th { color: var(--text-secondary-dark); border-color: var(--border-dark); }
+.admin-table td { padding: 12px; font-size: 13px; color: inherit; border-bottom: 1px solid var(--border-light); }
+[data-theme="dark"] .admin-table td { border-color: var(--border-dark); }
+.admin-table tr:hover { background: rgba(26,115,232,0.05); }
+[data-theme="dark"] .admin-table tr:hover { background: rgba(26,115,232,0.1); }
+.user-avatar-sm { width: 32px; height: 32px; border-radius: 50%; vertical-align: middle; margin-left: 8px; }
+.action-btn { padding: 6px 12px; border: none; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; margin: 2px; }
+.btn-ban { background: rgba(234,67,53,0.1); color: var(--danger); }
+.btn-ban:hover { background: var(--danger); color: white; }
+.btn-delete { background: rgba(234,67,53,0.1); color: var(--danger); }
+.btn-delete:hover { background: var(--danger); color: white; }
+
+/* Slider Preview */
+.slider-preview { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; }
+.slide-preview { min-width: 120px; height: 70px; border-radius: 10px; overflow: hidden; position: relative; }
+.slide-preview img { width: 100%; height: 100%; object-fit: cover; }
+.slide-preview .remove { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; border-radius: 50%; background: var(--danger); color: white; border: none; font-size: 10px; cursor: pointer; }
+
+/* Notifications */
+.notify-options { display: flex; gap: 8px; margin-bottom: 12px; }
+.notify-option { flex: 1; padding: 10px; border: 1px solid var(--border-light); border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; }
+[data-theme="dark"] .notify-option { border-color: var(--border-dark); }
+.notify-option.active { border-color: var(--primary-blue); background: rgba(26,115,232,0.1); font-weight: 700; }
+
+/* Toast */
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px 24px; color: inherit; font-weight: 700; z-index: 10000; display: none; }
+[data-theme="dark"] .toast { background: var(--card-dark); border-color: var(--border-dark); }
+.toast.show { display: block; }
+
+/* Responsive */
+@media (min-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+}
+</style>
+</head>
+<body>
+<!-- Header -->
+<header class="admin-header">
+  <div class="admin-title"><i class="fas fa-shield-alt"></i> لوحة التحكم</div>
+  <div class="header-actions">
+    <div class="theme-toggle" onclick="toggleTheme()"><div class="theme-slider"><i class="fas fa-sun"></i></div></div>
+    <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+  </div>
+</header>
+
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fas fa-users"></i></div>
+    <div class="stat-value" id="stat-users">0</div>
+    <div class="stat-label">المسجلون</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fas fa-comments"></i></div>
+    <div class="stat-value" id="stat-rooms">0</div>
+    <div class="stat-label">الغرف</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fas fa-newspaper"></i></div>
+    <div class="stat-value" id="stat-posts">0</div>
+    <div class="stat-label">المنشورات</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fas fa-video"></i></div>
+    <div class="stat-value" id="stat-videos">0</div>
+    <div class="stat-label">المقاطع</div>
+  </div>
+</div>
+
+<!-- Slider Management -->
+<div class="admin-section">
+  <div class="section-card">
+    <h3 class="section-title"><i class="fas fa-images"></i> إدارة شريط الصور</h3>
+    <div class="slider-preview" id="slider-preview"></div>
+    <div class="form-group">
+      <label class="form-label">إضافة صورة جديدة</label>
+      <input type="file" class="form-input" id="slider-image" accept="image/*" onchange="previewSliderImage(event)">
+    </div>
+    <div class="form-group">
+      <label class="form-label">عنوان الشريحة</label>
+      <input type="text" class="form-input" id="slide-title" placeholder="مثال: رمضان كريم">
+    </div>
+    <div class="form-group">
+      <label class="form-label">نص الشريحة</label>
+      <input type="text" class="form-input" id="slide-text" placeholder="وصف مختصر">
+    </div>
+    <button class="btn-primary" onclick="addSlide()"><i class="fas fa-plus"></i> إضافة للشريط</button>
+  </div>
+</div>
+
+<!-- News Management -->
+<div class="admin-section">
+  <div class="section-card">
+    <h3 class="section-title"><i class="fas fa-bullhorn"></i> شريط الأخبار</h3>
+    <div class="form-group">
+      <label class="form-label">نص الخبر العاجل</label>
+      <textarea class="form-textarea" id="news-text" placeholder="اكتب خبراً عاجلاً..."></textarea>
+    </div>
+    <button class="btn-primary" onclick="updateNews()"><i class="fas fa-save"></i> تحديث الأخبار</button>
+  </div>
+</div>
+
+<!-- Users Management -->
+<div class="admin-section">
+  <div class="section-card">
+    <h3 class="section-title"><i class="fas fa-user-cog"></i> إدارة المستخدمين</h3>
+    <div class="table-container">
+      <table class="admin-table">
+        <thead><tr><th>المستخدم</th><th>الدولة</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+        <tbody id="users-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Rooms Management -->
+<div class="admin-section">
+  <div class="section-card">
+    <h3 class="section-title"><i class="fas fa-door-open"></i> إدارة الغرف</h3>
+    <div class="table-container">
+      <table class="admin-table">
+        <thead><tr><th>الغرفة</th><th>النوع</th><th>الأعضاء</th><th>إجراءات</th></tr></thead>
+        <tbody id="rooms-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Content Management -->
+<div class="admin-section">
+  <div class="section-card">
+    <h3 class="section-title"><i class="fas fa-book"></i> إضافة محتوى للمكتبة</h3>
+    <div class="form-group">
+      <label class="form-label">عنوان المحتوى</label>
+      <input type="text" class="form-input" id="lib-title" placeholder="مثال: صحيح البخاري">
+    </div>
+    <div class="form-group">
+      <label class="form-label">الأيقونة</label>
+      <select class="form-select" id="lib-icon">
+        <option value="📖">📖 كتاب</option>
+        <option value="📚">📚 مكتبة</option>
+        <option value="🤲">🤲 دعاء</option>
+        <option value="🙏">🙏 ذكر</option>
+        <option value="⚖️">⚖️ فتوى</option>
+        <option value="🌟">🌟 سيرة</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="addLibraryItem()"><i class="fas fa-plus"></i> إضافة للمكتبة</button>
+  </div>
+</div>
+
+<!-- Notifications -->
+<div class="admin-section">
+  <div class="section-card">
+    <h3 class="section-title"><i class="fas fa-bell"></i> إرسال إشعار</h3>
+    <div class="notify-options">
+      <div class="notify-option active" onclick="selectNotifyTarget('all', this)">🌍 للجميع</div>
+      <div class="notify-option" onclick="selectNotifyTarget('user', this)">👤 لمستخدم</div>
+      <div class="notify-option" onclick="selectNotifyTarget('room', this)">🚪 لغرفة</div>
+    </div>
+    <div class="form-group" id="notify-user-select" style="display:none">
+      <label class="form-label">اختر المستخدم</label>
+      <select class="form-select" id="notify-user-id"></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">نص الإشعار</label>
+      <textarea class="form-textarea" id="notify-text" placeholder="اكتب رسالة الإشعار..."></textarea>
+    </div>
+    <button class="btn-primary" onclick="sendNotification()"><i class="fas fa-paper-plane"></i> إرسال الإشعار</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD7Ya_TIQj4_VFnAWydj5Xzq2zFjJsN-a4",
+  authDomain: "cahtai.firebaseapp.com",
+  databaseURL: "https://cahtai-default-rtdb.firebaseio.com",
+  projectId: "cahtai",
+  storageBucket: "cahtai.firebasestorage.app",
+  messagingSenderId: "325594152614",
+  appId: "1:325594152614:web:cf5fb37660a0c33b5afe67",
+  measurementId: "G-9VMJ193S9R"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Check admin auth
+const admin = JSON.parse(localStorage.getItem('currentUser'));
+if(!admin || !admin.isAdmin) { window.location.href = 'index.html'; }
+
+// Theme
+window.toggleTheme = function() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+}
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  loadStats();
+  loadUsers();
+  loadRooms();
+});
+
+// Load Stats
+async function loadStats() {
+  const usersSnap = await getDocs(collection(db, 'users'));
+  const roomsSnap = await getDocs(collection(db, 'rooms'));
+  const postsSnap = await getDocs(collection(db, 'posts'));
+  const videosSnap = await getDocs(collection(db, 'videos'));
+  
+  document.getElementById('stat-users').textContent = usersSnap.size;
+  document.getElementById('stat-rooms').textContent = roomsSnap.size;
+  document.getElementById('stat-posts').textContent = postsSnap.size;
+  document.getElementById('stat-videos').textContent = videosSnap.size;
+}
+
+// Load Users Table
+async function loadUsers() {
+  const tbody = document.getElementById('users-table');
+  const snapshot = await getDocs(collection(db, 'users'));
+  
+  tbody.innerHTML = snapshot.docs.map(docSnap => {
+    const user = docSnap.data();
+    return `
+    <tr>
+      <td><img src="${user.avatar}" class="user-avatar-sm">${user.name}<br><small style="color:var(--text-secondary-light)">${user.username}</small></td>
+      <td>${user.countryFlag || '🌍'} ${user.country || ''}</td>
+      <td><span style="color:${user.isBanned ? 'var(--danger)' : 'var(--success)'}">${user.isBanned ? 'محظور' : 'نشط'}</span></td>
+      <td>
+        <button class="action-btn btn-ban" onclick="toggleBan('${docSnap.id}', ${!user.isBanned})">${user.isBanned ? 'فك الحظر' : 'حظر'}</button>
+        <button class="action-btn btn-delete" onclick="deleteUser('${docSnap.id}')"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// Load Rooms Table
+async function loadRooms() {
+  const tbody = document.getElementById('rooms-table');
+  const snapshot = await getDocs(collection(db, 'rooms'));
+  
+  tbody.innerHTML = snapshot.docs.map(docSnap => {
+    const room = docSnap.data();
+    return `
+    <tr>
+      <td>${room.name}</td>
+      <td><span class="${room.isPrivate ? 'room-badge' : 'chat-badge'}" style="font-size:10px">${room.isPrivate ? 'خاصة' : 'عامة'}</span></td>
+      <td>${room.members?.length || 0}</td>
+      <td>
+        <button class="action-btn btn-ban" onclick="toggleRoom('${docSnap.id}')">${room.isBanned ? 'تفعيل' : 'تعطيل'}</button>
+        <button class="action-btn btn-delete" onclick="deleteRoom('${docSnap.id}')"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// Slider Management
+window.previewSliderImage = function(e) {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const preview = document.getElementById('slider-preview');
+    preview.innerHTML += `
+    <div class="slide-preview">
+      <img src="${ev.target.result}">
+      <button class="remove" onclick="this.parentElement.remove()">×</button>
+    </div>`;
+  };
+  reader.readAsDataURL(file);
+}
+
+window.addSlide = async function() {
+  const imageFile = document.getElementById('slider-image').files[0];
+  const title = document.getElementById('slide-title').value.trim();
+  const text = document.getElementById('slide-text').value.trim();
+  
+  if(!imageFile || !title) { showToast('يرجى إدخال الصورة والعنوان'); return; }
+  
+  // In production: upload to Firebase Storage
+  const imageUrl = URL.createObjectURL(imageFile);
+  
+  await addDoc(collection(db, 'slides'), {
+    image: imageUrl,
+    title: title,
+    text: text,
+    order: Date.now(),
+    createdAt: serverTimestamp()
+  });
+  
+  showToast('تمت إضافة الشريحة ✓');
+  document.getElementById('slide-title').value = '';
+  document.getElementById('slide-text').value = '';
+  document.getElementById('slider-image').value = '';
+  document.getElementById('slider-preview').innerHTML = '';
+}
+
+// News Update
+window.updateNews = async function() {
+  const text = document.getElementById('news-text').value.trim();
+  if(!text) { showToast('يرجى إدخال نص الخبر'); return; }
+  
+  await addDoc(collection(db, 'settings'), {
+    type: 'news',
+    content: text,
+    updatedAt: serverTimestamp()
+  });
+  
+  showToast('تم تحديث شريط الأخبار ✓');
+  document.getElementById('news-text').value = '';
+}
+
+// User Actions
+window.toggleBan = async function(userId, ban) {
+  await updateDoc(doc(db, 'users', userId), { isBanned: ban });
+  showToast(ban ? 'تم حظر المستخدم' : 'تم فك الحظر');
+  loadUsers();
+}
+
+window.deleteUser = async function(userId) {
+  if(confirm('هل تريد حذف هذا المستخدم نهائياً؟')) {
+    await deleteDoc(doc(db, 'users', userId));
+    showToast('تم حذف المستخدم');
+    loadUsers();
+    loadStats();
+  }
+}
+
+// Room Actions
+window.toggleRoom = async function(roomId) {
+  const room = (await getDocs(query(collection(db, 'rooms'), where('__name__', '==', roomId)))).docs[0]?.data();
+  await updateDoc(doc(db, 'rooms', roomId), { isBanned: !room?.isBanned });
+  showToast(room?.isBanned ? 'تم تفعيل الغرفة' : 'تم تعطيل الغرفة');
+  loadRooms();
+}
+
+window.deleteRoom = async function(roomId) {
+  if(confirm('هل تريد حذف هذه الغرفة؟')) {
+    await deleteDoc(doc(db, 'rooms', roomId));
+    showToast('تم حذف الغرفة');
+    loadRooms();
+    loadStats();
+  }
+}
+
+// Library
+window.addLibraryItem = async function() {
+  const title = document.getElementById('lib-title').value.trim();
+  const icon = document.getElementById('lib-icon').value;
+  if(!title) { showToast('يرجى إدخال العنوان'); return; }
+  
+  await addDoc(collection(db, 'library'), {
+    title: title,
+    icon: icon,
+    createdAt: serverTimestamp()
+  });
+  
+  showToast('تمت الإضافة للمكتبة ✓');
+  document.getElementById('lib-title').value = '';
+}
+
+// Notifications
+let notifyTarget = 'all';
+window.selectNotifyTarget = function(target, el) {
+  notifyTarget = target;
+  document.querySelectorAll('.notify-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('notify-user-select').style.display = target === 'user' ? 'block' : 'none';
+}
+
+window.sendNotification = async function() {
+  const text = document.getElementById('notify-text').value.trim();
+  if(!text) { showToast('يرجى إدخال نص الإشعار'); return; }
+  
+  await addDoc(collection(db, 'notifications'), {
+    text: text,
+    target: notifyTarget,
+    targetId: notifyTarget === 'user' ? document.getElementById('notify-user-id').value : null,
+    sentBy: 'admin',
+    createdAt: serverTimestamp()
+  });
+  
+  showToast('تم إرسال الإشعار ✓');
+  document.getElementById('notify-text').value = '';
+}
+
+// Logout
+window.logout = function() {
+  localStorage.removeItem('currentUser');
+  window.location.href = 'index.html';
+}
+
+// Toast
+window.showToast = function(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+</script>
+</body>
+</html>
