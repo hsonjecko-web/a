@@ -15,7 +15,6 @@
 --text-primary-light: #1f2937; --text-secondary-light: #6b7280;
 --text-primary-dark: #f9fafb; --text-secondary-dark: #9ca3af;
 --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --blur: blur(12px);
---success: #10b981; --warning: #f59e0b; --danger: #ea4335;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
 body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary-light); overflow-x: hidden; padding-bottom: 100px; }
@@ -366,41 +365,46 @@ window.toggleFriend = async function(userId, btn) {
     const isFriend = currentUser.friends?.includes(userId);
     
     if(isFriend) {
-      if(confirm('إزالة الصديق؟')) {
-        await updateDoc(userRef, { friends: arrayRemove(currentUser.id) });
-        await updateDoc(currentUserRef, { friends: arrayRemove(userId) });
-        btn.classList.remove('btn-added');
-        btn.innerHTML = '<i class="fas fa-user-plus"></i> إضافة';
-        currentUser.friends = currentUser.friends.filter(id => id !== userId);
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        showToast('تمت الإزالة');
-      }
+      // إزالة صديق
+      await updateDoc(userRef, { friends: arrayRemove(currentUser.id) });
+      await updateDoc(currentUserRef, { friends: arrayRemove(userId) });
+      showToast('تمت الإزالة');
     } else {
-      await updateDoc(userRef, { friendRequests: arrayUnion({ from: currentUser.id, name: currentUser.name, avatar: currentUser.avatar, status: 'pending' }) });
+      // ✅ إرسال طلب صداقة مع إشعار
+      await updateDoc(userRef, { 
+        friendRequests: arrayUnion({ 
+          from: currentUser.id, 
+          name: currentUser.name, 
+          avatar: currentUser.avatar,
+          status: 'pending'
+        }) 
+      });
       
-      // ✅ إنشاء إشعار لصاحب الحساب
+      // ✅ إنشاء إشعار للطرف الآخر
       await addDoc(collection(db, 'notifications'), {
         userId: userId,
         text: `${currentUser.name} أرسل لك طلب صداقة`,
         type: 'friend_request',
         fromUser: currentUser.id,
         fromUserName: currentUser.name,
-        fromUserAvatar: currentUser.avatar,
         read: false,
         createdAt: serverTimestamp()
       });
       
-      btn.classList.add('btn-added');
-      btn.innerHTML = '<i class="fas fa-check"></i> تم الإرسال';
-      if(!currentUser.friends) currentUser.friends = [];
-      currentUser.friends.push(userId);
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
-      showToast('تم الإرسال ✓');
+      // ✅ حفظ في sentRequests
+      await updateDoc(currentUserRef, {
+        sentRequests: arrayUnion({ 
+          to: userId, 
+          status: 'pending' 
+        })
+      });
       
-      // ✅ تحديث شارة الإشعارات
-      updateNotificationBadge();
+      showToast('تم إرسال طلب الصداقة ✓');
     }
-  } catch(error) { showToast('حدث خطأ'); }
+    loadUsers();
+  } catch(error) {
+    showToast('حدث خطأ: ' + error.message);
+  }
 }
 
 let selectedUserId = null;
@@ -430,11 +434,9 @@ window.closeModal = function(event) {
   if(modal && (!event || event.target.id === 'user-modal')) modal.classList.remove('active');
 }
 
-// ✅ فتح ملف المستخدم الشخصي (وليس ملفي)
 window.viewUserProfile = function() {
   closeModal();
   setTimeout(() => {
-    // حفظ ID المستخدم لفتحه في صفحة البروفايل
     localStorage.setItem('viewUserProfile', selectedUserId);
     window.location.href = 'profile.html';
   }, 300);
@@ -447,7 +449,6 @@ window.addFriendFromModal = async function() {
   }
 }
 
-// ✅ نظام الإشعارات
 let allNotifications = [];
 
 async function updateNotificationBadge() {
@@ -556,7 +557,7 @@ async function loadDynamicContent() {
       if(!slidesSnap.empty) {
         slider.innerHTML = slidesSnap.docs.map(doc => {
           const s = doc.data();
-          let imgUrl = 'https://via.placeholder.com/800x400?text=صورة';
+          let imgUrl = 'https://placehold.co/800x400/1a73e8/white?text=صورة';
           if(s.image && typeof s.image === 'string' && s.image.trim() && s.image !== 'null') imgUrl = s.image;
           return `<div class="slide"><img src="${imgUrl}" onerror="this.src='https://via.placeholder.com/800x400?text=صورة'"><div class="slide-overlay"><div class="slide-content-box"><div class="slide-title">${s.title || ''}</div><div>${s.text || ''}</div></div></div></div>`;
         }).join('');

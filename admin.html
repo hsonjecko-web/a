@@ -218,11 +218,10 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
   </div>
 </div>
 
-<!-- Add Points Modal -->
 <div class="points-modal" id="points-modal">
   <div class="points-card">
     <div class="section-title" style="margin-bottom:20px">
-      <i class="fas fa-coins"></i> إضافة نقاط
+      <i class="fas fa-coins"></i> إضافة نقاط ورصيد
     </div>
     <div class="form-group">
       <label class="form-label">معرف المستخدم</label>
@@ -231,6 +230,10 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
     <div class="form-group">
       <label class="form-label">عدد النقاط</label>
       <input type="number" class="form-input" id="points-amount" placeholder="100">
+    </div>
+    <div class="form-group">
+      <label class="form-label">المبلغ بالدولار (اختياري)</label>
+      <input type="number" class="form-input" id="balance-amount" placeholder="2.00" step="0.01">
     </div>
     <div class="modal-actions">
       <button class="modal-btn btn-secondary" onclick="closePointsModal()">إلغاء</button>
@@ -260,7 +263,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const admin = JSON.parse(localStorage.getItem('currentUser'));
-if(!admin || !admin.isAdmin) { window.location.href = 'index.html'; }
+if(!admin || !admin.isAdmin) { 
+  window.location.href = 'index.html'; 
+}
 
 window.toggleTheme = function() {
   const html = document.documentElement;
@@ -274,59 +279,75 @@ window.toggleTheme = function() {
 
 window.showToast = function(msg) {
   const t = document.getElementById('toast');
-  if(t) { t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+  if(t) { 
+    t.textContent = msg; 
+    t.classList.add('show'); 
+    setTimeout(() => t.classList.remove('show'), 2000); 
+  }
 }
 
 async function loadStats() {
-  const usersSnap = await getDocs(collection(db, 'users'));
-  const roomsSnap = await getDocs(collection(db, 'rooms'));
-  const postsSnap = await getDocs(collection(db, 'posts'));
-  const videosSnap = await getDocs(collection(db, 'videos'));
-  
-  document.getElementById('stat-users').textContent = usersSnap.size;
-  document.getElementById('stat-rooms').textContent = roomsSnap.size;
-  document.getElementById('stat-posts').textContent = postsSnap.size;
-  document.getElementById('stat-videos').textContent = videosSnap.size;
+  try {
+    const usersSnap = await getDocs(collection(db, 'users'));
+    const roomsSnap = await getDocs(collection(db, 'rooms'));
+    const postsSnap = await getDocs(collection(db, 'posts'));
+    const videosSnap = await getDocs(collection(db, 'videos'));
+    
+    document.getElementById('stat-users').textContent = usersSnap.size;
+    document.getElementById('stat-rooms').textContent = roomsSnap.size;
+    document.getElementById('stat-posts').textContent = postsSnap.size;
+    document.getElementById('stat-videos').textContent = videosSnap.size;
+  } catch(error) {
+    console.error('خطأ في تحميل الإحصائيات:', error);
+  }
 }
 
 async function loadUsers() {
-  const tbody = document.getElementById('users-table');
-  const snapshot = await getDocs(collection(db, 'users'));
-  
-  tbody.innerHTML = snapshot.docs.map(docSnap => {
-    const user = docSnap.data();
-    return `
-    <tr>
-      <td><img src="${user.avatar}" class="user-avatar-sm">${user.name}<br><small style="color:var(--text-secondary-light)">${user.username}</small></td>
-      <td>${user.countryFlag || '🌍'} ${user.country || ''}</td>
-      <td>${user.points || 0} نقطة</td>
-      <td><span style="color:${user.isBanned ? 'var(--danger)' : 'var(--success)'}">${user.isBanned ? 'محظور' : 'نشط'}</span></td>
-      <td>
-        <button class="action-btn btn-ban" onclick="toggleBan('${docSnap.id}', ${!user.isBanned})">${user.isBanned ? 'فك الحظر' : 'حظر'}</button>
-        <button class="action-btn btn-add-points" onclick="openPointsModal('${docSnap.id}')"><i class="fas fa-coins"></i></button>
-        <button class="action-btn btn-delete" onclick="deleteUser('${docSnap.id}')"><i class="fas fa-trash"></i></button>
-      </td>
-    </tr>`;
-  }).join('');
+  try {
+    const tbody = document.getElementById('users-table');
+    const snapshot = await getDocs(collection(db, 'users'));
+    
+    tbody.innerHTML = snapshot.docs.map(docSnap => {
+      const user = docSnap.data();
+      return `
+      <tr>
+        <td><img src="${user.avatar || 'https://via.placeholder.com/32'}" class="user-avatar-sm">${user.name}<br><small style="color:var(--text-secondary-light)">${user.username || ''}</small></td>
+        <td>${user.countryFlag || '🌍'} ${user.country || ''}</td>
+        <td>${user.points || 0} نقطة<br>$${user.balance || 0}</td>
+        <td><span style="color:${user.isBanned ? 'var(--danger)' : 'var(--success)'}">${user.isBanned ? 'محظور' : 'نشط'}</span></td>
+        <td>
+          <button class="action-btn btn-ban" onclick="toggleBan('${docSnap.id}', ${!user.isBanned})">${user.isBanned ? 'فك الحظر' : 'حظر'}</button>
+          <button class="action-btn btn-add-points" onclick="openPointsModal('${docSnap.id}')"><i class="fas fa-coins"></i> نقاط</button>
+          <button class="action-btn btn-delete" onclick="deleteUser('${docSnap.id}')"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch(error) {
+    console.error('خطأ في تحميل المستخدمين:', error);
+  }
 }
 
 async function loadRooms() {
-  const tbody = document.getElementById('rooms-table');
-  const snapshot = await getDocs(collection(db, 'rooms'));
-  
-  tbody.innerHTML = snapshot.docs.map(docSnap => {
-    const room = docSnap.data();
-    return `
-    <tr>
-      <td>${room.name}</td>
-      <td><span style="background:${room.isPrivate ? 'var(--warning)' : 'var(--success)'};color:white;padding:2px 8px;border-radius:10px;font-size:10px">${room.isPrivate ? 'خاصة' : 'عامة'}</span></td>
-      <td>${room.members?.length || 0}</td>
-      <td>
-        <button class="action-btn btn-ban" onclick="toggleRoom('${docSnap.id}')">${room.isBanned ? 'تفعيل' : 'تعطيل'}</button>
-        <button class="action-btn btn-delete" onclick="deleteRoom('${docSnap.id}')"><i class="fas fa-trash"></i></button>
-      </td>
-    </tr>`;
-  }).join('');
+  try {
+    const tbody = document.getElementById('rooms-table');
+    const snapshot = await getDocs(collection(db, 'rooms'));
+    
+    tbody.innerHTML = snapshot.docs.map(docSnap => {
+      const room = docSnap.data();
+      return `
+      <tr>
+        <td>${room.name || 'غرفة'}</td>
+        <td><span style="background:${room.isPrivate ? 'var(--warning)' : 'var(--success)'};color:white;padding:2px 8px;border-radius:10px;font-size:10px">${room.isPrivate ? 'خاصة' : 'عامة'}</span></td>
+        <td>${room.members?.length || 0}</td>
+        <td>
+          <button class="action-btn btn-ban" onclick="toggleRoom('${docSnap.id}')">${room.isBanned ? 'تفعيل' : 'تعطيل'}</button>
+          <button class="action-btn btn-delete" onclick="deleteRoom('${docSnap.id}')"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch(error) {
+    console.error('خطأ في تحميل الغرف:', error);
+  }
 }
 
 window.previewSliderImage = function(e) {
@@ -349,84 +370,121 @@ window.addSlide = async function() {
   const title = document.getElementById('slide-title').value.trim();
   const text = document.getElementById('slide-text').value.trim();
   
-  if(!imageFile || !title) { showToast('يرجى إدخال الصورة والعنوان'); return; }
+  if(!imageFile || !title) { 
+    showToast('يرجى إدخال الصورة والعنوان'); 
+    return; 
+  }
   
-  const imageUrl = URL.createObjectURL(imageFile);
-  
-  await addDoc(collection(db, 'slides'), {
-    image: imageUrl,
-    title: title,
-    text: text,
-    order: Date.now(),
-    createdAt: serverTimestamp()
-  });
-  
-  showToast('تمت إضافة الشريحة ✓');
-  document.getElementById('slide-title').value = '';
-  document.getElementById('slide-text').value = '';
-  document.getElementById('slider-image').value = '';
-  document.getElementById('slider-preview').innerHTML = '';
+  try {
+    const imageUrl = URL.createObjectURL(imageFile);
+    
+    await addDoc(collection(db, 'slides'), {
+      image: imageUrl,
+      title: title,
+      text: text,
+      order: Date.now(),
+      createdAt: serverTimestamp()
+    });
+    
+    showToast('تمت إضافة الشريحة ✓');
+    document.getElementById('slide-title').value = '';
+    document.getElementById('slide-text').value = '';
+    document.getElementById('slider-image').value = '';
+    document.getElementById('slider-preview').innerHTML = '';
+  } catch(error) {
+    showToast('حدث خطأ: ' + error.message);
+  }
 }
 
 window.updateNews = async function() {
   const text = document.getElementById('news-text').value.trim();
-  if(!text) { showToast('يرجى إدخال نص الخبر'); return; }
+  if(!text) { 
+    showToast('يرجى إدخال نص الخبر'); 
+    return; 
+  }
   
-  await addDoc(collection(db, 'settings'), {
-    type: 'news',
-    content: text,
-    updatedAt: serverTimestamp()
-  });
-  
-  showToast('تم تحديث شريط الأخبار ✓');
-  document.getElementById('news-text').value = '';
+  try {
+    await addDoc(collection(db, 'settings'), {
+      type: 'news',
+      content: text,
+      updatedAt: serverTimestamp()
+    });
+    
+    showToast('تم تحديث شريط الأخبار ✓');
+    document.getElementById('news-text').value = '';
+  } catch(error) {
+    showToast('حدث خطأ: ' + error.message);
+  }
 }
 
 window.toggleBan = async function(userId, ban) {
-  await updateDoc(doc(db, 'users', userId), { isBanned: ban });
-  showToast(ban ? 'تم حظر المستخدم' : 'تم فك الحظر');
-  loadUsers();
+  try {
+    await updateDoc(doc(db, 'users', userId), { isBanned: ban });
+    showToast(ban ? 'تم حظر المستخدم' : 'تم فك الحظر');
+    loadUsers();
+  } catch(error) {
+    showToast('حدث خطأ: ' + error.message);
+  }
 }
 
 window.deleteUser = async function(userId) {
   if(confirm('هل تريد حذف هذا المستخدم نهائياً؟')) {
-    await deleteDoc(doc(db, 'users', userId));
-    showToast('تم حذف المستخدم');
-    loadUsers();
-    loadStats();
+    try {
+      await deleteDoc(doc(db, 'users', userId));
+      showToast('تم حذف المستخدم');
+      loadUsers();
+      loadStats();
+    } catch(error) {
+      showToast('حدث خطأ: ' + error.message);
+    }
   }
 }
 
 window.toggleRoom = async function(roomId) {
-  const roomDoc = await getDocs(query(collection(db, 'rooms'), where('__name__', '==', roomId)));
-  const room = roomDoc.docs[0]?.data();
-  await updateDoc(doc(db, 'rooms', roomId), { isBanned: !room?.isBanned });
-  showToast(room?.isBanned ? 'تم تفعيل الغرفة' : 'تم تعطيل الغرفة');
-  loadRooms();
+  try {
+    const roomDoc = await getDoc(doc(db, 'rooms', roomId));
+    const room = roomDoc.data();
+    await updateDoc(doc(db, 'rooms', roomId), { isBanned: !room?.isBanned });
+    showToast(room?.isBanned ? 'تم تفعيل الغرفة' : 'تم تعطيل الغرفة');
+    loadRooms();
+  } catch(error) {
+    showToast('حدث خطأ: ' + error.message);
+  }
 }
 
 window.deleteRoom = async function(roomId) {
   if(confirm('هل تريد حذف هذه الغرفة؟')) {
-    await deleteDoc(doc(db, 'rooms', roomId));
-    showToast('تم حذف الغرفة');
-    loadRooms();
-    loadStats();
+    try {
+      await deleteDoc(doc(db, 'rooms', roomId));
+      showToast('تم حذف الغرفة');
+      loadRooms();
+      loadStats();
+    } catch(error) {
+      showToast('حدث خطأ: ' + error.message);
+    }
   }
 }
 
 window.addLibraryItem = async function() {
   const title = document.getElementById('lib-title').value.trim();
   const icon = document.getElementById('lib-icon').value;
-  if(!title) { showToast('يرجى إدخال العنوان'); return; }
+  if(!title) { 
+    showToast('يرجى إدخال العنوان'); 
+    return; 
+  }
   
-  await addDoc(collection(db, 'library'), {
-    title: title,
-    icon: icon,
-    createdAt: serverTimestamp()
-  });
-  
-  showToast('تمت الإضافة للمكتبة ✓');
-  document.getElementById('lib-title').value = '';
+  try {
+    await addDoc(collection(db, 'library'), {
+      title: title,
+      icon: icon,
+      createdAt: serverTimestamp()
+    });
+    
+    showToast('تمت الإضافة للمكتبة ✓');
+    document.getElementById('lib-title').value = '';
+  } catch(error) {
+    showToast('حدث خطأ: ' + error.message);
+  }
 }
 
 let notifyTarget = 'all';
@@ -439,57 +497,78 @@ window.selectNotifyTarget = function(target, el) {
 
 window.sendNotification = async function() {
   const text = document.getElementById('notify-text').value.trim();
-  if(!text) { showToast('يرجى إدخال نص الإشعار'); return; }
+  if(!text) { 
+    showToast('يرجى إدخال نص الإشعار'); 
+    return; 
+  }
   
-  await addDoc(collection(db, 'notifications'), {
-    text: text,
-    target: notifyTarget,
-    targetId: notifyTarget === 'user' ? document.getElementById('notify-user-id').value : null,
-    sentBy: 'admin',
-    createdAt: serverTimestamp()
-  });
-  
-  showToast('تم إرسال الإشعار ✓');
-  document.getElementById('notify-text').value = '';
+  try {
+    await addDoc(collection(db, 'notifications'), {
+      text: text,
+      target: notifyTarget,
+      targetId: notifyTarget === 'user' ? document.getElementById('notify-user-id').value : null,
+      sentBy: 'admin',
+      read: false,
+      createdAt: serverTimestamp()
+    });
+    
+    showToast('تم إرسال الإشعار ✓');
+    document.getElementById('notify-text').value = '';
+  } catch(error) {
+    showToast('حدث خطأ: ' + error.message);
+  }
 }
 
-// ✅ Points System for Admin
+// ✅ نقاط ورصيد - FIXED
 let selectedUserIdForPoints = null;
 window.openPointsModal = function(userId) {
   selectedUserIdForPoints = userId;
   document.getElementById('points-modal').classList.add('active');
 }
+
 window.closePointsModal = function() {
   document.getElementById('points-modal').classList.remove('active');
   selectedUserIdForPoints = null;
+  document.getElementById('points-amount').value = '';
+  document.getElementById('balance-amount').value = '';
 }
 
 window.addPointsToUser = async function() {
-  const amount = parseInt(document.getElementById('points-amount').value);
-  if(!amount || amount <= 0) { showToast('أدخل رقم صحيح'); return; }
-  if(!selectedUserIdForPoints) { showToast('اختر مستخدم'); return; }
+  const pointsAmount = parseInt(document.getElementById('points-amount').value);
+  const balanceAmount = parseFloat(document.getElementById('balance-amount').value);
+  
+  if(!pointsAmount && !balanceAmount) { 
+    showToast('أدخل نقاط أو مبلغ'); 
+    return; 
+  }
+  if(!selectedUserIdForPoints) { 
+    showToast('اختر مستخدم'); 
+    return; 
+  }
   
   try {
-    // ✅ إضافة نقاط للمستخدم
-    await updateDoc(doc(db, 'users', selectedUserIdForPoints), {
-      points: increment(amount),
-      balance: increment(amount / 50) // كل 100 نقطة = $2
-    });
+    const updates = {};
+    if(pointsAmount) updates.points = increment(pointsAmount);
+    if(balanceAmount) updates.balance = increment(balanceAmount);
+    
+    await updateDoc(doc(db, 'users', selectedUserIdForPoints), updates);
     
     // ✅ سجل العملية
     await addDoc(collection(db, 'transactions'), {
       toUser: selectedUserIdForPoints,
-      amount: amount,
+      points: pointsAmount || 0,
+      balance: balanceAmount || 0,
       type: 'admin_add',
-      addedBy: 'admin',
+      addedBy: admin.id,
       createdAt: serverTimestamp()
     });
     
-    showToast(`تم إضافة ${amount} نقطة ✓`);
+    showToast(`تم إضافة ${pointsAmount || 0} نقطة و $${balanceAmount || 0}`);
     closePointsModal();
     loadUsers();
+    loadStats();
   } catch(error) {
-    showToast('حدث خطأ');
+    showToast('حدث خطأ: ' + error.message);
   }
 }
 

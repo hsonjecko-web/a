@@ -87,7 +87,7 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 .message-time { font-size: 10px; opacity: 0.7; margin-top: 4px; text-align: right; }
 .message-image { max-width: 200px; border-radius: 12px; margin-top: 8px; }
 
-/* Comment/Reply System */
+/* Reply System */
 .message-actions { display: flex; gap: 8px; margin-top: 4px; opacity: 0; transition: opacity 0.3s; }
 .message:hover .message-actions { opacity: 1; }
 .message-action { font-size: 11px; color: var(--text-secondary-light); cursor: pointer; }
@@ -138,7 +138,7 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 [data-theme="dark"] .toast { background: var(--card-dark); border-color: var(--border-dark); }
 .toast.show { display: block; }
 
-/* Points Transfer Modal */
+/* Points Modal */
 .points-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
 .points-modal.active { display: flex; }
 .points-card { background: var(--card-light); backdrop-filter: blur(20px); border: 1px solid var(--border-light); border-radius: 24px; padding: 24px; width: 100%; max-width: 350px; }
@@ -462,11 +462,13 @@ window.sendMessage = async function() {
   try {
     let chatId, roomId;
     if(currentChat?.type === 'user') {
+      // ✅ إنشاء chatId فريد
       chatId = [currentUser.id, currentChat.id].sort().join('_');
     } else {
       roomId = currentRoomId;
     }
     
+    // ✅ حفظ الرسالة في Firebase
     await addDoc(collection(db, 'messages'), {
       chatId: chatId || null,
       roomId: roomId || null,
@@ -482,7 +484,7 @@ window.sendMessage = async function() {
     input.value = '';
     loadMessages();
   } catch(error) {
-    showToast('فشل إرسال الرسالة');
+    showToast('فشل إرسال الرسالة: ' + error.message);
   }
 }
 
@@ -628,7 +630,6 @@ window.joinRoom = async function(roomId, isPrivate, roomCode) {
       showToast('كود خاطئ');
     }
   } else {
-    // ✅ طلب انضمام للغرفة العامة
     const roomDoc = await getDoc(doc(db, 'rooms', roomId));
     const room = roomDoc.data();
     
@@ -640,7 +641,6 @@ window.joinRoom = async function(roomId, isPrivate, roomCode) {
         pendingRequests: arrayUnion({ userId: currentUser.id, userName: currentUser.name, avatar: currentUser.avatar })
       });
       
-      // ✅ إشعار لصاحب الغرفة
       await addDoc(collection(db, 'notifications'), {
         userId: room.adminId,
         text: `${currentUser.name} يريد الانضمام لغرفتك ${room.name}`,
@@ -691,18 +691,15 @@ window.sendPoints = async function() {
       targetId = currentRoomId;
     }
     
-    // ✅ خصم من المرسل
     await updateDoc(doc(db, 'users', currentUser.id), {
       points: (currentUser.points || 0) - amount
     });
     
-    // ✅ إضافة للمستقبل
     if(currentChat?.type === 'user') {
       await updateDoc(doc(db, 'users', targetId), {
         points: serverTimestamp()
       });
       
-      // ✅ إشعار
       await addDoc(collection(db, 'notifications'), {
         userId: targetId,
         text: `${currentUser.name} أرسل لك ${amount} نقطة`,
@@ -714,7 +711,6 @@ window.sendPoints = async function() {
       });
     }
     
-    // ✅ سجل العملية
     await addDoc(collection(db, 'transactions'), {
       fromUser: currentUser.id,
       toUser: targetId,

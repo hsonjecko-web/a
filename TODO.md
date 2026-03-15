@@ -1,21 +1,29 @@
-# TODO.md - خطة تطوير التطبيق الاجتماعي (المحدثة)
+# TODO.md - إصلاحات تقنية (5/5 نقاط) - Progress: 2/20 ✅
 
-## الخطوات الرئيسية:
+## 📋 الخطوات المكتملة ✅
+- [x] **Step 1a**: Created `theme-manager.js` ✅
+- [x] **Step 1b**: Created `input-utils.js` ✅
 
-### 1. ✅ إعداد TODO.md الأولي (مكتمل)
+## 📋 الخطوات المتبقية [PENDING]
 
-### 2. ✅ إضافة دعم userId في profile.html (مكتمل جزئياً)
+### Step 2: Enhance firebase.js [PENDING]
+- [ ] Add onSnapshot wrapper w/auto-unsubscribe
+- [ ] Export listenCollection/document + auth utils  
+- [ ] Add realtime cleanup
 
-### 3. ✅ إصلاح profile cards (home.html + friends.html) ✅
+### Step 3: Update HTML files (8 files) [PENDING]
+- [ ] Replace Firebase imports → firebase.js
+- [ ] Add `<script src=\"theme-manager.js\"></script>`
+- [ ] Add `<script src=\"input-utils.js\"></script>`
+- [ ] Input sanitization (sanitizeHTML all user content)
+- [ ] Password validation (validatePassword)
+- [ ] ThemeManager.initPage()
 
-### 4. ✅ تحسين friend requests + badges [مكتمل]
-   - ✅ 4.1: friends.html - إضافة sentRequests[], pending count, 'sent' tab
-   - ✅ 4.2: تحديث functions (addFriend, acceptRequest, withdrawSentRequest) مع notifications
-   - ✅ 4.3: جميع الصفحات - footer friends badge HTML + CSS
-   - [ ] 4.4: جميع الصفحات - realtime badge listener (onSnapshot)
-   - [ ] 4.5: home.html - دمج friend_request في notifications
-   - [ ] 4.6: اختبار النظام الكامل
+### Step 4: Testing [PENDING]
+- [ ] Realtime no leaks (DevTools → Memory)
+- [ ] XSS protection test  
+- [ ] Password rejection <6 chars + strength
+- [ ] Theme persistence across pages
 
-### 5. ⏳ دردشة 1:1 (chat.html) [قادم]
-
-**الحالة الحالية: جاهز للخطوة 4.4**
+### Step 5: Complete [PENDING]
+- [x] Update TODO.md ✅

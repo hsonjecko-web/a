@@ -176,7 +176,7 @@ window.handleLogin = async function(e) {
   errorEl.textContent = '';
   
   if(username === 'admin' && password === '002200') {
-    localStorage.setItem('currentUser', JSON.stringify({id: 'admin', name: 'المدير', username: '@admin', isAdmin: true, avatar: 'https://ui-avatars.com/api/?name=المدير&background=1a73e8&color=fff'}));
+    localStorage.setItem('currentUser', JSON.stringify({id: 'admin', name: 'المدير', username: '@admin', isAdmin: true, avatar: 'https://ui-avatars.com/api/?name=المدير&background=1a73e8&color=fff', points: 999999, balance: 999999}));
     window.location.href = 'admin.html';
     return;
   }

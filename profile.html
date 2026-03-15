@@ -44,9 +44,9 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 .wallet-points { font-size: 12px; opacity: 0.8; margin-top: 4px; }
 .wallet-icon { font-size: 32px; opacity: 0.3; }
 
-.profile-stats { display: flex; justify-content: center; gap: 30px; padding: 20px; background: var(--card-light); border: 1px solid var(--border-light); border-radius: 16px; margin: 0 20px 20px; }
+.profile-stats { display: flex; justify-content: center; gap: 30px; padding: 20px; background: var(--card-light); border: 1px solid var(--border-light); border-radius: 16px; margin: 0 20px 20px; cursor: pointer; }
 [data-theme="dark"] .profile-stats { background: var(--card-dark); border-color: var(--border-dark); }
-.profile-stat { text-align: center; cursor: pointer; }
+.profile-stat { text-align: center; }
 .profile-stat:hover { transform: scale(1.05); }
 .profile-stat-value { font-size: 20px; font-weight: 800; color: var(--primary-blue); }
 .profile-stat-label { font-size: 11px; color: var(--text-secondary-light); margin-top: 4px; }
@@ -137,7 +137,7 @@ body { background: var(--bg-light); min-height: 100vh; color: var(--text-primary
 </header>
 
 <div class="profile-header">
-  <button class="edit-btn" id="edit-btn" onclick="openEditModal()" style="display:none"><i class="fas fa-pen"></i></button>
+  <button class="edit-btn" id="edit-btn" onclick="openEditModal()"><i class="fas fa-pen"></i></button>
   <img src="" class="profile-avatar-lg" id="profile-avatar">
   <div class="profile-name-lg" id="profile-name">...</div>
   <div class="profile-username" id="profile-username">...</div>
@@ -312,7 +312,6 @@ window.showToast = function(msg) {
 }
 
 async function loadProfile() {
-  // ✅ التحقق من عرض ملف مستخدم آخر
   const viewUserId = localStorage.getItem('viewUserProfile');
   
   if(viewUserId && viewUserId !== currentUser.id) {
@@ -322,6 +321,7 @@ async function loadProfile() {
     
     document.getElementById('page-title').textContent = 'الملف الشخصي';
     document.getElementById('edit-btn').style.display = 'none';
+    document.querySelector('.wallet-card').style.display = 'none';
     
     try {
       const userDoc = await getDoc(doc(db, 'users', viewUserId));
@@ -340,10 +340,6 @@ async function loadProfile() {
       document.getElementById('stat-followers').textContent = user.followers || '0';
       document.getElementById('stat-posts').textContent = user.posts || '0';
       
-      // إخفاء المحفظة عند عرض ملف آخر
-      document.querySelector('.wallet-card').style.display = 'none';
-      
-      // تحميل منشورات المستخدم
       loadUserPosts(viewUserId);
       
     } catch(error) {
@@ -351,7 +347,6 @@ async function loadProfile() {
       showToast('خطأ في تحميل البيانات');
     }
   } else {
-    // ✅ عرض ملفي الشخصي
     viewingOtherProfile = false;
     viewingUserId = null;
     document.getElementById('page-title').textContent = 'ملفي الشخصي';
