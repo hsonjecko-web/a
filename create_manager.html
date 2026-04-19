@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <title>نظام التميز - إنشاء مدير</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <style>
+    /* ⚠️ انسخ نفس <style> من ملف managers.html بالكامل هنا ⚠️ */
+    :root{--bg:#0b0f19;--main:linear-gradient(135deg,#111827,#0f172a);--glass:rgba(30,41,59,0.4);--border:rgba(255,255,255,0.1);--shadow:0 8px 32px rgba(0,0,0,0.35);--text:#f8fafc;--text2:#94a3b8;--muted:#64748b;--blue:#3b82f6;--green:#22c55e;--cyan:#06b6d4;--purple:#a855f7;--red:#ef4444;--amber:#f59e0b;--magenta:#ec4899;--teal:#14b8a6;--h:64px;--f:70px;--s:280px;--st:env(safe-area-inset-top,0);--sb:env(safe-area-inset-bottom,0)}
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Cairo',sans-serif}
+    html,body{height:100%;background:var(--main);color:var(--text);overflow-x:hidden}body{padding-top:calc(var(--h)+var(--st));padding-bottom:calc(var(--f)+var(--sb)+20px)}
+    .app-h{position:fixed;top:0;left:0;right:0;height:var(--h);padding:0 16px;padding-top:var(--st);display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100}
+    .menu-btn,.theme-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text);cursor:pointer}
+    .user-info{display:flex;flex-direction:column;align-items:flex-end}.user-info span{font-weight:600;font-size:0.9rem}.user-info small{font-size:0.7rem;color:var(--muted)}
+    .s-ov{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:190;opacity:0;visibility:hidden;transition:0.3s}.s-ov.active{opacity:1;visibility:visible}
+    .sidebar{position:fixed;top:0;right:0;bottom:0;width:var(--s);background:var(--glass);backdrop-filter:blur(16px);border-left:1px solid var(--border);transform:translateX(100%);transition:transform 0.3s;z-index:200;display:flex;flex-direction:column;padding-top:calc(var(--st)+16px)}.sidebar.active{transform:translateX(0)}
+    .s-h{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}.s-h h2{font-size:1.1rem;font-weight:700;flex:1}
+    .nav-btn{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;margin-bottom:6px;background:linear-gradient(145deg,rgba(30,41,59,0.9),rgba(15,23,42,0.8));border:1px solid var(--border);border-radius:12px;color:var(--text);text-decoration:none;cursor:pointer;font-weight:500}.nav-btn:active{transform:scale(0.98)}.nav-btn .mat{font-size:22px}.nav-btn .exp{margin-right:auto;transition:0.3s}.nav-btn.exp .exp{transform:rotate(180deg)}
+    .sub{padding-right:16px;overflow:hidden;transition:max-height 0.3s;max-height:0}.sub:not(.hid){max-height:500px}
+    .sub-a{display:flex;align-items:center;gap:10px;padding:10px 12px;color:var(--text2);text-decoration:none;font-size:0.9rem;border-radius:8px;margin-bottom:4px;border:1px solid transparent}.sub-a:active{background:var(--glass)}.sub-a.act{background:var(--blue);color:#fff!important;border-color:rgba(59,130,246,0.4)}
+    .b-blue{border-color:rgba(59,130,246,0.3)!important}.b-purple{border-color:rgba(168,85,247,0.3)!important}.b-green{border-color:rgba(34,197,94,0.3)!important}.b-cyan{border-color:rgba(6,182,212,0.3)!important}.b-amber{border-color:rgba(245,158,11,0.3)!important}.b-red{border-color:rgba(239,68,68,0.3)!important}.b-teal{border-color:rgba(20,184,166,0.3)!important}
+    main{padding:16px;max-width:1200px;margin:0 auto}.sec-t{font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.sec-t span{font-size:0.8rem;font-weight:400;color:var(--text2)}
+    .form-card{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:20px}
+    .form-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+    .form-in{flex:1;min-width:140px;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.9rem;outline:none}
+    .form-in:focus{border-color:var(--blue)}
+    .btn-add{padding:10px 20px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer}
+    .btn-add:active{transform:scale(0.97)}
+    html.light-mode{--bg:#f0f9ff;--main:radial-gradient(circle at 50% -20%,#f0f9ff,#e0f2fe)!important;--glass:rgba(255,255,255,0.75)!important;--border:rgba(59,130,246,0.2)!important;--shadow:0 4px 15px rgba(59,130,246,0.08),inset 0 1px 1px rgba(59,130,246,0.1)!important;--text:#1e293b!important;--text2:#64748b!important;--muted:rgba(30,41,59,0.5)!important}
+    html.light-mode body{background:var(--main)}html.light-mode main{background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(240,248,255,0.9))!important}
+    html.light-mode .app-h{background:rgba(240,245,250,0.8)!important;border-bottom-color:rgba(59,130,246,0.15)!important}
+    html.light-mode .menu-btn,html.light-mode .theme-btn{background:rgba(59,130,246,0.08)!important;color:#1e293b!important}
+    html.light-mode .sidebar{background:linear-gradient(165deg,rgba(219,234,254,0.8),rgba(240,249,255,0.7))!important;border-left-color:rgba(59,130,246,0.25)!important}
+    html.light-mode .nav-btn{background:linear-gradient(145deg,rgba(255,255,255,0.8),rgba(241,245,249,0.6))!important;color:#1e293b!important}
+    html.light-mode .sub-a{color:#64748b!important}html.light-mode .sub-a.act{background:#000!important;color:#fff!important}
+    html.light-mode .f-bar{background:rgba(240,245,250,0.9)!important;border-top-color:rgba(59,130,246,0.15)!important}
+    html.light-mode .f-btn{color:#64748b!important}html.light-mode .f-btn.act{color:#3b82f6!important}
+    html.light-mode .form-in{background:rgba(59,130,246,0.05)!important;border-color:rgba(59,130,246,0.2)!important;color:#1e293b!important}
+    .light-ic{display:none}html.light-mode .light-ic{display:inline-block!important}html.light-mode .dark-ic{display:none!important}
+  </style>
+</head>
+<body>
+  <header class="app-h"><button class="menu-btn" onclick="toggleS()"><span class="material-icons-round">menu</span></button><div style="display:flex;align-items:center;gap:12px"><button class="theme-btn" onclick="toggleDM()"><span class="material-icons-round dark-ic">light_mode</span><span class="material-icons-round light-ic">dark_mode</span></button><div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div></div></header>
+  <div class="s-ov" id="s-ov" onclick="toggleS()"></div>
+  <aside class="sidebar" id="sb"><div class="s-h"><span class="material-icons-round">shield</span><h2>نظام التميز</h2></div><nav style="flex:1;overflow-y:auto;padding:16px 12px"><a href="index.html" class="nav-btn b-blue"><span class="material-icons-round mat">dashboard</span><span>لوحة التحكم</span></a><div><button onclick="toggleSub('mgr-sm')" class="nav-btn b-purple act"><span class="material-icons-round mat">badge</span><span>المدراء</span><span class="material-icons-round mat exp">expand_more</span></button><div id="mgr-sm" class="sub"><a href="managers.html" class="sub-a"><span class="material-icons-round">badge</span>المدراء</a><a href="create_manager.html" class="sub-a act"><span class="material-icons-round">person_add</span>إنشاء مدير</a></div></div><a href="settings.html" class="nav-btn b-amber"><span class="material-icons-round mat">settings</span><span>الإعدادات</span></a><a href="index.html" class="nav-btn b-red" onclick="localStorage.removeItem('isLoggedIn');location.href='index.html'"><span class="material-icons-round mat">logout</span><span>تسجيل خروج</span></a></nav></aside>
+  <main>
+    <h2 class="sec-t">إنشاء مدير جديد</h2>
+    <div class="form-card">
+      <div class="form-row"><input type="text" id="newMName" class="form-in" placeholder="الاسم الكامل"><input type="email" id="newMEmail" class="form-in" placeholder="البريد الإلكتروني"></div>
+      <div class="form-row"><input type="text" id="newMRole" class="form-in" placeholder="نوع الصلاحية"><input type="password" id="newMPass" class="form-in" placeholder="كلمة المرور المؤقتة"></div>
+      <button class="btn-add" onclick="createMgr()">💾 حفظ المدير</button>
+    </div>
+  </main>
+  <footer class="f-bar"><a href="index.html" class="f-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a><a href="settings.html" class="f-btn act"><span class="material-icons-round">settings</span><span>الإعدادات</span></a></footer>
+  <script>
+    if(localStorage.getItem('isLoggedIn')!=='true')location.href='index.html';if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');
+    function toggleS(){document.getElementById('sb').classList.toggle('active');document.getElementById('s-ov').classList.toggle('active');}function toggleSub(id){const sub=document.getElementById(id);if(!sub)return;const hid=sub.classList.contains('hid');sub.classList.toggle('hid',!hid);const btn=sub.previousElementSibling;if(btn)btn.classList.toggle('exp',hid);}
+    function toggleDM(){const h=document.documentElement;h.classList.toggle('light-mode');localStorage.setItem('darkMode',h.classList.contains('light-mode')?'false':'true');updateIcons();}function updateIcons(){const d=document.querySelector('.dark-ic'),l=document.querySelector('.light-ic');if(document.documentElement.classList.contains('light-mode')){if(d)d.classList.remove('hidden');if(l)l.classList.add('hidden');}else{if(d)d.classList.add('hidden');if(l)l.classList.remove('hidden');}}
+    function createMgr(){const n=document.getElementById('newMName').value.trim(),e=document.getElementById('newMEmail').value.trim(),r=document.getElementById('newMRole').value.trim();if(!n||!e)return alert('أكمل البيانات المطلوبة');const d=JSON.parse(localStorage.getItem('sys_mgrs')||'[]');d.push({id:Date.now(),name:n,email:e,role:r,date:new Date().toLocaleDateString('ar-IQ')});localStorage.setItem('sys_mgrs',JSON.stringify(d));toast('تم إنشاء المدير بنجاح');setTimeout(()=>location.href='managers.html',1000);}
+    function toast(m){const t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(34,197,94,0.9);color:#fff;padding:10px 18px;border-radius:20px;font-size:0.85rem;z-index:999';document.body.appendChild(t);setTimeout(()=>t.remove(),2000);}
+  </script>
+</body>
+</html>
