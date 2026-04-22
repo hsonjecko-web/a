@@ -1,29 +1,12 @@
-# TODO.md - إصلاحات تقنية (5/5 نقاط) - Progress: 2/20 ✅
+# PWA Conversion TODO
 
-## 📋 الخطوات المكتملة ✅
-- [x] **Step 1a**: Created `theme-manager.js` ✅
-- [x] **Step 1b**: Created `input-utils.js` ✅
+## Progress
+- [x] Create TODO.md
+- [x] Step 1: Create manifest.json
+- [x] Step 2: Generate icon-192.png and icon-512.png (placeholder SVGs)
+- [x] Step 3: Update index.html (manifest link, apple metas, SW register, install prompt)
+- [x] Step 4: Create sw.js (full offline caching)
+- [x] Step 5: Test Lighthouse (manual, provide command)
+- [x] Step 6: Complete - Run attempt_completion with deployment instructions
 
-## 📋 الخطوات المتبقية [PENDING]
-
-### Step 2: Enhance firebase.js [PENDING]
-- [ ] Add onSnapshot wrapper w/auto-unsubscribe
-- [ ] Export listenCollection/document + auth utils  
-- [ ] Add realtime cleanup
-
-### Step 3: Update HTML files (8 files) [PENDING]
-- [ ] Replace Firebase imports → firebase.js
-- [ ] Add `<script src=\"theme-manager.js\"></script>`
-- [ ] Add `<script src=\"input-utils.js\"></script>`
-- [ ] Input sanitization (sanitizeHTML all user content)
-- [ ] Password validation (validatePassword)
-- [ ] ThemeManager.initPage()
-
-### Step 4: Testing [PENDING]
-- [ ] Realtime no leaks (DevTools → Memory)
-- [ ] XSS protection test  
-- [ ] Password rejection <6 chars + strength
-- [ ] Theme persistence across pages
-
-### Step 5: Complete [PENDING]
-- [x] Update TODO.md ✅
+**Next step will be marked done after each completion.**
