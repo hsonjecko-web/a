@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <title>نظام التميز - قائمة الكفلاء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <style>
+    :root{--bg-page:#0b0f19;--bg-main:linear-gradient(135deg,#111827 0%,#0f172a 100%);--glass-bg:rgba(30,41,59,0.4);--glass-border:rgba(255,255,255,0.1);--glass-shadow:0 8px 32px rgba(0,0,0,0.35);--text-primary:#f8fafc;--text-secondary:#94a3b8;--text-muted:#64748b;--accent-blue:#3b82f6;--accent-green:#22c55e;--accent-cyan:#06b6d4;--accent-purple:#a855f7;--accent-red:#ef4444;--accent-amber:#f59e0b;--accent-lime:#84cc16;--accent-magenta:#ec4899;--accent-teal:#14b8a6;--accent-orange:#f97316;--accent-pink:#f472b6;--header-height:64px;--footer-height:70px;--sidebar-width:280px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Cairo',sans-serif}
+    html,body{height:100%;background:var(--bg-main);color:var(--text-primary);overflow-x:hidden}
+    body{padding-top:calc(var(--header-height)+var(--safe-top));padding-bottom:calc(var(--footer-height)+var(--safe-bottom)+20px)}
+    .app-header{position:fixed;top:0;left:0;right:0;height:var(--header-height);padding:0 16px;padding-top:var(--safe-top);display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);z-index:100}
+    .menu-toggle{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--text-primary);cursor:pointer;border-radius:10px}.menu-toggle:active{background:var(--glass-bg)}
+    .header-controls{display:flex;align-items:center;gap:12px}
+    .theme-btn,.user-info{display:flex;align-items:center;justify-content:center;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:10px;padding:6px 10px;cursor:pointer}
+    .user-info{flex-direction:column;align-items:flex-end;background:transparent;border:none;padding:0}.user-info span{font-weight:600;font-size:.9rem}.user-info small{font-size:.7rem;color:var(--text-muted)}
+    .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:190;opacity:0;visibility:hidden;transition:.3s}.sidebar-overlay.active{opacity:1;visibility:visible}
+    .sidebar{position:fixed;top:0;right:0;bottom:0;width:var(--sidebar-width);background:var(--glass-bg);backdrop-filter:blur(16px);border-left:1px solid var(--glass-border);transform:translateX(100%);transition:transform .3s ease;z-index:200;display:flex;flex-direction:column;padding-top:calc(var(--safe-top)+16px)}.sidebar.active{transform:translateX(0)}
+    .sidebar-header{padding:16px 20px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;gap:10px}.sidebar-header h2{font-size:1.1rem;font-weight:700;flex:1}.sidebar-header .material-icons-round{color:var(--accent-blue);font-size:24px}
+    .sidebar-nav{flex:1;overflow-y:auto;padding:16px 12px}
+    .nav-btn-3d{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;margin-bottom:6px;background:linear-gradient(145deg,rgba(30,41,59,0.9),rgba(15,23,42,0.8));border:1px solid var(--glass-border);border-radius:12px;color:var(--text-primary);text-decoration:none;cursor:pointer;font-weight:500;transition:all .2s}.nav-btn-3d:active{transform:scale(.98)}
+    .nav-btn-3d .material-icons-round{font-size:22px}.nav-btn-3d .expand-icon{margin-right:auto;transition:transform .3s}.nav-btn-3d.expanded .expand-icon{transform:rotate(180deg)}
+    .submenu{padding-right:16px;overflow:hidden;transition:max-height .3s ease;max-height:0}.submenu:not(.hidden){max-height:500px}
+    .sub-link{display:flex;align-items:center;gap:10px;padding:10px 12px;color:var(--text-secondary);text-decoration:none;font-size:.9rem;border-radius:8px;margin-bottom:4px;border:1px solid transparent}.sub-link:active{background:var(--glass-bg)}.sub-link.active-submenu{background:var(--accent-blue);color:#fff !important;border-color:rgba(59,130,246,0.4);box-shadow:0 0 12px rgba(59,130,246,0.4)}
+    .btn-blue{border-color:rgba(59,130,246,0.3) !important}.btn-purple{border-color:rgba(168,85,247,0.3) !important}.btn-green{border-color:rgba(34,197,94,0.3) !important}.btn-cyan{border-color:rgba(6,182,212,0.3) !important}.btn-amber{border-color:rgba(245,158,11,0.3) !important}.btn-red{border-color:rgba(239,68,68,0.3) !important}.btn-teal{border-color:rgba(20,184,166,0.3) !important}.btn-lime{border-color:rgba(132,204,22,0.3) !important}.btn-orange{border-color:rgba(249,115,22,0.3) !important}.btn-pink{border-color:rgba(244,114,182,0.3) !important}
+    main{padding:16px;max-width:1200px;margin:0 auto}
+    .page-title{font-size:1.3rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.page-title .material-icons-round{color:var(--accent-lime);margin-left:10px}
+    .btn-sm{padding:8px 14px;border:none;border-radius:8px;font-size:.85rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;background:transparent;color:var(--text-primary)}.btn-sm:active{transform:scale(.98)}
+    .btn-add{background:var(--accent-lime);color:#0b0f19;box-shadow:0 4px 12px rgba(132,204,22,0.3)}
+    .search-bar{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;padding:12px;margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap}
+    .search-bar input,.search-bar select{padding:10px 14px;background:rgba(15,23,42,0.6);border:1px solid var(--glass-border);border-radius:8px;color:var(--text-primary);outline:none;flex:1;min-width:140px}.search-bar input:focus,.search-bar select:focus{border-color:var(--accent-blue)}
+    .grid-container{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:768px){.grid-container{grid-template-columns:repeat(2,1fr)}}@media(min-width:1024px){.grid-container{grid-template-columns:repeat(3,1fr)}}
+    .card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:16px;box-shadow:var(--glass-shadow);backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:12px;transition:transform .2s,opacity .3s;position:relative;overflow:hidden}.card:active{transform:scale(.98)}
+    .card.inactive{border:2px dashed rgba(239,68,68,0.5) !important;opacity:.75}.card.inactive::before{content:'⏸️ معطل';position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px;z-index:2;box-shadow:0 2px 8px rgba(239,68,68,0.5)}.card.inactive::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(239,68,68,0.05) 10px,rgba(239,68,68,0.05) 20px);pointer-events:none;z-index:1}
+    .card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.card-title{font-weight:700;font-size:1.05rem;color:var(--text-primary)}
+    .badge{font-size:.75rem;padding:4px 10px;border-radius:20px;font-weight:600}.badge.employee{background:rgba(59,130,246,0.2);color:var(--accent-blue)}.badge.business{background:rgba(245,158,11,0.2);color:var(--accent-amber)}
+    .card-info{display:flex;flex-direction:column;gap:6px;font-size:.85rem;color:var(--text-secondary)}.card-info span{display:flex;align-items:center;gap:6px}.card-info .material-icons-round{font-size:16px;color:var(--text-muted)}
+    .card-job{font-size:.8rem;color:var(--accent-cyan);background:rgba(6,182,212,0.1);padding:4px 10px;border-radius:6px;display:inline-block}
+    .card-notes{font-size:.8rem;color:var(--text-muted);font-style:italic;border-top:1px dashed var(--glass-border);padding-top:8px}
+    .card-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.action-btn{flex:1;min-width:32px;padding:8px;border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:.75rem}.action-btn:active{transform:scale(.95)}.action-btn.view{background:rgba(59,130,246,0.2);color:var(--accent-blue)}.action-btn.edit{background:rgba(245,158,11,0.2);color:var(--accent-amber)}.action-btn.delete{background:rgba(239,68,68,0.2);color:var(--accent-red)}.action-btn.toggle{background:rgba(34,197,94,0.2);color:var(--accent-green)}
+    .empty-state{text-align:center;padding:40px 20px;color:var(--text-muted)}.empty-state .material-icons-round{font-size:48px;margin-bottom:12px;opacity:.5}
+    .mobile-footer{position:fixed;bottom:0;left:0;right:0;height:var(--footer-height);padding-bottom:var(--safe-bottom);background:rgba(15,23,42,0.9);backdrop-filter:blur(12px);border-top:1px solid var(--glass-border);display:flex;align-items:center;justify-content:space-around;z-index:90}
+    .footer-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-decoration:none;color:var(--text-muted);padding:8px 12px;border-radius:12px;transition:all .2s;flex:1;max-width:20%}.footer-btn .material-icons-round{font-size:24px;transition:transform .2s}.footer-btn span:last-child{font-size:.7rem;font-weight:500}.footer-btn:active{transform:scale(.9);background:var(--glass-bg)}.footer-btn.active{color:var(--accent-blue)}.footer-btn.active .material-icons-round{transform:translateY(-2px)}
+    html.light-mode{--bg-page:#f0f9ff;--bg-main:radial-gradient(circle at 50% -20%,#f0f9ff 0%,#e0f2fe 100%) !important;--glass-bg:rgba(255,255,255,0.75) !important;--glass-border:rgba(59,130,246,0.2) !important;--glass-shadow:0 4px 15px rgba(59,130,246,0.08),inset 0 1px 1px rgba(59,130,246,0.1) !important;--text-primary:#1e293b !important;--text-secondary:#64748b !important;--text-muted:rgba(30,41,59,0.5) !important}
+    html.light-mode body{background:var(--bg-main)}html.light-mode main{background:linear-gradient(135deg,rgba(255,255,255,0.95) 0%,rgba(240,248,255,0.9) 100%) !important}html.light-mode .app-header{background:rgba(240,245,250,0.8) !important;border-bottom-color:rgba(59,130,246,0.15) !important}html.light-mode .menu-toggle{color:#1e293b !important}html.light-mode .theme-btn{background:rgba(59,130,246,0.08) !important;border-color:rgba(59,130,246,0.2) !important}html.light-mode .user-info span{color:#1e293b !important}html.light-mode .user-info small{color:rgba(30,41,59,0.6) !important}html.light-mode .sidebar{background:linear-gradient(165deg,rgba(219,234,254,0.8) 0%,rgba(240,249,255,0.7) 100%) !important;border-left-color:rgba(59,130,246,0.25) !important}html.light-mode .sidebar-overlay{background:rgba(30,41,59,0.4)}html.light-mode .nav-btn-3d{background:linear-gradient(145deg,rgba(255,255,255,0.8),rgba(241,245,249,0.6)) !important;border-color:rgba(59,130,246,0.2) !important;color:#1e293b !important}html.light-mode .sub-link{color:#64748b !important}html.light-mode .sub-link.active-submenu{background:#000 !important;color:#fff !important;border-color:rgba(0,0,0,0.5) !important}html.light-mode .mobile-footer{background:rgba(240,245,250,0.9) !important;border-top-color:rgba(59,130,246,0.15) !important}html.light-mode .footer-btn{color:#64748b !important}html.light-mode .footer-btn.active{color:#3b82f6 !important}html.light-mode .search-bar input,html.light-mode .search-bar select{background:rgba(59,130,246,0.05) !important;border-color:rgba(59,130,246,0.2) !important;color:#1e293b !important}html.light-mode .card{background:linear-gradient(135deg,rgba(255,255,255,0.95) 0%,rgba(240,248,255,0.9) 100%) !important;border-color:rgba(59,130,246,0.2) !important}html.light-mode .card.inactive{border-color:rgba(239,68,68,0.4) !important;opacity:.8}html.light-mode .card.inactive::after{background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(239,68,68,0.08) 10px,rgba(239,68,68,0.08) 20px)}html.light-mode .action-btn.view{background:rgba(59,130,246,0.1) !important}html.light-mode .action-btn.edit{background:rgba(245,158,11,0.1) !important}html.light-mode .action-btn.delete{background:rgba(239,68,68,0.1) !important}html.light-mode .action-btn.toggle{background:rgba(34,197,94,0.1) !important}.light-mode-icon{display:none}html.light-mode .light-mode-icon{display:inline-block !important}html.light-mode .dark-mode-icon{display:none !important}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:10px}html.light-mode ::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.3)}
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <button class="menu-toggle" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button>
+    <div class="header-controls">
+      <button class="theme-btn" onclick="toggleDarkMode()"><span class="material-icons-round dark-mode-icon">light_mode</span><span class="material-icons-round light-mode-icon">dark_mode</span></button>
+      <div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-btn-3d btn-blue"><span class="material-icons-round">dashboard</span><span>لوحة التحكم</span></a>
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green"><span class="material-icons-round">group</span><span>الزبائن</span><span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="customers-submenu" class="submenu hidden"><a href="customers.html" class="sub-link"><span class="material-icons-round">group</span>الزبائن</a><a href="add_customer.html" class="sub-link"><span class="material-icons-round">person_add</span>إضافة زبون جديد</a></div>
+      </div>
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('guarantors-submenu')" class="nav-btn-3d btn-lime active-link"><span class="material-icons-round">verified_user</span><span>الكفلاء</span><span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="guarantors-submenu" class="submenu"><a href="guarantors.html" class="sub-link active-submenu"><span class="material-icons-round">badge</span>قائمة الكفلاء</a><a href="add_guarantor.html" class="sub-link"><span class="material-icons-round">person_add</span>إضافة كفيل</a></div>
+      </div>
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('materials-submenu')" class="nav-btn-3d btn-orange"><span class="material-icons-round">inventory_2</span><span>المواد</span><span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="materials-submenu" class="submenu hidden"><a href="materials.html" class="sub-link"><span class="material-icons-round">list</span>المواد</a><a href="add_material.html" class="sub-link"><span class="material-icons-round">add_circle</span>إضافة مادة</a><a href="store.html" class="sub-link"><span class="material-icons-round">warehouse</span>المخزن</a></div>
+      </div>
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan"><span class="material-icons-round">receipt_long</span><span>الأقساط</span><span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="installments-submenu" class="submenu hidden"><a href="add_installment.html" class="sub-link"><span class="material-icons-round">add</span>إضافة قسط جديد</a><a href="installments.html" class="sub-link"><span class="material-icons-round">receipt_long</span>الأقساط</a><a href="incomplete_installments.html" class="sub-link"><span class="material-icons-round">hourglass_empty</span>الأقساط الغير مكتملة</a><a href="due_today_installments.html" class="sub-link"><span class="material-icons-round">priority_high</span>الأقساط المستحقة اليوم</a></div>
+      </div>
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal"><span class="material-icons-round">shopping_cart</span><span>المبيعات</span><span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="sales-submenu" class="submenu hidden"><a href="sales.html" class="sub-link"><span class="material-icons-round">shopping_cart</span>المبيعات</a><a href="add_sale.html" class="sub-link"><span class="material-icons-round">add_shopping_cart</span>إضافة بيع جديد</a><a href="archive.html" class="sub-link"><span class="material-icons-round">archive</span>الأرشيف</a></div>
+      </div>
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber"><span class="material-icons-round">analytics</span><span>التقارير</span><span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="reports-submenu" class="submenu hidden"><a href="monthly_payments_report.html" class="sub-link"><span class="material-icons-round">calendar_month</span>تقرير التسديدات الشهرية</a><a href="daily_payments_report.html" class="sub-link"><span class="material-icons-round">today</span>تقرير التسديدات اليومية</a><a href="monthly_sales_report.html" class="sub-link"><span class="material-icons-round">bar_chart</span>تقرير مبيعات شهري</a><a href="daily_sales_report.html" class="sub-link"><span class="material-icons-round">show_chart</span>تقرير مبيعات يومي</a><a href="monthly_dues_report.html" class="sub-link"><span class="material-icons-round">pending</span>تقرير المستحقات الشهري</a><a href="daily_dues_report.html" class="sub-link"><span class="material-icons-round">schedule</span>تقرير المستحقات اليومي</a></div>
+      </div>
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple"><span class="material-icons-round">badge</span><span>المدراء</span><span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="managers-submenu" class="submenu hidden"><a href="managers.html" class="sub-link"><span class="material-icons-round">badge</span>المدراء</a><a href="create_manager.html" class="sub-link"><span class="material-icons-round">person_add</span>إنشاء مدير</a><a href="permissions_groups.html" class="sub-link"><span class="material-icons-round">group</span>مجموعات الصلاحيات</a><a href="create_group.html" class="sub-link"><span class="material-icons-round">group_add</span>إنشاء مجموعة جديدة</a></div>
+      </div>
+      <a href="support.html" class="nav-btn-3d btn-pink"><span class="material-icons-round">support_agent</span><span>الدعم الفني</span></a>
+      <a href="backup.html" class="nav-btn-3d btn-teal"><span class="material-icons-round">backup</span><span>نسخ احتياطي</span></a>
+      <a href="settings.html" class="nav-btn-3d btn-amber"><span class="material-icons-round">settings</span><span>الإعدادات</span></a>
+      <a href="index.html" class="nav-btn-3d btn-red"><span class="material-icons-round">logout</span><span>تسجيل خروج</span></a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="page-title"><div><span class="material-icons-round">verified_user</span>قائمة الكفلاء</div><div><button class="btn-sm btn-add" onclick="window.location.href='add_guarantor.html'"><span class="material-icons-round">person_add</span> إضافة كفيل</button></div></div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="🔍 بحث بالاسم أو الهاتف..." oninput="filterData()">
+      <select id="typeFilter" onchange="filterData()"><option value="all">كل الأنواع</option><option value="employee">موظف</option><option value="business">كاسب</option></select>
+      <select id="statusFilter" onchange="filterData()"><option value="all">كل الحالات</option><option value="active">نشط</option><option value="inactive">معطل</option></select>
+    </div>
+    <div class="grid-container" id="dataGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <span class="material-icons-round">person_off</span><p>لا يوجد كفلاء لعرضهم حالياً</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px;">
+        <button class="btn-sm" onclick="window.location.href='add_guarantor.html'" style="background:var(--accent-lime);color:#0b0f19;border:none"><span class="material-icons-round">person_add</span> إضافة كفيل جديد</button>
+        <button class="btn-sm" onclick="window.location.href='view_guarantor.html'" style="background:rgba(59,130,246,0.2);color:var(--accent-blue);border:1px solid rgba(59,130,246,0.3)"><span class="material-icons-round">visibility</span> عرض معلومات الكفيل</button>
+        <button class="btn-sm" onclick="window.location.href='edit_guarantor.html'" style="background:rgba(245,158,11,0.2);color:var(--accent-amber);border:1px solid rgba(245,158,11,0.3)"><span class="material-icons-round">edit</span> تعديل بيانات كفيل</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mobile-footer">
+    <a href="home.html" class="footer-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a>
+    <a href="add_installment.html" class="footer-btn"><span class="material-icons-round">post_add</span><span>إضافة قسط</span></a>
+    <a href="monthly_payments_report.html" class="footer-btn"><span class="material-icons-round">analytics</span><span>التقارير</span></a>
+    <a href="installments.html" class="footer-btn"><span class="material-icons-round">receipt_long</span><span>الأقساط</span></a>
+    <a href="customers.html" class="footer-btn"><span class="material-icons-round">group</span><span>الزبائن</span></a>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');updateDarkModeIcon();checkActivePage();loadData()})
+    function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('sidebar-overlay').classList.toggle('active')}
+    const allSubmenus=['guarantors-submenu','materials-submenu','managers-submenu','customers-submenu','installments-submenu','sales-submenu','reports-submenu']
+    function toggleSubmenu(id){const s=document.getElementById(id);if(!s)return;const h=s.classList.contains('hidden');allSubmenus.forEach(x=>{const m=document.getElementById(x);if(m&&x!==id)m.classList.add('hidden')});s.classList.toggle('hidden',!h);const b=s.previousElementSibling;if(b)b.classList.toggle('expanded',h)}
+    function checkActivePage(){const p=window.location.pathname.split('/').pop()||'home.html';document.querySelectorAll('.nav-btn-3d,.sub-link,.footer-btn').forEach(e=>{if(e.getAttribute('href')===p){e.classList.add('active');if(e.classList.contains('sub-link'))e.classList.add('active-submenu')}})}
+    function toggleDarkMode(){const h=document.documentElement;h.classList.toggle('light-mode');localStorage.setItem('darkMode',h.classList.contains('light-mode')?'false':'true');updateDarkModeIcon()}
+    function updateDarkModeIcon(){const d=document.querySelector('.dark-mode-icon'),l=document.querySelector('.light-mode-icon');if(document.documentElement.classList.contains('light-mode')){if(d)d.classList.remove('hidden');if(l)l.classList.add('hidden')}else{if(d)d.classList.add('hidden');if(l)l.classList.remove('hidden')}}
+    
+    function loadData(){
+      const data=JSON.parse(localStorage.getItem('guarantors')||'[]');
+      const grid=document.getElementById('dataGrid'),empty=document.getElementById('emptyState');
+      if(data.length===0){grid.innerHTML='';empty.style.display='block';return}
+      empty.style.display='none';
+      grid.innerHTML=data.map(c=>`
+        <div class="card ${c.status==='inactive'?'inactive':''}" data-id="${c.id}">
+          <div class="card-header"><div class="card-title">${c.fullName}</div><span class="badge ${c.type}">${c.type==='employee'?'موظف':'كاسب'}</span></div>
+          <div class="card-info">
+            <span><span class="material-icons-round">phone</span>${c.phone}</span>
+            <span><span class="material-icons-round">location_on</span>${c.address.substring(0,35)}${c.address.length>35?'...':''}</span>
+            ${c.jobTitle?`<span class="card-job">📋 ${c.jobTitle}</span>`:''}
+          </div>
+          ${c.notes?`<div class="card-notes">📝 ${c.notes.substring(0,50)}${c.notes.length>50?'...':''}</div>`:''}
+          <div class="card-actions">
+            <button class="action-btn view" onclick="viewData(${c.id})" title="عرض"><span class="material-icons-round" style="font-size:16px">visibility</span></button>
+            <button class="action-btn edit" onclick="editData(${c.id})" title="تعديل"><span class="material-icons-round" style="font-size:16px">edit</span></button>
+            <button class="action-btn delete" onclick="deleteData(${c.id})" title="حذف"><span class="material-icons-round" style="font-size:16px">delete</span></button>
+            <button class="action-btn toggle" onclick="toggleStatus(${c.id})" title="${c.status==='inactive'?'تفعيل':'تعطيل'}"><span class="material-icons-round" style="font-size:16px">${c.status==='inactive'?'check_circle':'block'}</span></button>
+          </div>
+        </div>`).join('')
+    }
+    function filterData(){
+      const s=document.getElementById('searchInput').value.toLowerCase(),t=document.getElementById('typeFilter').value,st=document.getElementById('statusFilter').value;
+      document.querySelectorAll('.card').forEach(c=>{
+        const n=c.querySelector('.card-title').textContent.toLowerCase(),p=c.textContent,tc=c.querySelector('.badge').classList.contains('employee')?'employee':'business',ia=c.classList.contains('inactive');
+        c.style.display=(n.includes(s)||p.includes(s))&&(t==='all'||tc===t)&&(st==='all'||(st==='active'&&!ia)||(st==='inactive'&&ia))?'flex':'none'
+      })
+    }
+    function viewData(id){window.location.href=`view_guarantor.html?id=${id}`}
+    function editData(id){window.location.href=`edit_guarantor.html?id=${id}`}
+    function deleteData(id){if(confirm('⚠️ حذف هذا الكفيل؟ لا يمكن التراجع!')){let d=JSON.parse(localStorage.getItem('guarantors')||'[]');d=d.filter(c=>c.id!==id);localStorage.setItem('guarantors',JSON.stringify(d));loadData()}}
+    function toggleStatus(id){let d=JSON.parse(localStorage.getItem('guarantors')||'[]');const c=d.find(x=>x.id===id);if(c){c.status=c.status==='active'?'inactive':'active';localStorage.setItem('guarantors',JSON.stringify(d));loadData()}}
+  </script>
+</body>
+</html>

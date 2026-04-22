@@ -16,12 +16,15 @@
       --accent-blue: #3b82f6; --accent-green: #22c55e; --accent-cyan: #06b6d4;
       --accent-purple: #a855f7; --accent-red: #ef4444; --accent-amber: #f59e0b;
       --accent-lime: #84cc16; --accent-magenta: #ec4899; --accent-teal: #14b8a6;
+      --accent-orange: #f97316; --accent-pink: #f472b6;
       --header-height: 64px; --footer-height: 70px; --sidebar-width: 280px;
       --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: 'Cairo', sans-serif; }
     html, body { height: 100%; background: var(--bg-main); color: var(--text-primary); overflow-x: hidden; }
     body { padding-top: calc(var(--header-height) + var(--safe-top)); padding-bottom: calc(var(--footer-height) + var(--safe-bottom) + 20px); }
+    
+    /* Header Styles */
     .app-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); padding: 0 16px; padding-top: var(--safe-top); display: flex; align-items: center; justify-content: space-between; background: rgba(15,23,42,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); z-index: 100; }
     .menu-toggle { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--text-primary); cursor: pointer; border-radius: 10px; }
     .menu-toggle:active { background: var(--glass-bg); }
@@ -36,6 +39,8 @@
     .user-info { flex-direction: column; align-items: flex-end; background: transparent; border: none; padding: 0; }
     .user-info span { font-weight: 600; font-size: 0.9rem; }
     .user-info small { font-size: 0.7rem; color: var(--text-muted); }
+    
+    /* Sidebar Styles */
     .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 190; opacity: 0; visibility: hidden; transition: 0.3s; }
     .sidebar-overlay.active { opacity: 1; visibility: visible; }
     .sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: var(--sidebar-width); background: var(--glass-bg); backdrop-filter: blur(16px); border-left: 1px solid var(--glass-border); transform: translateX(100%); transition: transform 0.3s ease; z-index: 200; display: flex; flex-direction: column; padding-top: calc(var(--safe-top) + 16px); }
@@ -54,6 +59,8 @@
     .sub-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; border-radius: 8px; margin-bottom: 4px; border: 1px solid transparent; }
     .sub-link:active { background: var(--glass-bg); }
     .sub-link.active-submenu { background: var(--accent-blue); color: #fff !important; border-color: rgba(59,130,246,0.4); box-shadow: 0 0 12px rgba(59,130,246,0.4); }
+    
+    /* Button Color Classes */
     .btn-blue { border-color: rgba(59,130,246,0.3) !important; }
     .btn-purple { border-color: rgba(168,85,247,0.3) !important; }
     .btn-green { border-color: rgba(34,197,94,0.3) !important; }
@@ -61,6 +68,11 @@
     .btn-amber { border-color: rgba(245,158,11,0.3) !important; }
     .btn-red { border-color: rgba(239,68,68,0.3) !important; }
     .btn-teal { border-color: rgba(20,184,166,0.3) !important; }
+    .btn-lime { border-color: rgba(132,204,22,0.3) !important; }
+    .btn-orange { border-color: rgba(249,115,22,0.3) !important; }
+    .btn-pink { border-color: rgba(244,114,182,0.3) !important; }
+    
+    /* Main Content Styles */
     main { padding: 16px; max-width: 1200px; margin: 0 auto; }
     .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
     .section-title span { font-size: 0.8rem; font-weight: 400; color: var(--text-secondary); }
@@ -72,13 +84,22 @@
     .card-label { font-size: 0.8rem; color: var(--text-secondary); }
     .card-value { font-size: 1.2rem; font-weight: 700; }
     .card-value span { font-size: 0.8rem; font-weight: 500; margin-right: 4px; opacity: 0.8; }
-    .card-accent-blue { border-color: rgba(59,130,246,0.3); background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.2), transparent 70%), var(--glass-bg); }
+    
+    /* Card Accent Colors */
+    .card-accent-blue { border-color: rgba(59,130,246,0.3);
+       background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.2), transparent 70%), var(--glass-bg);
+       }
     .card-accent-green { border-color: rgba(34,197,94,0.3); background: radial-gradient(circle at 30% 30%, rgba(34,197,94,0.2), transparent 70%), var(--glass-bg); }
     .card-accent-cyan { border-color: rgba(6,182,212,0.3); background: radial-gradient(circle at 30% 30%, rgba(6,182,212,0.2), transparent 70%), var(--glass-bg); }
     .card-accent-purple { border-color: rgba(168,85,247,0.3); background: radial-gradient(circle at 30% 30%, rgba(168,85,247,0.2), transparent 70%), var(--glass-bg); }
     .card-accent-red { border-color: rgba(239,68,68,0.3); background: radial-gradient(circle at 30% 30%, rgba(239,68,68,0.2), transparent 70%), var(--glass-bg); }
     .card-accent-amber { border-color: rgba(245,158,11,0.3); background: radial-gradient(circle at 30% 30%, rgba(245,158,11,0.2), transparent 70%), var(--glass-bg); }
     .card-accent-magenta { border-color: rgba(236,72,153,0.3); background: radial-gradient(circle at 30% 30%, rgba(236,72,153,0.2), transparent 70%), var(--glass-bg); }
+    .card-accent-lime { border-color: rgba(132,204,22,0.3); background: radial-gradient(circle at 30% 30%, rgba(132,204,22,0.2), transparent 70%), var(--glass-bg); }
+    .card-accent-orange { border-color: rgba(249,115,22,0.3); background: radial-gradient(circle at 30% 30%, rgba(249,115,22,0.2), transparent 70%), var(--glass-bg); }
+    .card-accent-pink { border-color: rgba(244,114,182,0.3); background: radial-gradient(circle at 30% 30%, rgba(238, 130, 186, 0.2), transparent 70%), var(--glass-bg); }
+    
+    /* List Styles */
     .list-container { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 4px; margin-bottom: 24px; overflow: hidden; }
     .list-item { display: flex; flex-direction: column; padding: 14px; border-bottom: 1px solid var(--glass-border); gap: 6px; }
     .list-item:last-child { border-bottom: none; }
@@ -96,16 +117,20 @@
     .badge.edit { background: rgba(245,158,11,0.2); color: var(--accent-amber); }
     .view-all { display: block; text-align: center; padding: 12px; color: var(--accent-blue); font-weight: 600; text-decoration: none; border-top: 1px solid var(--glass-border); background: rgba(255,255,255,0.02); }
     .view-all:active { background: rgba(255,255,255,0.05); }
+    
+    /* Installment Item Styles */
     .installment-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-bottom: 1px solid var(--glass-border); }
     .installment-item:last-child { border-bottom: none; }
     .status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .status-dot.urgent { background: var(--accent-red); box-shadow: 0 0 8px rgba(239,68,68,0.6); }
+    .status-dot.urgent { background: var(--accent-red); box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
     .status-dot.close { background: var(--accent-amber); box-shadow: 0 0 8px rgba(245,158,11,0.6); }
     .status-dot.normal { background: var(--accent-cyan); box-shadow: 0 0 8px rgba(6,182,212,0.4); }
     .inst-details { flex: 1; }
     .inst-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
     .inst-time { font-size: 0.75rem; color: var(--text-muted); }
     .inst-amount { font-weight: 700; font-size: 1rem; white-space: nowrap; }
+    
+    /* Footer Styles */
     .mobile-footer { position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-height); padding-bottom: var(--safe-bottom); background: rgba(15,23,42,0.9); backdrop-filter: blur(12px); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-around; z-index: 90; }
     .footer-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--text-muted); padding: 8px 12px; border-radius: 12px; transition: all 0.2s; flex: 1; max-width: 20%; }
     .footer-btn .material-icons-round { font-size: 24px; transition: transform 0.2s; }
@@ -113,6 +138,8 @@
     .footer-btn:active { transform: scale(0.9); background: var(--glass-bg); }
     .footer-btn.active { color: var(--accent-blue); }
     .footer-btn.active .material-icons-round { transform: translateY(-2px); }
+    
+    /* Light Mode Styles */
     html.light-mode { --bg-page: #f0f9ff; --bg-main: radial-gradient(circle at 50% -20%, #f0f9ff 0%, #e0f2fe 100%) !important; --glass-bg: rgba(255,255,255,0.75) !important; --glass-border: rgba(59,130,246,0.2) !important; --glass-shadow: 0 4px 15px rgba(59,130,246,0.08), inset 0 1px 1px rgba(59,130,246,0.1) !important; --text-primary: #1e293b !important; --text-secondary: #64748b !important; --text-muted: rgba(30,41,59,0.5) !important; }
     html.light-mode body { background: var(--bg-main); }
     html.light-mode main { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; border-color: rgba(59,130,246,0.2) !important; }
@@ -135,15 +162,18 @@
     html.light-mode .footer-btn.active { color: #3b82f6 !important; }
     html.light-mode .footer-btn:active { background: rgba(59,130,246,0.08) !important; }
     html.light-mode h1, html.light-mode h2, html.light-mode h3, html.light-mode h4, html.light-mode h5, html.light-mode h6, html.light-mode p { color: #1e293b !important; }
-    html.light-mode .text-white, html.light-mode .text-white/95, html.light-mode .text-white/50, html.light-mode .text-white/40, html.light-mode .text-white/30, html.light-mode .text-white/20, html.light-mode .text-white/10 { color: #1e293b !important; }
+    html.light-mode .text-white, html.light-mode .text-white\/95, html.light-mode .text-white\/50, html.light-mode .text-white\/40, html.light-mode .text-white\/30, html.light-mode .text-white\/20, html.light-mode .text-white\/10 { color: #1e293b !important; }
     html.light-mode .material-icons-round { color: inherit !important; }
-    html.light-mode .card-accent-blue { border-color: rgba(59,130,246,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(219,234,254,0.7) 100%) !important; box-shadow: 0 0 40px rgba(59,130,246,0.25), inset 0 0 20px rgba(59,130,246,0.1) !important; }
-    html.light-mode .card-accent-green { border-color: rgba(34,197,94,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(220,252,231,0.7) 100%) !important; box-shadow: 0 0 40px rgba(34,197,94,0.25), inset 0 0 20px rgba(34,197,94,0.1) !important; }
-    html.light-mode .card-accent-cyan { border-color: rgba(6,182,212,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(6,182,212,0.15) 0%, rgba(6,182,212,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(207,250,254,0.7) 100%) !important; box-shadow: 0 0 40px rgba(6,182,212,0.25), inset 0 0 20px rgba(6,182,212,0.1) !important; }
-    html.light-mode .card-accent-purple { border-color: rgba(168,85,247,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(168,85,247,0.15) 0%, rgba(168,85,247,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(243,232,255,0.7) 100%) !important; box-shadow: 0 0 40px rgba(168,85,247,0.25), inset 0 0 20px rgba(168,85,247,0.1) !important; }
-    html.light-mode .card-accent-red { border-color: rgba(239,68,68,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(254,226,226,0.7) 100%) !important; box-shadow: 0 0 40px rgba(239,68,68,0.25), inset 0 0 20px rgba(239,68,68,0.1) !important; }
-    html.light-mode .card-accent-amber { border-color: rgba(245,158,11,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(245,158,11,0.15) 0%, rgba(245,158,11,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(254,243,199,0.7) 100%) !important; box-shadow: 0 0 40px rgba(245,158,11,0.25), inset 0 0 20px rgba(245,158,11,0.1) !important; }
-    html.light-mode .card-accent-magenta { border-color: rgba(236,72,153,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(236,72,153,0.15) 0%, rgba(236,72,153,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(252,231,243,0.7) 100%) !important; box-shadow: 0 0 40px rgba(236,72,153,0.25), inset 0 0 20px rgba(236,72,153,0.1) !important; }
+    html.light-mode .card-accent-blue { border-color: rgba(59,130,246,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(219,234,254,0.7) 100%) !important; box-shadow: 0 0 40px rgba(180, 185, 193, 0.25), inset 0 0 20px rgba(59,130,246,0.1) !important; }
+    html.light-mode .card-accent-green { border-color: rgba(34,197,94,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(220,252,231,0.7) 100%) !important; box-shadow: 0 0 40px rgba(189, 198, 192, 0.25), inset 0 0 20px rgba(34,197,94,0.1) !important; }
+    html.light-mode .card-accent-cyan { border-color: rgba(6,182,212,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(6,182,212,0.15) 0%, rgba(6,182,212,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(207,250,254,0.7) 100%) !important; box-shadow: 0 0 40px rgba(178, 185, 187, 0.25), inset 0 0 20px rgba(6,182,212,0.1) !important; }
+    html.light-mode .card-accent-purple { border-color: rgba(168,85,247,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(168,85,247,0.15) 0%, rgba(168,85,247,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(243,232,255,0.7) 100%) !important; box-shadow: 0 0 40px rgba(189, 183, 195, 0.25), inset 0 0 20px rgba(168,85,247,0.1) !important; }
+    html.light-mode .card-accent-red { border-color: rgba(239,68,68,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(254,226,226,0.7) 100%) !important; box-shadow: 0 0 40px rgba(199, 189, 189, 0.25), inset 0 0 20px rgba(239,68,68,0.1) !important; }
+    html.light-mode .card-accent-amber { border-color: rgba(245,158,11,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(245,158,11,0.15) 0%, rgba(245,158,11,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(254,243,199,0.7) 100%) !important; box-shadow: 0 0 40px rgba(201, 199, 194, 0.25), inset 0 0 20px rgba(245,158,11,0.1) !important; }
+    html.light-mode .card-accent-magenta { border-color: rgba(236,72,153,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(236,72,153,0.15) 0%, rgba(236,72,153,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(252,231,243,0.7) 100%) !important; box-shadow: 0 0 40px rgba(214, 205, 210, 0.25), inset 0 0 20px rgba(236,72,153,0.1) !important; }
+    html.light-mode .card-accent-lime { border-color: rgba(132,204,22,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(132,204,22,0.15) 0%, rgba(132,204,22,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(236,252,203,0.7) 100%) !important; box-shadow: 0 0 40px rgba(220, 225, 214, 0.25), inset 0 0 20px rgba(132,204,22,0.1) !important; }
+    html.light-mode .card-accent-orange { border-color: rgba(249,115,22,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(249,115,22,0.15) 0%, rgba(249,115,22,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,237,213,0.7) 100%) !important; box-shadow: 0 0 40px rgba(227, 224, 222, 0.25), inset 0 0 20px rgba(249,115,22,0.1) !important; }
+    html.light-mode .card-accent-pink { border-color: rgba(244,114,182,0.4) !important; background: radial-gradient(circle at 30% 30%, rgba(244,114,182,0.15) 0%, rgba(244,114,182,0.05) 40%, transparent 70%), linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(252,231,243,0.7) 100%) !important; box-shadow: 0 0 40px rgba(227, 221, 224, 0.25), inset 0 0 20px rgba(244,114,182,0.1) !important; }
     html.light-mode .badge { background: rgba(59,130,246,0.08) !important; color: #1e293b !important; }
     html.light-mode .badge.success { background: rgba(34,197,94,0.1) !important; }
     html.light-mode .badge.add { background: rgba(59,130,246,0.1) !important; }
@@ -153,6 +183,8 @@
     .light-mode-icon { display: none; }
     html.light-mode .light-mode-icon { display: inline-block !important; }
     html.light-mode .dark-mode-icon { display: none !important; }
+    
+    /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
@@ -160,112 +192,453 @@
   </style>
 </head>
 <body>
-  <!-- HEADER -->
+
+  <!-- ==================== HEADER ==================== -->
   <header class="app-header">
     <button class="menu-toggle" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button>
-    <div class="header-search"><span class="material-icons-round">search</span><input type="text" placeholder="بحث سريع..."></div>
     <div class="header-controls">
-      <div class="lang-toggle">العربية | EN</div>
-      <button class="theme-btn" onclick="toggleDarkMode()"><span class="material-icons-round dark-mode-icon">light_mode</span><span class="material-icons-round light-mode-icon">dark_mode</span></button>
-      <div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div>
+      <button class="theme-btn" onclick="toggleDarkMode()">
+        <span class="material-icons-round dark-mode-icon">light_mode</span>
+        <span class="material-icons-round light-mode-icon">dark_mode</span>
+      </button>
+      <div class="user-info">
+        <span>الحسن الساعدي</span>
+        <small>مدير النظام</small>
+      </div>
     </div>
   </header>
 
-  <!-- SIDEBAR -->
+  <!-- ==================== SIDEBAR ==================== -->
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
+    <div class="sidebar-header">
+      <span class="material-icons-round">shield</span>
+      <span class="material-icons-round">account_balance</span>
+      <span class="material-icons-round">trending_up</span>
+      <h2>نظام التميز</h2>
+    </div>
     <nav class="sidebar-nav">
-      <a href="home.html" class="nav-btn-3d btn-blue active-link"><span class="material-icons-round">dashboard</span><span>لوحة التحكم</span></a>
-      <div class="submenu-container"><button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple"><span class="material-icons-round">badge</span><span>المدراء</span><span class="material-icons-round expand-icon">expand_more</span></button>
-        <div id="managers-submenu" class="submenu hidden"><a href="managers.html" class="sub-link"><span class="material-icons-round">badge</span>المدراء</a><a href="create_manager.html" class="sub-link"><span class="material-icons-round">person_add</span>إنشاء مدير</a><a href="permissions_groups.html" class="sub-link"><span class="material-icons-round">group</span>مجموعات الصلاحيات</a><a href="create_group.html" class="sub-link"><span class="material-icons-round">group_add</span>إنشاء مجموعة جديدة</a></div></div>
-      <div class="submenu-container"><button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green"><span class="material-icons-round">group</span><span>الزبائن</span><span class="material-icons-round expand-icon">expand_more</span></button>
-        <div id="customers-submenu" class="submenu hidden"><a href="customers.html" class="sub-link"><span class="material-icons-round">group</span>الزبائن</a><a href="add_customer.html" class="sub-link"><span class="material-icons-round">person_add</span>إضافة زبون جديد</a></div></div>
-      <div class="submenu-container"><button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan"><span class="material-icons-round">receipt_long</span><span>الأقساط</span><span class="material-icons-round expand-icon">expand_more</span></button>
-        <div id="installments-submenu" class="submenu hidden"><a href="add_installment.html" class="sub-link"><span class="material-icons-round">add</span>إضافة قسط جديد</a><a href="installments.html" class="sub-link"><span class="material-icons-round">receipt_long</span>الأقساط</a><a href="incomplete_installments.html" class="sub-link"><span class="material-icons-round">hourglass_empty</span>الأقساط الغير مكتملة</a><a href="due_today_installments.html" class="sub-link"><span class="material-icons-round">priority_high</span>الأقساط المستحقة اليوم</a></div></div>
-      <div class="submenu-container"><button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal"><span class="material-icons-round">shopping_cart</span><span>المبيعات</span><span class="material-icons-round expand-icon">expand_more</span></button>
-        <div id="sales-submenu" class="submenu hidden"><a href="sales.html" class="sub-link"><span class="material-icons-round">shopping_cart</span>المبيعات</a><a href="add_sale.html" class="sub-link"><span class="material-icons-round">add_shopping_cart</span>إضافة بيع جديد</a><a href="archive.html" class="sub-link"><span class="material-icons-round">archive</span>الأرشيف</a></div></div>
-      <div class="submenu-container"><button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber"><span class="material-icons-round">analytics</span><span>التقارير</span><span class="material-icons-round expand-icon">expand_more</span></button>
-        <div id="reports-submenu" class="submenu hidden"><a href="monthly_payments_report.html" class="sub-link"><span class="material-icons-round">calendar_month</span>تقرير التسديدات الشهرية</a><a href="daily_payments_report.html" class="sub-link"><span class="material-icons-round">today</span>تقرير التسديدات اليومية</a><a href="monthly_sales_report.html" class="sub-link"><span class="material-icons-round">bar_chart</span>تقرير مبيعات شهري</a><a href="daily_sales_report.html" class="sub-link"><span class="material-icons-round">show_chart</span>تقرير مبيعات يومي</a><a href="monthly_dues_report.html" class="sub-link"><span class="material-icons-round">pending</span>تقرير المستحقات الشهري</a><a href="daily_dues_report.html" class="sub-link"><span class="material-icons-round">schedule</span>تقرير المستحقات اليومي</a></div></div>
-      <a href="backup.html" class="nav-btn-3d btn-teal"><span class="material-icons-round">backup</span><span>نسخ احتياطي</span></a>
-      <a href="settings.html" class="nav-btn-3d btn-amber"><span class="material-icons-round">settings</span><span>الإعدادات</span></a>
-      <a href="index.html" class="nav-btn-3d btn-red"><span class="material-icons-round">logout</span><span>تسجيل خروج</span></a>
+      
+      <!-- الرئيسية -->
+      <a href="home.html" class="nav-btn-3d btn-blue active-link">
+        <span class="material-icons-round">dashboard</span>
+        <span>لوحة التحكم</span>
+      </a>
+
+        <!-- الزبائن (منسدل) -->
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green">
+          <span class="material-icons-round">group</span>
+          <span>الزبائن</span>
+          <span class="material-icons-round expand-icon">expand_more</span>
+        </button>
+        <div id="customers-submenu" class="submenu hidden">
+          <a href="customers.html" class="sub-link"><span class="material-icons-round">group</span>الزبائن</a>
+          <a href="add_customer.html" class="sub-link"><span class="material-icons-round">person_add</span>إضافة زبون جديد</a>
+        </div>
+      </div>
+      <!-- الكفلاء (منسدل) -->
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('guarantors-submenu')" class="nav-btn-3d btn-lime">
+          <span class="material-icons-round">verified_user</span>
+          <span>الكفلاء</span>
+          <span class="material-icons-round expand-icon">expand_more</span>
+        </button>
+        <div id="guarantors-submenu" class="submenu hidden">
+          <a href="add_guarantor.html" class="sub-link">
+            <span class="material-icons-round">person_add</span>
+            إضافة كفيل
+          </a>
+          <a href="guarantors.html" class="sub-link">
+            <span class="material-icons-round">badge</span>
+            قائمة الكفلاء
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ المواد (منسدل) - يحتوي على: المواد، إضافة مادة، المخزن -->
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('materials-submenu')" class="nav-btn-3d btn-orange">
+          <span class="material-icons-round">inventory_2</span>
+          <span>المواد</span>
+          <span class="material-icons-round expand-icon">expand_more</span>
+        </button>
+        <div id="materials-submenu" class="submenu hidden">
+          <a href="materials.html" class="sub-link">
+            <span class="material-icons-round">list</span>
+            المواد
+          </a>
+          <a href="add_material.html" class="sub-link">
+            <span class="material-icons-round">add_circle</span>
+            إضافة مادة
+          </a>
+          <a href="store.html" class="sub-link">
+            <span class="material-icons-round">warehouse</span>
+            المخزن
+          </a>
+        </div>
+      </div>
+
+    
+
+     
+
+      <!-- الأقساط (منسدل) -->
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan">
+          <span class="material-icons-round">receipt_long</span>
+          <span>الأقساط</span>
+          <span class="material-icons-round expand-icon">expand_more</span>
+        </button>
+        <div id="installments-submenu" class="submenu hidden">
+          <a href="add_installment.html" class="sub-link"><span class="material-icons-round">add</span>إضافة قسط جديد</a>
+          <a href="installments.html" class="sub-link"><span class="material-icons-round">receipt_long</span>الأقساط</a>
+          <a href="incomplete_installments.html" class="sub-link"><span class="material-icons-round">hourglass_empty</span>الأقساط الغير مكتملة</a>
+          <a href="due_today_installments.html" class="sub-link"><span class="material-icons-round">priority_high</span>الأقساط المستحقة اليوم</a>
+        </div>
+      </div>
+
+      <!-- المبيعات (منسدل) -->
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal">
+          <span class="material-icons-round">shopping_cart</span>
+          <span>المبيعات</span>
+          <span class="material-icons-round expand-icon">expand_more</span>
+        </button>
+        <div id="sales-submenu" class="submenu hidden">
+          <a href="sales.html" class="sub-link"><span class="material-icons-round">shopping_cart</span>المبيعات</a>
+          <a href="add_sale.html" class="sub-link"><span class="material-icons-round">add_shopping_cart</span>إضافة بيع جديد</a>
+          <a href="archive.html" class="sub-link"><span class="material-icons-round">archive</span>الأرشيف</a>
+        </div>
+      </div>
+
+      <!-- التقارير (منسدل) -->
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber">
+          <span class="material-icons-round">analytics</span>
+          <span>التقارير</span>
+          <span class="material-icons-round expand-icon">expand_more</span>
+        </button>
+        <div id="reports-submenu" class="submenu hidden">
+          <a href="monthly_payments_report.html" class="sub-link"><span class="material-icons-round">calendar_month</span>تقرير التسديدات الشهرية</a>
+          <a href="daily_payments_report.html" class="sub-link"><span class="material-icons-round">today</span>تقرير التسديدات اليومية</a>
+          <a href="monthly_sales_report.html" class="sub-link"><span class="material-icons-round">bar_chart</span>تقرير مبيعات شهري</a>
+          <a href="daily_sales_report.html" class="sub-link"><span class="material-icons-round">show_chart</span>تقرير مبيعات يومي</a>
+          <a href="monthly_dues_report.html" class="sub-link"><span class="material-icons-round">pending</span>تقرير المستحقات الشهري</a>
+          <a href="daily_dues_report.html" class="sub-link"><span class="material-icons-round">schedule</span>تقرير المستحقات اليومي</a>
+        </div>
+      </div>
+  <!-- المدراء (منسدل) -->
+      <div class="submenu-container">
+        <button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple">
+          <span class="material-icons-round">badge</span>
+          <span>المدراء</span>
+          <span class="material-icons-round expand-icon">expand_more</span>
+        </button>
+        <div id="managers-submenu" class="submenu hidden">
+          <a href="managers.html" class="sub-link"><span class="material-icons-round">badge</span>المدراء</a>
+          <a href="create_manager.html" class="sub-link"><span class="material-icons-round">person_add</span>إنشاء مدير</a>
+          <a href="permissions_groups.html" class="sub-link"><span class="material-icons-round">group</span>مجموعات الصلاحيات</a>
+          <a href="create_group.html" class="sub-link"><span class="material-icons-round">group_add</span>إنشاء مجموعة جديدة</a>
+        </div>
+      </div>
+      <!-- ✅ الدعم الفني - زر واحد فقط ينقل لصفحة مستقلة -->
+      <a href="support.html" class="nav-btn-3d btn-pink">
+        <span class="material-icons-round">support_agent</span>
+        <span>الدعم الفني</span>
+      </a>
+
+      <!-- أدوات النظام -->
+      <a href="backup.html" class="nav-btn-3d btn-teal">
+        <span class="material-icons-round">backup</span>
+        <span>نسخ احتياطي</span>
+      </a>
+      <a href="settings.html" class="nav-btn-3d btn-amber">
+        <span class="material-icons-round">settings</span>
+        <span>الإعدادات</span>
+      </a>
+      
+      <a href="index.html" class="nav-btn-3d btn-red">
+        <span class="material-icons-round">logout</span>
+        <span>تسجيل خروج</span>
+      </a>
+
     </nav>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- ==================== MAIN CONTENT ==================== -->
   <main>
+    
+    <!-- بطاقات الإحصائيات -->
     <div class="stats-grid">
-      <div class="glass-premium card-accent-blue"><div class="card-icon" style="background:rgba(59,130,246,0.15);color:var(--accent-blue)"><span class="material-icons-round">payments</span></div><div class="card-label">جميع الأقساط</div><div class="card-value">124,500,000 <span>د.ع</span></div></div>
-      <div class="glass-premium card-accent-green"><div class="card-icon" style="background:rgba(34,197,94,0.15);color:var(--accent-green)"><span class="material-icons-round">task_alt</span></div><div class="card-label">الأقساط المكتملة</div><div class="card-value">8,200</div></div>
-      <div class="glass-premium card-accent-cyan"><div class="card-icon" style="background:rgba(6,182,212,0.15);color:var(--accent-cyan)"><span class="material-icons-round">hourglass_empty</span></div><div class="card-label">الاقساط الغير مكتملة</div><div class="card-value">4,250</div></div>
-      <div class="glass-premium card-accent-purple"><div class="card-icon" style="background:rgba(168,85,247,0.15);color:var(--accent-purple)"><span class="material-icons-round">priority_high</span></div><div class="card-label">الاقساط المستحقة اليوم</div><div class="card-value">12</div></div>
-      <div class="glass-premium card-accent-purple"><div class="card-icon" style="background:rgba(168,85,247,0.15);color:var(--accent-purple)"><span class="material-icons-round">shield_person</span></div><div class="card-label">مدراء النظام</div><div class="card-value">08</div></div>
-      <div class="glass-premium card-accent-red"><div class="card-icon" style="background:rgba(239,68,68,0.15);color:var(--accent-red)"><span class="material-icons-round">groups_3</span></div><div class="card-label">الزبائن</div><div class="card-value">1,200</div></div>
-      <div class="glass-premium card-accent-amber"><div class="card-icon" style="background:rgba(245,158,11,0.15);color:var(--accent-amber)"><span class="material-icons-round">monetization_on</span></div><div class="card-label">المبلغ الكلي للشهور الغير مدفوعة</div><div class="card-value">125k <span>د.ع</span></div></div>
-      <div class="glass-premium card-accent-magenta"><div class="card-icon" style="background:rgba(236,72,153,0.15);color:var(--accent-magenta)"><span class="material-icons-round">account_balance_wallet</span></div><div class="card-label">المبلغ الكلي للشهور المدفوعة</div><div class="card-value">45k <span>د.ع</span></div></div>
+      <div class="glass-premium card-accent-blue">
+        <div class="card-icon" style="background:rgba(59,130,246,0.15);color:var(--accent-blue)">
+          <span class="material-icons-round">payments</span>
+        </div>
+        <div class="card-label">جميع الأقساط</div>
+        <div class="card-value">124,500,000 <span>د.ع</span></div>
+      </div>
+      <div class="glass-premium card-accent-green">
+        <div class="card-icon" style="background:rgba(34,197,94,0.15);color:var(--accent-green)">
+          <span class="material-icons-round">task_alt</span>
+        </div>
+        <div class="card-label">الأقساط المكتملة</div>
+        <div class="card-value">8,200</div>
+      </div>
+      <div class="glass-premium card-accent-cyan">
+        <div class="card-icon" style="background:rgba(6,182,212,0.15);color:var(--accent-cyan)">
+          <span class="material-icons-round">hourglass_empty</span>
+        </div>
+        <div class="card-label">الاقساط الغير مكتملة</div>
+        <div class="card-value">4,250</div>
+      </div>
+      <div class="glass-premium card-accent-purple">
+        <div class="card-icon" style="background:rgba(168,85,247,0.15);color:var(--accent-purple)">
+          <span class="material-icons-round">priority_high</span>
+        </div>
+        <div class="card-label">الاقساط المستحقة اليوم</div>
+        <div class="card-value">12</div>
+      </div>
+      
+      <!-- الكفلاء -->
+      <div class="glass-premium card-accent-lime">
+        <div class="card-icon" style="background:rgba(132,204,22,0.15);color:var(--accent-lime)">
+          <span class="material-icons-round">verified_user</span>
+        </div>
+        <div class="card-label">الكفلاء</div>
+        <div class="card-value">08</div>
+      </div>
+      
+      <!-- المواد/المخزون -->
+      <div class="glass-premium card-accent-orange">
+        <div class="card-icon" style="background:rgba(249,115,22,0.15);color:var(--accent-orange)">
+          <span class="material-icons-round">inventory_2</span>
+        </div>
+        <div class="card-label">إجمالي المواد</div>
+        <div class="card-value">342</div>
+      </div>
+      
+      <div class="glass-premium card-accent-red">
+        <div class="card-icon" style="background:rgba(239,68,68,0.15);color:var(--accent-red)">
+          <span class="material-icons-round">groups_3</span>
+        </div>
+        <div class="card-label">الزبائن</div>
+        <div class="card-value">1,200</div>
+      </div>
+      <div class="glass-premium card-accent-amber">
+        <div class="card-icon" style="background:rgba(245,158,11,0.15);color:var(--accent-amber)">
+          <span class="material-icons-round">monetization_on</span>
+        </div>
+        <div class="card-label">المبلغ الكلي للشهور الغير مدفوعة</div>
+        <div class="card-value">125k <span>د.ع</span></div>
+      </div>
+      <div class="glass-premium card-accent-magenta">
+        <div class="card-icon" style="background:rgba(236,72,153,0.15);color:var(--accent-magenta)">
+          <span class="material-icons-round">account_balance_wallet</span>
+        </div>
+        <div class="card-label">المبلغ الكلي للشهور المدفوعة</div>
+        <div class="card-value">45k <span>د.ع</span></div>
+      </div>
     </div>
+
+    <!-- آخر العمليات -->
     <h2 class="section-title">آخر العمليات <span>آخر 24 ساعة</span></h2>
     <div class="list-container">
-      <div class="list-item"><div class="list-header"><span class="list-title">تسديد قسط - أحمد محمد</span><span class="list-meta">2024-01-24 14:30:00</span></div><div class="list-footer"><span class="amount success">+50,000</span><span class="badge success">نجحت</span></div></div>
-      <div class="list-item"><div class="list-header"><span class="list-title">إضافة قسط جديد - فاطمة علي</span><span class="list-meta">2024-01-24 12:15:00</span></div><div class="list-footer"><span class="amount pending">250,000</span><span class="badge add">إضافة</span></div></div>
-      <div class="list-item"><div class="list-header"><span class="list-title">تسديد قسط - علي حسن</span><span class="list-meta">2024-01-24 10:45:00</span></div><div class="list-footer"><span class="amount success">+75,000</span><span class="badge success">نجحت</span></div></div>
-      <div class="list-item"><div class="list-header"><span class="list-title">إضافة عميل جديد - خديجة محمود</span><span class="list-meta">2024-01-24 09:20:00</span></div><div class="list-footer"><span class="amount pending">عميل</span><span class="badge add">إضافة</span></div></div>
-      <div class="list-item"><div class="list-header"><span class="list-title">تحديث بيانات قسط - محمود إبراهيم</span><span class="list-meta">2024-01-24 08:00:00</span></div><div class="list-footer"><span class="amount edit">تعديل</span><span class="badge edit">محدّث</span></div></div>
+      <div class="list-item">
+        <div class="list-header">
+          <span class="list-title">تسديد قسط - أحمد محمد</span>
+          <span class="list-meta">2024-01-24 14:30:00</span>
+        </div>
+        <div class="list-footer">
+          <span class="amount success">+50,000</span>
+          <span class="badge success">نجحت</span>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-header">
+          <span class="list-title">إضافة قسط جديد - فاطمة علي</span>
+          <span class="list-meta">2024-01-24 12:15:00</span>
+        </div>
+        <div class="list-footer">
+          <span class="amount pending">250,000</span>
+          <span class="badge add">إضافة</span>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-header">
+          <span class="list-title">تسديد قسط - علي حسن</span>
+          <span class="list-meta">2024-01-24 10:45:00</span>
+        </div>
+        <div class="list-footer">
+          <span class="amount success">+75,000</span>
+          <span class="badge success">نجحت</span>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-header">
+          <span class="list-title">إضافة عميل جديد - خديجة محمود</span>
+          <span class="list-meta">2024-01-24 09:20:00</span>
+        </div>
+        <div class="list-footer">
+          <span class="amount pending">عميل</span>
+          <span class="badge add">إضافة</span>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-header">
+          <span class="list-title">تحديث بيانات قسط - محمود إبراهيم</span>
+          <span class="list-meta">2024-01-24 08:00:00</span>
+        </div>
+        <div class="list-footer">
+          <span class="amount edit">تعديل</span>
+          <span class="badge edit">محدّث</span>
+        </div>
+      </div>
       <a href="archive.html" class="view-all">عرض جميع العمليات →</a>
     </div>
+
+    <!-- الأقساط القريبة من الاستحقاق -->
     <h2 class="section-title">الأقساط القريبة من الاستحقاق</h2>
     <div class="list-container">
-      <div class="installment-item"><div class="status-dot urgent"></div><div class="inst-details"><div class="inst-name">أحمد محمد - آيفون 13</div><div class="inst-time">متبقي: 3 أيام</div></div><div class="inst-amount">50,000</div></div>
-      <div class="installment-item"><div class="status-dot close"></div><div class="inst-details"><div class="inst-name">فاطمة علي - لابتوب Dell</div><div class="inst-time">متبقي: 5 أيام</div></div><div class="inst-amount">125,000</div></div>
-      <div class="installment-item"><div class="status-dot normal"></div><div class="inst-details"><div class="inst-name">علي حسن - تكييف سامسونج</div><div class="inst-time">متبقي: 7 أيام</div></div><div class="inst-amount">200,000</div></div>
-      <div class="installment-item"><div class="status-dot normal"></div><div class="inst-details"><div class="inst-name">خديجة محمود - ثلاجة LG</div><div class="inst-time">متبقي: 8 أيام</div></div><div class="inst-amount">75,000</div></div>
-      <div class="installment-item"><div class="status-dot normal"></div><div class="inst-details"><div class="inst-name">محمود إبراهيم - تلفاز 55"</div><div class="inst-time">متبقي: 10 أيام</div></div><div class="inst-amount">300,000</div></div>
+      <div class="installment-item">
+        <div class="status-dot urgent"></div>
+        <div class="inst-details">
+          <div class="inst-name">أحمد محمد - آيفون 13</div>
+          <div class="inst-time">متبقي: 3 أيام</div>
+        </div>
+        <div class="inst-amount">50,000</div>
+      </div>
+      <div class="installment-item">
+        <div class="status-dot close"></div>
+        <div class="inst-details">
+          <div class="inst-name">فاطمة علي - لابتوب Dell</div>
+          <div class="inst-time">متبقي: 5 أيام</div>
+        </div>
+        <div class="inst-amount">125,000</div>
+      </div>
+      <div class="installment-item">
+        <div class="status-dot normal"></div>
+        <div class="inst-details">
+          <div class="inst-name">علي حسن - تكييف سامسونج</div>
+          <div class="inst-time">متبقي: 7 أيام</div>
+        </div>
+        <div class="inst-amount">200,000</div>
+      </div>
+      <div class="installment-item">
+        <div class="status-dot normal"></div>
+        <div class="inst-details">
+          <div class="inst-name">خديجة محمود - ثلاجة LG</div>
+          <div class="inst-time">متبقي: 8 أيام</div>
+        </div>
+        <div class="inst-amount">75,000</div>
+      </div>
+      <div class="installment-item">
+        <div class="status-dot normal"></div>
+        <div class="inst-details">
+          <div class="inst-name">محمود إبراهيم - تلفاز 55"</div>
+          <div class="inst-time">متبقي: 10 أيام</div>
+        </div>
+        <div class="inst-amount">300,000</div>
+      </div>
       <a href="due_today_installments.html" class="view-all">عرض جميع الأقساط المستحقة →</a>
     </div>
+
   </main>
 
-  <!-- FOOTER -->
-  <footer class="mobile-footer">
-    <a href="home.html" class="footer-btn active"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a>
-    <a href="installments.html" class="footer-btn"><span class="material-icons-round">receipt_long</span><span>الأقساط</span></a>
-    <a href="sales.html" class="footer-btn"><span class="material-icons-round">shopping_cart</span><span>المبيعات</span></a>
-    <a href="monthly_payments_report.html" class="footer-btn"><span class="material-icons-round">analytics</span><span>التقارير</span></a>
-    <a href="settings.html" class="footer-btn"><span class="material-icons-round">settings</span><span>الإعدادات</span></a>
-  </footer>
+  <!-- ==================== FOOTER ==================== -->
+ <footer class="mobile-footer">
+  <a href="home.html" class="footer-btn active">
+    <span class="material-icons-round">dashboard</span>
+    <span>الرئيسية</span>
+  </a>
+  <a href="add_installment.html" class="footer-btn">
+    <span class="material-icons-round">post_add</span>
+    <span>إضافة قسط</span>
+  </a>
+  <a href="monthly_payments_report.html" class="footer-btn">
+    <span class="material-icons-round">analytics</span>
+    <span>التقارير</span>
+  </a>
+  <a href="installments.html" class="footer-btn">
+    <span class="material-icons-round">receipt_long</span>
+    <span>الأقساط</span>
+  </a>
+  <a href="customers.html" class="footer-btn">
+    <span class="material-icons-round">group</span>
+    <span>الزبائن</span>
+  </a>
+</footer>
 
+  <!-- ==================== JAVASCRIPT ==================== -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage();
+      updateDarkModeIcon(); 
+      checkActivePage();
     });
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebar-overlay').classList.toggle('active'); }
-    const allSubmenus = ['managers-submenu','customers-submenu','installments-submenu','sales-submenu','reports-submenu'];
-    function toggleSubmenu(id) {
-      const sub = document.getElementById(id); if(!sub) return;
-      const hidden = sub.classList.contains('hidden');
-      allSubmenus.forEach(s => { const m=document.getElementById(s); if(m && s!==id) m.classList.add('hidden'); });
-      sub.classList.toggle('hidden', !hidden);
-      const btn = sub.previousElementSibling; if(btn) btn.classList.toggle('expanded', hidden);
+
+    function toggleSidebar() { 
+      document.getElementById('sidebar').classList.toggle('active'); 
+      document.getElementById('sidebar-overlay').classList.toggle('active'); 
     }
+
+    // ✅ تم تحديث قائمة القوائم المنسدلة (بدون support-submenu لأنه زر مستقل)
+    const allSubmenus = [
+      'guarantors-submenu',
+      'materials-submenu',
+      'managers-submenu',
+      'customers-submenu',
+      'installments-submenu',
+      'sales-submenu',
+      'reports-submenu'
+    ];
+
+    function toggleSubmenu(id) {
+      const sub = document.getElementById(id); 
+      if(!sub) return;
+      const hidden = sub.classList.contains('hidden');
+      allSubmenus.forEach(s => { 
+        const m = document.getElementById(s); 
+        if(m && s!==id) m.classList.add('hidden'); 
+      });
+      sub.classList.toggle('hidden', !hidden);
+      const btn = sub.previousElementSibling; 
+      if(btn) btn.classList.toggle('expanded', hidden);
+    }
+
     function checkActivePage() {
       const page = window.location.pathname.split('/').pop() || 'home.html';
       document.querySelectorAll('.nav-btn-3d, .sub-link, .footer-btn').forEach(el => {
-        if(el.getAttribute('href')===page) { el.classList.add('active'); if(el.classList.contains('sub-link')) el.classList.add('active-submenu'); }
+        if(el.getAttribute('href')===page) { 
+          el.classList.add('active'); 
+          if(el.classList.contains('sub-link')) el.classList.add('active-submenu'); 
+        }
       });
       document.querySelectorAll('.sub-link.active-submenu').forEach(link => {
-        const parent = link.closest('.submenu'); if(parent) { parent.classList.remove('hidden'); parent.previousElementSibling.classList.add('expanded'); }
+        const parent = link.closest('.submenu'); 
+        if(parent) { 
+          parent.classList.remove('hidden'); 
+          parent.previousElementSibling.classList.add('expanded'); 
+        }
       });
     }
+
     function toggleDarkMode() {
-      const h = document.documentElement; h.classList.toggle('light-mode');
+      const h = document.documentElement; 
+      h.classList.toggle('light-mode');
       localStorage.setItem('darkMode', h.classList.contains('light-mode') ? 'false' : 'true');
       updateDarkModeIcon();
     }
+
     function updateDarkModeIcon() {
       const d = document.querySelector('.dark-mode-icon'), l = document.querySelector('.light-mode-icon');
-      if(document.documentElement.classList.contains('light-mode')) { if(d)d.classList.remove('hidden'); if(l)l.classList.add('hidden'); }
-      else { if(d)d.classList.add('hidden'); if(l)l.classList.remove('hidden'); }
+      if(document.documentElement.classList.contains('light-mode')) { 
+        if(d) d.classList.remove('hidden'); 
+        if(l) l.classList.add('hidden'); 
+      } else { 
+        if(d) d.classList.add('hidden'); 
+        if(l) l.classList.remove('hidden'); 
+      }
     }
   </script>
 </body>

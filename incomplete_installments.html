@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
-  <title>نظام التميز - إضافة قسط</title>
+  <title>نظام التميز - الأقساط غير المكتملة</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <style>
@@ -62,32 +62,41 @@
     .btn-orange { border-color: rgba(249,115,22,0.3) !important; }
     .btn-pink { border-color: rgba(244,114,182,0.3) !important; }
     
-    /* Form Styles */
-    main { padding: 16px; max-width: 800px; margin: 0 auto; }
-    .page-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-    .page-title .material-icons-round { color: var(--accent-cyan); }
-    .form-container { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; box-shadow: var(--glass-shadow); backdrop-filter: blur(10px); }
-    .form-group { margin-bottom: 16px; }
-    .form-label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
-    .form-label .optional { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); margin-right: 4px; }
-    .form-input, .form-select { width: 100%; padding: 12px 14px; background: rgba(15,23,42,0.6); border: 1px solid var(--glass-border); border-radius: 10px; color: var(--text-primary); font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
-    .form-input:focus, .form-select:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
-    .form-row { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    @media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+    /* Main Styles */
+    main { padding: 16px; max-width: 1200px; margin: 0 auto; }
+    .page-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .page-title .material-icons-round { color: var(--accent-amber); margin-left: 10px; }
     
-    .type-toggle { display: flex; gap: 8px; background: rgba(15,23,42,0.6); border: 1px solid var(--glass-border); border-radius: 10px; padding: 4px; }
-    .type-option { flex: 1; padding: 10px; text-align: center; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; color: var(--text-secondary); }
-    .type-option.active { background: var(--accent-cyan); color: #0b0f19; box-shadow: 0 4px 12px rgba(6,182,212,0.3); }
-    .type-option input { display: none; }
+    .section-title { font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
+    .section-title .material-icons-round { color: var(--accent-amber); }
     
-    .calc-result { background: rgba(59,130,246,0.1); border: 1px dashed rgba(59,130,246,0.3); border-radius: 10px; padding: 12px; margin-top: 12px; font-size: 0.9rem; }
-    .calc-result strong { color: var(--accent-blue); }
+    .grid-container { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
+    @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid-container { grid-template-columns: repeat(3, 1fr); } }
     
-    .form-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
-    .btn { flex: 1; min-width: 120px; padding: 12px 20px; border: none; border-radius: 10px; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
-    .btn:active { transform: scale(0.98); }
-    .btn-primary { background: var(--accent-cyan); color: #0b0f19; }
-    .btn-secondary { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); }
+    .card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px; box-shadow: var(--glass-shadow); backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 10px; transition: transform 0.2s; position: relative; }
+    .card:active { transform: scale(0.98); }
+    .card.urgent { border: 2px solid rgba(239,68,68,0.5); }
+    .card.urgent::before { content: '🔴 مستحق اليوم'; position: absolute; top: 12px; left: 12px; background: var(--accent-red); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; z-index: 2; }
+    
+    .card-title { font-weight: 700; font-size: 1.05rem; color: var(--text-primary); }
+    .card-info { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); }
+    .card-info span { display: flex; align-items: center; gap: 6px; }
+    .card-info .material-icons-round { font-size: 16px; color: var(--text-muted); }
+    
+    .due-badge { display: inline-flex; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-top: 4px; }
+    .due-badge.today { background: rgba(239,68,68,0.2); color: var(--accent-red); }
+    .due-badge.soon { background: rgba(245,158,11,0.2); color: var(--accent-amber); }
+    .due-badge.later { background: rgba(59,130,246,0.2); color: var(--accent-blue); }
+    
+    .card-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .action-btn { flex: 1; min-width: 32px; padding: 8px; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 0.75rem; }
+    .action-btn:active { transform: scale(0.95); }
+    .action-btn.view { background: rgba(59,130,246,0.2); color: var(--accent-blue); }
+    .action-btn.whatsapp { background: rgba(37,211,102,0.2); color: #25D366; }
+    
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+    .empty-state .material-icons-round { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
     
     /* Footer Styles */
     .mobile-footer { position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-height); padding-bottom: var(--safe-bottom); background: rgba(15,23,42,0.9); backdrop-filter: blur(12px); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-around; z-index: 90; }
@@ -113,11 +122,9 @@
     html.light-mode .mobile-footer { background: rgba(240,245,250,0.9) !important; border-top-color: rgba(59,130,246,0.15) !important; }
     html.light-mode .footer-btn { color: #64748b !important; }
     html.light-mode .footer-btn.active { color: #3b82f6 !important; }
-    html.light-mode .form-input, html.light-mode .form-select { background: rgba(59,130,246,0.05) !important; border-color: rgba(59,130,246,0.2) !important; color: #1e293b !important; }
-    html.light-mode .type-toggle { background: rgba(59,130,246,0.05) !important; border-color: rgba(59,130,246,0.2) !important; }
-    html.light-mode .type-option { color: #64748b !important; }
-    html.light-mode .calc-result { background: rgba(59,130,246,0.08) !important; border-color: rgba(59,130,246,0.3) !important; }
-    html.light-mode .btn-secondary { background: rgba(59,130,246,0.08) !important; border-color: rgba(59,130,246,0.2) !important; color: #1e293b !important; }
+    html.light-mode .card { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; border-color: rgba(59,130,246,0.2) !important; }
+    html.light-mode .action-btn.view { background: rgba(59,130,246,0.1) !important; }
+    html.light-mode .action-btn.whatsapp { background: rgba(37,211,102,0.1) !important; }
     .light-mode-icon { display: none; }
     html.light-mode .light-mode-icon { display: inline-block !important; }
     html.light-mode .dark-mode-icon { display: none !important; }
@@ -179,9 +186,9 @@
           <span class="material-icons-round">receipt_long</span><span>الأقساط</span><span class="material-icons-round expand-icon">expand_more</span>
         </button>
         <div id="installments-submenu" class="submenu">
-          <a href="add_installment.html" class="sub-link active-submenu"><span class="material-icons-round">add</span>إضافة قسط جديد</a>
+          <a href="add_installment.html" class="sub-link"><span class="material-icons-round">add</span>إضافة قسط جديد</a>
           <a href="installments.html" class="sub-link"><span class="material-icons-round">receipt_long</span>الأقساط</a>
-          <a href="incomplete_installments.html" class="sub-link"><span class="material-icons-round">hourglass_empty</span>الأقساط الغير مكتملة</a>
+          <a href="incomplete_installments.html" class="sub-link active-submenu"><span class="material-icons-round">hourglass_empty</span>الأقساط الغير مكتملة</a>
           <a href="due_today_installments.html" class="sub-link"><span class="material-icons-round">priority_high</span>الأقساط المستحقة اليوم</a>
         </div>
       </div>
@@ -228,100 +235,36 @@
 
   <!-- ==================== MAIN CONTENT ==================== -->
   <main>
-    <h1 class="page-title"><span class="material-icons-round">add</span>إضافة قسط جديد</h1>
-    
-    <form class="form-container" id="addForm" onsubmit="saveInstallment(event)">
-      <div class="form-group">
-        <label class="form-label">الزبون *</label>
-        <select class="form-select" id="customer" required onchange="updateFromCustomer()">
-          <option value="">اختر الزبون...</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">الكفيل <span class="optional">(اختياري)</span></label>
-        <select class="form-select" id="guarantor">
-          <option value="">بدون كفيل</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">المادة *</label>
-        <select class="form-select" id="material" required onchange="updateFromMaterial()">
-          <option value="">اختر المادة...</option>
-        </select>
-      </div>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">المبلغ الكلي (د.ع) *</label>
-          <input type="number" class="form-input" id="totalAmount" placeholder="0" min="1" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">عدد الدفعات *</label>
-          <input type="number" class="form-input" id="totalCount" placeholder="مثال: 12" min="1" value="12" required>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">نوع القسط *</label>
-        <div class="type-toggle">
-          <label class="type-option active" onclick="selectType('monthly', this)">
-            <input type="radio" name="type" value="monthly" checked> شهري
-          </label>
-          <label class="type-option" onclick="selectType('weekly', this)">
-            <input type="radio" name="type" value="weekly"> أسبوعي
-          </label>
-          <label class="type-option" onclick="selectType('daily', this)">
-            <input type="radio" name="type" value="daily"> يومي
-          </label>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">تاريخ البدء *</label>
-        <input type="date" class="form-input" id="startDate" required>
-      </div>
-      
-      <div class="calc-result" id="calcResult" style="display:none">
-        💡 سيتم تقسيم <strong id="calcTotal">0</strong> د.ع على <strong id="calcCount">0</strong> دفعات → <strong id="calcPer">0</strong> د.ع لكل <span id="calcType">شهر</span>
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">ملاحظات <span class="optional">(اختياري)</span></label>
-        <input type="text" class="form-input" id="notes" placeholder="أي معلومات إضافية...">
-      </div>
-      
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">
-          <span class="material-icons-round">save</span> حفظ القسط
-        </button>
-        <button type="button" class="btn btn-secondary" onclick="location.href='installments.html'">
-          <span class="material-icons-round">arrow_back</span> رجوع
-        </button>
-      </div>
-    </form>
+    <div class="page-title">
+      <div><span class="material-icons-round">hourglass_empty</span>الأقساط غير المكتملة</div>
+    </div>
+
+    <!-- الأقساط المستحقة اليوم -->
+    <h2 class="section-title"><span class="material-icons-round">priority_high</span>مستحقة اليوم</h2>
+    <div class="grid-container" id="todayGrid"></div>
+    <div class="empty-state" id="todayEmpty" style="display:none"><span class="material-icons-round">check_circle</span><p>لا توجد أقساط مستحقة اليوم 🎉</p></div>
+
+    <!-- الأقساط غير المكتملة الأخرى -->
+    <h2 class="section-title"><span class="material-icons-round">hourglass_empty</span>غير مكتملة الأخرى</h2>
+    <div class="grid-container" id="incompleteGrid"></div>
+    <div class="empty-state" id="incompleteEmpty" style="display:none"><span class="material-icons-round">check_circle</span><p>جميع الأقساط مكتملة ✅</p></div>
   </main>
 
   <!-- ==================== FOOTER ==================== -->
   <footer class="mobile-footer">
     <a href="home.html" class="footer-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a>
-    <a href="add_installment.html" class="footer-btn active"><span class="material-icons-round">post_add</span><span>إضافة قسط</span></a>
+    <a href="add_installment.html" class="footer-btn"><span class="material-icons-round">post_add</span><span>إضافة قسط</span></a>
     <a href="monthly_payments_report.html" class="footer-btn"><span class="material-icons-round">analytics</span><span>التقارير</span></a>
     <a href="installments.html" class="footer-btn"><span class="material-icons-round">receipt_long</span><span>الأقساط</span></a>
-    <a href="customers.html" class="footer-btn"><span class="material-icons-round">group</span><span>الزبائن</span></a>
+    <a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a>
   </footer>
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage();
-      populateSelects();
-      document.getElementById('startDate').valueAsDate = new Date();
-      calculateInstallment();
+      updateDarkModeIcon(); checkActivePage(); loadIncomplete();
     });
-    
     function toggleSidebar() { 
       document.getElementById('sidebar').classList.toggle('active'); 
       document.getElementById('sidebar-overlay').classList.toggle('active'); 
@@ -351,111 +294,76 @@
       else { if(d)d.classList.add('hidden'); if(l)l.classList.remove('hidden'); }
     }
     
-    function populateSelects() {
-      const customers = JSON.parse(localStorage.getItem('customers')||'[]');
-      const guarantors = JSON.parse(localStorage.getItem('guarantors')||'[]');
-      const materials = JSON.parse(localStorage.getItem('materials')||'[]');
+    function loadIncomplete() {
+      const today = new Date().toISOString().split('T')[0];
+      const all = JSON.parse(localStorage.getItem('installments')||'[]');
       
-      const custSel = document.getElementById('customer');
-      customers.forEach(c => {
-        if(c.status !== 'inactive') custSel.innerHTML += `<option value="${c.id}">${c.fullName}</option>`;
-      });
+      const todayGrid = document.getElementById('todayGrid');
+      const incompleteGrid = document.getElementById('incompleteGrid');
+      const todayEmpty = document.getElementById('todayEmpty');
+      const incompleteEmpty = document.getElementById('incompleteEmpty');
       
-      const guarSel = document.getElementById('guarantor');
-      guarantors.forEach(g => {
-        if(g.status !== 'inactive') guarSel.innerHTML += `<option value="${g.id}">${g.fullName}</option>`;
-      });
+      const todayDue = [], incomplete = [];
       
-      const matSel = document.getElementById('material');
-      materials.forEach(m => {
-        if(m.status !== 'inactive') matSel.innerHTML += `<option value="${m.id}" data-price="${m.price}">${m.name} - ${m.price} د.ع</option>`;
-      });
-    }
-    
-    function updateFromCustomer() {
-      // يمكن إضافة منطق لجلب بيانات الزبون تلقائياً
-    }
-    
-    function updateFromMaterial() {
-      const mat = document.getElementById('material');
-      const price = mat.options[mat.selectedIndex]?.dataset.price;
-      if(price) document.getElementById('totalAmount').value = price;
-      calculateInstallment();
-    }
-    
-    function selectType(type, el) {
-      document.querySelectorAll('.type-option').forEach(e => e.classList.remove('active'));
-      el.classList.add('active');
-      calculateInstallment();
-    }
-    
-    function calculateInstallment() {
-      const total = parseFloat(document.getElementById('totalAmount').value) || 0;
-      const count = parseInt(document.getElementById('totalCount').value) || 1;
-      const type = document.querySelector('input[name="type"]:checked').value;
-      const per = total / count;
-      
-      document.getElementById('calcTotal').textContent = total.toLocaleString();
-      document.getElementById('calcCount').textContent = count;
-      document.getElementById('calcPer').textContent = per.toLocaleString(undefined, {maximumFractionDigits:0});
-      document.getElementById('calcType').textContent = type === 'daily' ? 'يوم' : type === 'weekly' ? 'أسبوع' : 'شهر';
-      document.getElementById('calcResult').style.display = 'block';
-    }
-    
-    document.getElementById('totalAmount').addEventListener('input', calculateInstallment);
-    document.getElementById('totalCount').addEventListener('input', calculateInstallment);
-    
-    function saveInstallment(e) {
-      e.preventDefault();
-      const total = parseFloat(document.getElementById('totalAmount').value);
-      const count = parseInt(document.getElementById('totalCount').value);
-      const type = document.querySelector('input[name="type"]:checked').value;
-      const per = total / count;
-      const start = new Date(document.getElementById('startDate').value);
-      
-      // إنشاء جدول الدفعات
-      const schedule = [];
-      for(let i=0; i<count; i++) {
-        const due = new Date(start);
-        if(type === 'daily') due.setDate(due.getDate() + i);
-        else if(type === 'weekly') due.setDate(due.getDate() + i*7);
-        else due.setMonth(due.getMonth() + i);
+      all.forEach(inst => {
+        if(inst.status === 'paid') return;
+        const nextDue = (inst.schedule||[]).find(p => !p.paid)?.dueDate;
+        if(!nextDue) return;
         
-        schedule.push({
-          index: i+1,
-          dueDate: due.toISOString().split('T')[0],
-          amount: Math.round(per),
-          paid: false
-        });
+        if(nextDue === today) todayDue.push({...inst, dueDate: nextDue});
+        else incomplete.push({...inst, dueDate: nextDue});
+      });
+      
+      // عرض مستحقات اليوم
+      if(todayDue.length === 0) { todayGrid.innerHTML = ''; todayEmpty.style.display = 'block'; }
+      else {
+        todayEmpty.style.display = 'none';
+        todayGrid.innerHTML = todayDue.map(inst => renderCard(inst, true)).join('');
       }
       
-      const installment = {
-        id: Date.now(),
-        customerName: document.getElementById('customer').options[document.getElementById('customer').selectedIndex]?.text || '',
-        customerId: document.getElementById('customer').value,
-        guarantorName: document.getElementById('guarantor').options[document.getElementById('guarantor').selectedIndex]?.text || null,
-        guarantorId: document.getElementById('guarantor').value || null,
-        materialName: document.getElementById('material').options[document.getElementById('material').selectedIndex]?.text.split(' - ')[0] || '',
-        materialId: document.getElementById('material').value,
-        totalAmount: total,
-        totalCount: count,
-        paidCount: 0,
-        paidAmount: 0,
-        type: type,
-        startDate: document.getElementById('startDate').value,
-        notes: document.getElementById('notes').value,
-        status: 'pending',
-        schedule: schedule,
-        createdAt: new Date().toLocaleString('ar-IQ')
-      };
-      
-      let data = JSON.parse(localStorage.getItem('installments') || '[]');
-      data.push(installment);
-      localStorage.setItem('installments', JSON.stringify(data));
-      
-      alert('✅ تم إضافة القسط بنجاح');
-      location.href = 'installments.html';
+      // عرض غير المكتملة الأخرى
+      if(incomplete.length === 0) { incompleteGrid.innerHTML = ''; incompleteEmpty.style.display = 'block'; }
+      else {
+        incompleteEmpty.style.display = 'none';
+        incompleteGrid.innerHTML = incomplete.map(inst => renderCard(inst, false)).join('');
+      }
     }
+    
+    function renderCard(inst, isToday) {
+      const remaining = inst.totalAmount - (inst.paidAmount||0);
+      const dueBadge = isToday ? `<span class="due-badge today">🔴 اليوم</span>` : 
+                      (new Date(inst.dueDate) < new Date() ? `<span class="due-badge today">⚠️ متأخر</span>` : `<span class="due-badge soon">⏳ ${inst.dueDate}</span>`);
+      
+      return `
+        <div class="card ${isToday?'urgent':''}">
+          ${dueBadge}
+          <div class="card-title" style="margin-top:16px">${inst.customerName}</div>
+          <div class="card-info">
+            <span><span class="material-icons-round">inventory_2</span> ${inst.materialName}</span>
+            ${inst.guarantorName ? `<span><span class="material-icons-round">verified_user</span> ${inst.guarantorName}</span>` : ''}
+            <span><span class="material-icons-round">payments</span> المتبقي: ${remaining.toLocaleString()} د.ع</span>
+            <span><span class="material-icons-round">calendar_today</span> ${inst.type === 'daily' ? 'يومي' : inst.type === 'weekly' ? 'أسبوعي' : 'شهري'}</span>
+          </div>
+          <div class="card-actions">
+            <button class="action-btn view" onclick="location.href='view_installment.html?id=${inst.id}'">👁️ عرض</button>
+            <button class="action-btn whatsapp" onclick="sendReminder(${inst.id}, '${inst.customerName}', ${remaining}, '${inst.dueDate}')">📱 تذكير واتساب</button>
+          </div>
+        </div>`;
+    }
+    
+    function sendReminder(id, name, amount, dueDate) {
+      const isToday = dueDate === new Date().toISOString().split('T')[0];
+      const isOverdue = new Date(dueDate) < new Date();
+      const msg = isOverdue ? 
+        `⚠️ *تنبيه تأخير*%0A%0Aعزيزي ${name}،%0Aنود تذكيركم بأن قسطكم بقيمة ${amount.toLocaleString()} د.ع كان مستحقاً في ${dueDate}.%0A%0Aيرجى السداد في أقرب وقت لتجنب أي رسوم تأخير.%0A%0Aشكراً لتعاونكم!` :
+        isToday ? 
+        `🔔 *تذكير استحقاق*%0A%0Aعزيزي ${name}،%0Aنود تذكيركم بأن قسطكم بقيمة ${amount.toLocaleString()} د.ع مستحق اليوم ${dueDate}.%0A%0Aشكراً لالتزامكم!` :
+        `📅 *تذكير مسبق*%0A%0Aعزيزي ${name}،%0Aنود تذكيركم بأن قسطكم بقيمة ${amount.toLocaleString()} د.ع سيكون مستحقاً في ${dueDate}.%0A%0Aشكراً لثقتكم بنا!`;
+      
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+    
+    window.addEventListener('focus', loadIncomplete);
   </script>
 </body>
 </html>
