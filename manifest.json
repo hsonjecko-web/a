@@ -1,7 +1,8 @@
 {
   "name": "عيادة الأثير للبصريات",
   "short_name": "الأثير",
-  "start_url": "/",
+  "start_url": "/a/",
+  "scope": "/a/",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#0f172a",
