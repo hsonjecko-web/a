@@ -2,118 +2,225 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f172a">
-  <title>نظام التميز - المدراء</title>
+  <title>نظام التميز - إدارة المدراء</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <!-- ⚠️ انسخ نفس <style> من home.html هنا ⚠️ -->
   <style>
-    /* نفس كود CSS من home.html */
-    :root{--bg:#0b0f19;--main:linear-gradient(135deg,#111827,#0f172a);--glass:rgba(30,41,59,0.4);--border:rgba(255,255,255,0.1);--shadow:0 8px 32px rgba(0,0,0,0.35);--text:#f8fafc;--text2:#94a3b8;--muted:#64748b;--blue:#3b82f6;--green:#22c55e;--cyan:#06b6d4;--purple:#a855f7;--red:#ef4444;--amber:#f59e0b;--magenta:#ec4899;--teal:#14b8a6;--h-h:64px;--f-h:70px;--s-w:280px;--safe-t:env(safe-area-inset-top,0);--safe-b:env(safe-area-inset-bottom,0)}
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Cairo',sans-serif}
-    html,body{height:100%;background:var(--main);color:var(--text);overflow-x:hidden}
-    body{padding-top:calc(var(--h-h)+var(--safe-t));padding-bottom:calc(var(--f-h)+var(--safe-b)+20px)}
-    .app-h{position:fixed;top:0;left:0;right:0;height:var(--h-h);padding:0 16px;padding-top:var(--safe-t);display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100}
-    .menu-btn,.theme-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text);cursor:pointer}
-    .user-info{display:flex;flex-direction:column;align-items:flex-end}.user-info span{font-weight:600;font-size:0.9rem}.user-info small{font-size:0.7rem;color:var(--muted)}
-    .s-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:190;opacity:0;visibility:hidden;transition:0.3s}.s-overlay.active{opacity:1;visibility:visible}
-    .sidebar{position:fixed;top:0;right:0;bottom:0;width:var(--s-w);background:var(--glass);backdrop-filter:blur(16px);border-left:1px solid var(--border);transform:translateX(100%);transition:transform 0.3s;z-index:200;display:flex;flex-direction:column;padding-top:calc(var(--safe-t)+16px)}.sidebar.active{transform:translateX(0)}
-    .s-h{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}.s-h h2{font-size:1.1rem;font-weight:700;flex:1}
-    .nav-btn{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;margin-bottom:6px;background:linear-gradient(145deg,rgba(30,41,59,0.9),rgba(15,23,42,0.8));border:1px solid var(--border);border-radius:12px;color:var(--text);text-decoration:none;cursor:pointer;font-weight:500}.nav-btn:active{transform:scale(0.98)}.nav-btn .mat{font-size:22px}.nav-btn .exp{margin-right:auto;transition:0.3s}.nav-btn.exp .exp{transform:rotate(180deg)}
-    .sub{padding-right:16px;overflow:hidden;transition:max-height 0.3s;max-height:0}.sub:not(.hid){max-height:500px}
-    .sub-a{display:flex;align-items:center;gap:10px;padding:10px 12px;color:var(--text2);text-decoration:none;font-size:0.9rem;border-radius:8px;margin-bottom:4px;border:1px solid transparent}.sub-a:active{background:var(--glass)}.sub-a.act{background:var(--blue);color:#fff!important;border-color:rgba(59,130,246,0.4)}
-    .b-blue{border-color:rgba(59,130,246,0.3)!important}.b-purple{border-color:rgba(168,85,247,0.3)!important}.b-green{border-color:rgba(34,197,94,0.3)!important}.b-cyan{border-color:rgba(6,182,212,0.3)!important}.b-amber{border-color:rgba(245,158,11,0.3)!important}.b-red{border-color:rgba(239,68,68,0.3)!important}.b-teal{border-color:rgba(20,184,166,0.3)!important}
-    main{padding:16px;max-width:1200px;margin:0 auto}.sec-t{font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.sec-t span{font-size:0.8rem;font-weight:400;color:var(--text2)}
-    .form-card{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:20px}
-    .form-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-    .form-in{flex:1;min-width:140px;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.9rem;outline:none}
-    .form-in:focus{border-color:var(--blue)}
-    .btn-add{padding:10px 20px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer}
-    .btn-add:active{transform:scale(0.97)}
-    .list{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:4px;overflow:hidden}.item{display:flex;flex-direction:column;padding:14px;border-bottom:1px solid var(--border);gap:6px}.item:last-child{border-bottom:none}
-    .item-h{display:flex;justify-content:space-between;align-items:flex-start}.item-t{font-size:0.95rem;font-weight:600}.item-m{font-size:0.75rem;color:var(--muted)}.item-f{display:flex;justify-content:space-between;align-items:center}
-    .f-bar{position:fixed;bottom:0;left:0;right:0;height:var(--f-h);padding-bottom:var(--safe-b);background:rgba(15,23,42,0.9);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90}
-    .f-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-decoration:none;color:var(--text2);padding:8px 12px;border-radius:12px;transition:0.2s;flex:1;max-width:20%}.f-btn .mat{font-size:24px}.f-btn span:last-child{font-size:0.7rem;font-weight:500}.f-btn:active{transform:scale(0.9);background:var(--glass)}.f-btn.act{color:var(--blue)}
-    html.light-mode{--bg:#f0f9ff;--main:radial-gradient(circle at 50% -20%,#f0f9ff,#e0f2fe)!important;--glass:rgba(255,255,255,0.75)!important;--border:rgba(59,130,246,0.2)!important;--shadow:0 4px 15px rgba(59,130,246,0.08),inset 0 1px 1px rgba(59,130,246,0.1)!important;--text:#1e293b!important;--text2:#64748b!important;--muted:rgba(30,41,59,0.5)!important}
-    html.light-mode body{background:var(--main)}html.light-mode main{background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(240,248,255,0.9))!important}
-    html.light-mode .app-h{background:rgba(240,245,250,0.8)!important;border-bottom-color:rgba(59,130,246,0.15)!important}
-    html.light-mode .menu-btn,.light-mode .theme-btn{background:rgba(59,130,246,0.08)!important;color:#1e293b!important}
-    html.light-mode .sidebar{background:linear-gradient(165deg,rgba(219,234,254,0.8),rgba(240,249,255,0.7))!important;border-left-color:rgba(59,130,246,0.25)!important}
-    html.light-mode .nav-btn{background:linear-gradient(145deg,rgba(255,255,255,0.8),rgba(241,245,249,0.6))!important;color:#1e293b!important}
-    html.light-mode .sub-a{color:#64748b!important}html.light-mode .sub-a.act{background:#000!important;color:#fff!important}
-    html.light-mode .f-bar{background:rgba(240,245,250,0.9)!important;border-top-color:rgba(59,130,246,0.15)!important}
-    html.light-mode .f-btn{color:#64748b!important}html.light-mode .f-btn.act{color:#3b82f6!important}
-    html.light-mode .form-in{background:rgba(59,130,246,0.05)!important;border-color:rgba(59,130,246,0.2)!important;color:#1e293b!important}
-    .light-ic{display:none}html.light-mode .light-ic{display:inline-block!important}html.light-mode .dark-ic{display:none!important}
+    :root {
+      --bg-page: #0b0f19; --bg-main: linear-gradient(135deg, #111827 0%, #0f172a 100%);
+      --glass-bg: rgba(30, 41, 59, 0.4); --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      --text-primary: #f8fafc; --text-secondary: #94a3b8; --text-muted: #64748b;
+      --accent-blue: #3b82f6; --accent-green: #22c55e; --accent-cyan: #06b6d4;
+      --accent-purple: #a855f7; --accent-red: #ef4444; --accent-amber: #f59e0b;
+      --accent-lime: #84cc16; --accent-magenta: #ec4899; --accent-teal: #14b8a6;
+      --accent-orange: #f97316; --accent-pink: #f472b6;
+      --header-height: 64px; --footer-height: 70px; --sidebar-width: 280px;
+      --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: 'Cairo', sans-serif; }
+    html, body { height: 100%; background: var(--bg-main); color: var(--text-primary); overflow-x: hidden; }
+    body { padding-top: calc(var(--header-height) + var(--safe-top)); padding-bottom: calc(var(--footer-height) + var(--safe-bottom) + 20px); }
+    
+    .app-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); padding: 0 16px; padding-top: var(--safe-top); display: flex; align-items: center; justify-content: space-between; background: rgba(15,23,42,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); z-index: 100; }
+    .menu-toggle { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--text-primary); cursor: pointer; border-radius: 10px; }
+    .menu-toggle:active { background: var(--glass-bg); }
+    .header-controls { display: flex; align-items: center; gap: 12px; }
+    .theme-btn, .user-info { display: flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px; padding: 6px 10px; cursor: pointer; }
+    .user-info { flex-direction: column; align-items: flex-end; background: transparent; border: none; padding: 0; }
+    .user-info span { font-weight: 600; font-size: 0.9rem; }
+    .user-info small { font-size: 0.7rem; color: var(--text-muted); }
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 190; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+    .sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: var(--sidebar-width); background: var(--glass-bg); backdrop-filter: blur(16px); border-left: 1px solid var(--glass-border); transform: translateX(100%); transition: transform 0.3s ease; z-index: 200; display: flex; flex-direction: column; padding-top: calc(var(--safe-top) + 16px); }
+    .sidebar.active { transform: translateX(0); }
+    .sidebar-header { padding: 16px 20px; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 10px; }
+    .sidebar-header h2 { font-size: 1.1rem; font-weight: 700; flex: 1; }
+    .sidebar-header .material-icons-round { color: var(--accent-blue); font-size: 24px; }
+    .sidebar-nav { flex: 1; overflow-y: auto; padding: 16px 12px; }
+    .nav-btn-3d { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; margin-bottom: 6px; background: linear-gradient(145deg, rgba(30,41,59,0.9), rgba(15,23,42,0.8)); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary); text-decoration: none; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+    .nav-btn-3d:active { transform: scale(0.98); }
+    .nav-btn-3d .material-icons-round { font-size: 22px; }
+    .nav-btn-3d .expand-icon { margin-right: auto; transition: transform 0.3s; }
+    .nav-btn-3d.expanded .expand-icon { transform: rotate(180deg); }
+    .submenu { padding-right: 16px; overflow: hidden; transition: max-height 0.3s ease; max-height: 0; }
+    .submenu:not(.hidden) { max-height: 500px; }
+    .sub-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; border-radius: 8px; margin-bottom: 4px; border: 1px solid transparent; }
+    .sub-link:active { background: var(--glass-bg); }
+    .sub-link.active-submenu { background: var(--accent-blue); color: #fff !important; border-color: rgba(59,130,246,0.4); box-shadow: 0 0 12px rgba(59,130,246,0.4); }
+    .btn-blue { border-color: rgba(59,130,246,0.3) !important; } .btn-purple { border-color: rgba(168,85,247,0.3) !important; } .btn-green { border-color: rgba(34,197,94,0.3) !important; } .btn-cyan { border-color: rgba(6,182,212,0.3) !important; } .btn-amber { border-color: rgba(245,158,11,0.3) !important; } .btn-red { border-color: rgba(239,68,68,0.3) !important; } .btn-teal { border-color: rgba(20,184,166,0.3) !important; } .btn-lime { border-color: rgba(132,204,22,0.3) !important; } .btn-orange { border-color: rgba(249,115,22,0.3) !important; } .btn-pink { border-color: rgba(244,114,182,0.3) !important; }
+    
+    main { padding: 16px; max-width: 1200px; margin: 0 auto; }
+    .page-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .page-title .material-icons-round { color: var(--accent-purple); margin-left: 10px; }
+    .btn-sm { padding: 8px 14px; border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; background: var(--accent-purple); color: #fff; }
+    .btn-sm:active { transform: scale(0.98); }
+    .search-bar { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 12px; margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .search-bar input, .search-bar select { padding: 10px 14px; background: rgba(15,23,42,0.6); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--text-primary); outline: none; flex: 1; min-width: 140px; }
+    .search-bar input:focus, .search-bar select:focus { border-color: var(--accent-blue); }
+    .grid-container { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid-container { grid-template-columns: repeat(3, 1fr); } }
+    .card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px; box-shadow: var(--glass-shadow); backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 10px; transition: transform 0.2s; position: relative; }
+    .card:active { transform: scale(0.98); }
+    .status-badge { position: absolute; top: 12px; left: 12px; font-size: 0.7rem; font-weight: 700; padding: 4px 8px; border-radius: 20px; }
+    .status-badge.active { background: rgba(34,197,94,0.2); color: var(--accent-green); }
+    .status-badge.inactive { background: rgba(239,68,68,0.2); color: var(--accent-red); }
+    .card-title { font-weight: 700; font-size: 1.05rem; color: var(--text-primary); margin-top: 16px; }
+    .card-info { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); }
+    .card-info span { display: flex; align-items: center; gap: 6px; }
+    .card-info .material-icons-round { font-size: 16px; color: var(--text-muted); }
+    .card-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .action-btn { flex: 1; min-width: 32px; padding: 8px; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 0.75rem; }
+    .action-btn:active { transform: scale(0.95); }
+    .action-btn.edit { background: rgba(245,158,11,0.2); color: var(--accent-amber); }
+    .action-btn.delete { background: rgba(239,68,68,0.2); color: var(--accent-red); }
+    .action-btn.toggle { background: rgba(34,197,94,0.2); color: var(--accent-green); }
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+    .empty-state .material-icons-round { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+    
+    .mobile-footer { position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-height); padding-bottom: var(--safe-bottom); background: rgba(15,23,42,0.9); backdrop-filter: blur(12px); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-around; z-index: 90; }
+    .footer-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--text-muted); padding: 8px 12px; border-radius: 12px; transition: all 0.2s; flex: 1; max-width: 20%; }
+    .footer-btn .material-icons-round { font-size: 24px; transition: transform 0.2s; }
+    .footer-btn span:last-child { font-size: 0.7rem; font-weight: 500; }
+    .footer-btn:active { transform: scale(0.9); background: var(--glass-bg); }
+    .footer-btn.active { color: var(--accent-blue); }
+    .footer-btn.active .material-icons-round { transform: translateY(-2px); }
+    
+    html.light-mode { --bg-page: #f0f9ff; --bg-main: radial-gradient(circle at 50% -20%, #f0f9ff 0%, #e0f2fe 100%) !important; --glass-bg: rgba(255,255,255,0.75) !important; --glass-border: rgba(59,130,246,0.2) !important; --glass-shadow: 0 4px 15px rgba(59,130,246,0.08), inset 0 1px 1px rgba(59,130,246,0.1) !important; --text-primary: #1e293b !important; --text-secondary: #64748b !important; --text-muted: rgba(30,41,59,0.5) !important; }
+    html.light-mode body { background: var(--bg-main); }
+    html.light-mode main { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; }
+    html.light-mode .app-header { background: rgba(240,245,250,0.8) !important; border-bottom-color: rgba(59,130,246,0.15) !important; }
+    html.light-mode .menu-toggle { color: #1e293b !important; }
+    html.light-mode .theme-btn { background: rgba(59,130,246,0.08) !important; border-color: rgba(59,130,246,0.2) !important; }
+    html.light-mode .user-info span { color: #1e293b !important; }
+    html.light-mode .sidebar { background: linear-gradient(165deg, rgba(219,234,254,0.8) 0%, rgba(240,249,255,0.7) 100%) !important; border-left-color: rgba(59,130,246,0.25) !important; }
+    html.light-mode .nav-btn-3d { background: linear-gradient(145deg, rgba(255,255,255,0.8), rgba(241,245,249,0.6)) !important; border-color: rgba(59,130,246,0.2) !important; color: #1e293b !important; }
+    html.light-mode .sub-link { color: #64748b !important; }
+    html.light-mode .sub-link.active-submenu { background: #000 !important; color: #fff !important; border-color: rgba(0,0,0,0.5) !important; }
+    html.light-mode .mobile-footer { background: rgba(240,245,250,0.9) !important; border-top-color: rgba(59,130,246,0.15) !important; }
+    html.light-mode .footer-btn { color: #64748b !important; }
+    html.light-mode .footer-btn.active { color: #3b82f6 !important; }
+    html.light-mode .search-bar input, html.light-mode .search-bar select { background: rgba(59,130,246,0.05) !important; border-color: rgba(59,130,246,0.2) !important; color: #1e293b !important; }
+    html.light-mode .card { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; border-color: rgba(59,130,246,0.2) !important; }
+    html.light-mode .action-btn.edit { background: rgba(245,158,11,0.1) !important; }
+    html.light-mode .action-btn.delete { background: rgba(239,68,68,0.1) !important; }
+    html.light-mode .action-btn.toggle { background: rgba(34,197,94,0.1) !important; }
+    .light-mode-icon { display: none; }
+    html.light-mode .light-mode-icon { display: inline-block !important; }
+    html.light-mode .dark-mode-icon { display: none !important; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+    html.light-mode ::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.3); }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="app-h">
-    <button class="menu-btn" onclick="toggleS()"><span class="material-icons-round">menu</span></button>
-    <div style="display:flex;align-items:center;gap:12px">
-      <button class="theme-btn" onclick="toggleDM()"><span class="material-icons-round dark-ic">light_mode</span><span class="material-icons-round light-ic">dark_mode</span></button>
-      <div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div>
-    </div>
-  </header>
-
-  <!-- Sidebar -->
-  <div class="s-overlay" id="s-ov" onclick="toggleS()"></div>
-  <aside class="sidebar" id="sb">
-    <div class="s-h"><span class="material-icons-round">shield</span><h2>نظام التميز</h2></div>
-    <nav style="flex:1;overflow-y:auto;padding:16px 12px">
-      <a href="home.html" class="nav-btn b-blue"><span class="material-icons-round mat">dashboard</span><span>لوحة التحكم</span></a>
-      <div><button onclick="toggleSub('mgr-sm')" class="nav-btn b-purple act"><span class="material-icons-round mat">badge</span><span>المدراء</span><span class="material-icons-round mat exp">expand_more</span></button>
-        <div id="mgr-sm" class="sub"><a href="managers.html" class="sub-a act"><span class="material-icons-round">badge</span>المدراء</a><a href="create_manager.html" class="sub-a"><span class="material-icons-round">person_add</span>إنشاء مدير</a></div></div>
-      <a href="settings.html" class="nav-btn b-amber"><span class="material-icons-round mat">settings</span><span>الإعدادات</span></a>
-      <a href="index.html" class="nav-btn b-red"><span class="material-icons-round mat">logout</span><span>تسجيل خروج</span></a>
+  <header class="app-header"><button class="menu-toggle" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button><div class="header-controls"><button class="theme-btn" onclick="toggleDarkMode()"><span class="material-icons-round dark-mode-icon">light_mode</span><span class="material-icons-round light-mode-icon">dark_mode</span></button><div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div></div></header>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar">
+    <div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-btn-3d btn-blue"><span class="material-icons-round">dashboard</span><span>لوحة التحكم</span></a>
+      <div class="submenu-container"><button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green"><span class="material-icons-round">group</span><span>الزبائن</span><span class="material-icons-round expand-icon">expand_more</span></button><div id="customers-submenu" class="submenu hidden"><a href="customers.html" class="sub-link">الزبائن</a><a href="add_customer.html" class="sub-link">إضافة زبون</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('guarantors-submenu')" class="nav-btn-3d btn-lime"><span class="material-icons-round">verified_user</span><span>الكفلاء</span><span class="material-icons-round expand-icon">expand_more</span></button><div id="guarantors-submenu" class="submenu hidden"><a href="add_guarantor.html" class="sub-link">إضافة كفيل</a><a href="guarantors.html" class="sub-link">قائمة الكفلاء</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('materials-submenu')" class="nav-btn-3d btn-orange"><span class="material-icons-round">inventory_2</span><span>المواد</span><span class="material-icons-round expand-icon">expand_more</span></button><div id="materials-submenu" class="submenu hidden"><a href="materials.html" class="sub-link">المواد</a><a href="add_material.html" class="sub-link">إضافة مادة</a><a href="store.html" class="sub-link">المخزن</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan"><span class="material-icons-round">receipt_long</span><span>الأقساط</span><span class="material-icons-round expand-icon">expand_more</span></button><div id="installments-submenu" class="submenu hidden"><a href="add_installment.html" class="sub-link">إضافة قسط</a><a href="installments.html" class="sub-link">الأقساط</a><a href="incomplete_installments.html" class="sub-link">الغير مكتملة</a><a href="due_today_installments.html" class="sub-link">المستحقة اليوم</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal"><span class="material-icons-round">shopping_cart</span><span>المبيعات</span><span class="material-icons-round expand-icon">expand_more</span></button><div id="sales-submenu" class="submenu hidden"><a href="sales.html" class="sub-link">المبيعات</a><a href="add_sale.html" class="sub-link">إضافة بيع</a><a href="archive.html" class="sub-link">الأرشيف</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber"><span class="material-icons-round">analytics</span><span>التقارير</span><span class="material-icons-round expand-icon">expand_more</span></button><div id="reports-submenu" class="submenu hidden"><a href="monthly_payments_report.html" class="sub-link">تقرير التسديدات</a><a href="daily_payments_report.html" class="sub-link">تقرير يومي</a><a href="monthly_sales_report.html" class="sub-link">تقرير مبيعات</a><a href="daily_sales_report.html" class="sub-link">تقرير يومي</a><a href="monthly_dues_report.html" class="sub-link">المستحقات</a><a href="daily_dues_report.html" class="sub-link">المستحقات اليوم</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple active-link expanded"><span class="material-icons-round">badge</span><span>المدراء</span><span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="managers-submenu" class="submenu">
+          <a href="managers.html" class="sub-link active-submenu"><span class="material-icons-round">badge</span>قائمة المدراء</a>
+          <a href="create_manager.html" class="sub-link"><span class="material-icons-round">person_add</span>إضافة مدير</a>
+          <a href="permissions_groups.html" class="sub-link"><span class="material-icons-round">group</span>مجموعات الصلاحيات</a>
+          <a href="create_group.html" class="sub-link"><span class="material-icons-round">group_add</span>إنشاء مجموعة</a>
+        </div>
+      </div>
+      <a href="support.html" class="nav-btn-3d btn-pink"><span class="material-icons-round">support_agent</span>الدعم الفني</a>
+      <a href="backup.html" class="nav-btn-3d btn-teal"><span class="material-icons-round">backup</span>نسخ احتياطي</a>
+      <a href="settings.html" class="nav-btn-3d btn-amber"><span class="material-icons-round">settings</span>الإعدادات</a>
+      <a href="index.html" class="nav-btn-3d btn-red"><span class="material-icons-round">logout</span>تسجيل خروج</a>
     </nav>
   </aside>
 
   <main>
-    <h2 class="sec-t">إدارة المدراء</h2>
-    <div class="form-card">
-      <div class="form-row">
-        <input type="text" id="mName" class="form-in" placeholder="اسم المدير">
-        <input type="text" id="mRole" class="form-in" placeholder="الصلاحية">
-      </div>
-      <button class="btn-add" onclick="addMgr()">➕ إضافة مدير</button>
+    <div class="page-title"><div><span class="material-icons-round">badge</span>إدارة المدراء</div><button class="btn-sm" onclick="location.href='create_manager.html'"><span class="material-icons-round">person_add</span> إضافة مدير</button></div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="بحث بالاسم، البريد، الدور..." oninput="loadManagers()">
+      <select id="statusFilter" onchange="loadManagers()"><option value="all">كل الحالات</option><option value="active">نشط</option><option value="inactive">معطل</option></select>
     </div>
-    <div class="list" id="mgrList"></div>
+    <div class="grid-container" id="managersGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none;"><span class="material-icons-round">person_off</span><p>لا يوجد مدراء مضافين حالياً</p></div>
   </main>
 
-  <footer class="f-bar">
-    <a href="home.html" class="f-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a>
-    <a href="settings.html" class="f-btn act"><span class="material-icons-round">settings</span><span>الإعدادات</span></a>
-  </footer>
+  <footer class="mobile-footer"><a href="home.html" class="footer-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a><a href="add_installment.html" class="footer-btn"><span class="material-icons-round">post_add</span><span>إضافة قسط</span></a><a href="monthly_payments_report.html" class="footer-btn"><span class="material-icons-round">analytics</span><span>التقارير</span></a><a href="installments.html" class="footer-btn"><span class="material-icons-round">receipt_long</span><span>الأقساط</span></a><a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a></footer>
 
   <script>
-    if(localStorage.getItem('isLoggedIn')!=='true')location.href='index.html';
-    if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');
-    function toggleS(){document.getElementById('sb').classList.toggle('active');document.getElementById('s-ov').classList.toggle('active');}
-    function toggleSub(id){const sub=document.getElementById(id);if(!sub)return;const hid=sub.classList.contains('hid');sub.classList.toggle('hid',!hid);const btn=sub.previousElementSibling;if(btn)btn.classList.toggle('exp',hid);}
-    function toggleDM(){const h=document.documentElement;h.classList.toggle('light-mode');localStorage.setItem('darkMode',h.classList.contains('light-mode')?'false':'true');updateIcons();}
-    function updateIcons(){const d=document.querySelector('.dark-ic'),l=document.querySelector('.light-ic');if(document.documentElement.classList.contains('light-mode')){if(d)d.classList.remove('hidden');if(l)l.classList.add('hidden');}else{if(d)d.classList.add('hidden');if(l)l.classList.remove('hidden');}}
+    document.addEventListener('DOMContentLoaded', function() {
+      if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
+      updateDarkModeIcon(); checkActivePage(); loadManagers();
+    });
+    function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('sidebar-overlay').classList.toggle('active')}
+    const allSubmenus = ['guarantors-submenu','materials-submenu','managers-submenu','customers-submenu','installments-submenu','sales-submenu','reports-submenu'];
+    function toggleSubmenu(id){const s=document.getElementById(id);if(!s)return;const h=s.classList.contains('hidden');allSubmenus.forEach(x=>{const m=document.getElementById(x);if(m&&x!==id)m.classList.add('hidden')});s.classList.toggle('hidden',!h);const b=s.previousElementSibling;if(b)b.classList.toggle('expanded',h)}
+    function checkActivePage(){const p=window.location.pathname.split('/').pop()||'home.html';document.querySelectorAll('.nav-btn-3d, .sub-link, .footer-btn').forEach(el=>{if(el.getAttribute('href')===p){el.classList.add('active');if(el.classList.contains('sub-link'))el.classList.add('active-submenu')}})}
+    function toggleDarkMode(){const h=document.documentElement;h.classList.toggle('light-mode');localStorage.setItem('darkMode',h.classList.contains('light-mode')?'false':'true');updateDarkModeIcon()}
+    function updateDarkModeIcon(){const d=document.querySelector('.dark-mode-icon'),l=document.querySelector('.light-mode-icon');if(document.documentElement.classList.contains('light-mode')){if(d)d.classList.remove('hidden');if(l)l.classList.add('hidden')}else{if(d)d.classList.add('hidden');if(l)l.classList.remove('hidden')}}
     
-    function renderMgrs(){
-      const d=JSON.parse(localStorage.getItem('sys_mgrs')||'[]');
-      const c=document.getElementById('mgrList');
-      if(!d.length){c.innerHTML='<div style="padding:20px;text-align:center;color:var(--muted)">لا يوجد مدراء</div>';return;}
-      c.innerHTML=d.map(x=>`<div class="item"><div class="item-h"><span class="item-t">${x.name}</span><span class="item-m">${x.date||'-'}</span></div><div class="item-f"><span class="item-m">${x.role||'-'}</span><button onclick="delMgr(${x.id})" style="background:transparent;border:none;color:var(--red);cursor:pointer"><span class="material-icons-round">delete</span></button></div></div>`).join('');
+    function loadManagers() {
+      const managers = JSON.parse(localStorage.getItem('managers') || '[]');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const status = document.getElementById('statusFilter').value;
+      const grid = document.getElementById('managersGrid');
+      const empty = document.getElementById('emptyState');
+      
+      const filtered = managers.filter(m => {
+        const matchS = m.name.toLowerCase().includes(search) || m.email.toLowerCase().includes(search) || (m.role||'').toLowerCase().includes(search);
+        const matchSt = status === 'all' || m.status === status;
+        return matchS && matchSt;
+      });
+
+      if(filtered.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+
+      grid.innerHTML = filtered.map(m => `
+        <div class="card" data-id="${m.id}">
+          <div class="status-badge ${m.status}">${m.status === 'active' ? '✅ نشط' : '⏸️ معطل'}</div>
+          <div class="card-title">${m.name}</div>
+          <div class="card-info">
+            <span><span class="material-icons-round">email</span> ${m.email}</span>
+            <span><span class="material-icons-round">phone</span> ${m.phone || '-'}</span>
+            <span><span class="material-icons-round">badge</span> ${m.role || 'مدير عام'}</span>
+          </div>
+          <div class="card-actions">
+            <button class="action-btn edit" data-act="edit"><span class="material-icons-round" style="font-size:16px">edit</span> تعديل</button>
+            <button class="action-btn delete" data-act="delete"><span class="material-icons-round" style="font-size:16px">delete</span> حذف</button>
+            <button class="action-btn toggle" data-act="toggle"><span class="material-icons-round" style="font-size:16px">${m.status === 'active' ? 'block' : 'check_circle'}</span></button>
+          </div>
+        </div>
+      `).join('');
     }
-    function addMgr(){
-      const n=document.getElementById('mName').value.trim(),r=document.getElementById('mRole').value.trim();
-      if(!n)return alert('أدخل الاسم');
-      const d=JSON.parse(localStorage.getItem('sys_mgrs')||'[]');
-      d.push({id:Date.now(),name:n,role:r,date:new Date().toLocaleDateString('ar-IQ')});
-      localStorage.setItem('sys_mgrs',JSON.stringify(d));
-      document.getElementById('mName').value='';document.getElementById('mRole').value='';
-      renderMgrs();toast('تمت الإضافة');
-    }
-    function delMgr(id){if(!confirm('حذف؟'))return;let d=JSON.parse(localStorage.getItem('sys_mgrs')||'[]');d=d.filter(x=>x.id!==id);localStorage.setItem('sys_mgrs',JSON.stringify(d));renderMgrs();toast('تم الحذف');}
-    function toast(m){const t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(34,197,94,0.9);color:#fff;padding:10px 18px;border-radius:20px;font-size:0.85rem;z-index:999';document.body.appendChild(t);setTimeout(()=>t.remove(),2000);}
-    document.addEventListener('DOMContentLoaded',renderMgrs);
+    
+    document.getElementById('managersGrid').addEventListener('click', function(e) {
+      const btn = e.target.closest('.action-btn'); if(!btn) return;
+      const card = btn.closest('.card'); if(!card) return;
+      const id = parseInt(card.dataset.id);
+      const act = btn.dataset.act;
+      
+      let managers = JSON.parse(localStorage.getItem('managers') || '[]');
+      const idx = managers.findIndex(m => m.id === id);
+      
+      if(act === 'edit') location.href = `create_manager.html?id=${id}`;
+      else if(act === 'delete') {
+        if(confirm('⚠️ حذف هذا المدير نهائياً؟')) { managers.splice(idx, 1); localStorage.setItem('managers', JSON.stringify(managers)); loadManagers(); }
+      }
+      else if(act === 'toggle') {
+        managers[idx].status = managers[idx].status === 'active' ? 'inactive' : 'active';
+        localStorage.setItem('managers', JSON.stringify(managers));
+        loadManagers();
+      }
+    });
+    window.addEventListener('focus', loadManagers);
   </script>
 </body>
 </html>

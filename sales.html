@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <title>نظام التميز - المبيعات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <style>
+    :root{--bg:#0b0f19;--glass:rgba(30,41,59,0.4);--border:rgba(255,255,255,0.1);--text:#f8fafc;--text2:#94a3b8;--blue:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--orange:#f97316;--cyan:#06b6d4;--purple:#a855f7;--teal:#14b8a6;--header-h:64px;--footer-h:70px;--sidebar-w:280px}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}html,body{height:100%;background:linear-gradient(135deg,#111827,#0f172a);color:var(--text)}body{padding-top:calc(var(--header-h)+env(safe-area-inset-top,0px));padding-bottom:calc(var(--footer-h)+env(safe-area-inset-bottom,0px)+20px)}
+    .app-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100}.menu-btn{width:40px;height:40px;background:transparent;border:none;color:var(--text);cursor:pointer;border-radius:10px}.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:190;opacity:0;visibility:hidden;transition:.3s}.sidebar-overlay.active{opacity:1;visibility:visible}.sidebar{position:fixed;top:0;right:0;bottom:0;width:var(--sidebar-w);background:var(--glass);backdrop-filter:blur(16px);border-left:1px solid var(--border);transform:translateX(100%);transition:.3s;z-index:200;display:flex;flex-direction:column}.sidebar.active{transform:translateX(0)}.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}.sidebar-header h2{font-size:1.1rem;font-weight:700;flex:1}.sidebar-header .material-icons-round{color:var(--blue);font-size:24px}.sidebar-nav{flex:1;overflow-y:auto;padding:16px 12px}.nav-btn-3d{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;margin-bottom:6px;background:linear-gradient(145deg,rgba(30,41,59,0.9),rgba(15,23,42,0.8));border:1px solid var(--border);border-radius:12px;color:var(--text);text-decoration:none;cursor:pointer;font-weight:500;transition:.2s}.nav-btn-3d .expand-icon{margin-right:auto;transition:.3s}.nav-btn-3d.expanded .expand-icon{transform:rotate(180deg)}.submenu{padding-right:16px;max-height:0;overflow:hidden;transition:.3s}.submenu:not(.hidden){max-height:500px}.sub-link{display:flex;align-items:center;gap:10px;padding:10px 12px;color:var(--text2);text-decoration:none;font-size:.9rem;border-radius:8px;margin-bottom:4px;border:1px solid transparent}.sub-link.active-submenu{background:var(--blue);color:#fff !important}.btn-teal{border-color:rgba(20,184,166,0.3) !important}.btn-blue{border-color:rgba(59,130,246,0.3) !important}.btn-green{border-color:rgba(34,197,94,0.3) !important}.btn-cyan{border-color:rgba(6,182,212,0.3) !important}.btn-purple{border-color:rgba(168,85,247,0.3) !important}.btn-lime{border-color:rgba(132,204,22,0.3) !important}.btn-orange{border-color:rgba(249,115,22,0.3) !important}.btn-pink{border-color:rgba(244,114,182,0.3) !important}.btn-red{border-color:rgba(239,68,68,0.3) !important}
+    main{max-width:1200px;margin:0 auto;padding:0 16px}.page-title{font-size:1.2rem;font-weight:700;margin:16px 0 10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}.page-title span{color:var(--teal)}.btn-sm{padding:8px 12px;background:var(--teal);color:#0b0f19;border:none;border-radius:8px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.controls input,.controls select{padding:10px 14px;background:var(--glass);border:1px solid var(--border);border-radius:8px;color:var(--text);outline:none;flex:1;min-width:140px}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:768px){.grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:1024px){.grid{grid-template-columns:repeat(3,1fr)}}
+    .card{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:16px;position:relative}.status-badge{position:absolute;top:12px;left:12px;font-size:.7rem;font-weight:700;padding:4px 8px;border-radius:6px;color:#fff}.status-badge.completed{background:var(--green)}.status-badge.pending{background:var(--amber)}.card h3{font-size:1rem;margin-top:20px;margin-bottom:6px}.card p{color:var(--text2);font-size:.85rem;margin-bottom:4px}.actions{display:flex;gap:6px;margin-top:8px}.act-btn{flex:1;padding:8px;border:none;border-radius:8px;cursor:pointer;background:rgba(255,255,255,0.05);color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:.75rem}.act-btn:active{transform:scale(.95)}.empty{text-align:center;padding:40px;color:var(--text2)}.footer{position:fixed;bottom:0;left:0;right:0;height:var(--footer-h);background:rgba(15,23,42,0.9);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90}.footer a{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:var(--text2);font-size:.7rem;padding:8px;border-radius:8px}.footer a.active{color:var(--blue)}
+    html.light-mode{--bg:#f0f9ff;--glass:rgba(255,255,255,0.85);--border:rgba(59,130,246,0.2);--text:#1e293b;--text2:#64748b}html.light-mode body{background:linear-gradient(135deg,#f0f9ff,#e0f2fe)}html.light-mode .app-header{background:rgba(240,245,250,0.8)}html.light-mode .sidebar{background:linear-gradient(165deg,rgba(219,234,254,0.8),rgba(240,249,255,0.7))}html.light-mode .nav-btn-3d{background:rgba(255,255,255,0.8);color:#1e293b}html.light-mode .sub-link{color:#64748b}html.light-mode .sub-link.active-submenu{background:#000 !important;color:#fff !important}html.light-mode .card{background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(240,248,255,0.9));border-color:rgba(59,130,246,0.2)}html.light-mode .controls input,html.light-mode .controls select{background:#fff;color:#1e293b}.light-mode-icon{display:none}html.light-mode .light-mode-icon{display:inline-block !important}html.light-mode .dark-mode-icon{display:none !important}
+  </style>
+</head>
+<body>
+  <header class="app-header"><button class="menu-btn" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button><div style="display:flex;align-items:center;gap:12px"><button class="theme-btn" onclick="toggleTheme()"><span class="material-icons-round dark-mode-icon">light_mode</span><span class="material-icons-round light-mode-icon">dark_mode</span></button><div class="user-info"><span>مدير النظام</span><small>admin</small></div></div></header>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar"><div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-btn-3d btn-blue"><span class="material-icons-round">dashboard</span>الرئيسية</a>
+      <div class="submenu-container"><button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green"><span class="material-icons-round">group</span>الزبائن<span class="material-icons-round expand-icon">expand_more</span></button><div id="customers-submenu" class="submenu hidden"><a href="customers.html" class="sub-link">الزبائن</a><a href="add_customer.html" class="sub-link">إضافة زبون</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('guarantors-submenu')" class="nav-btn-3d btn-lime"><span class="material-icons-round">verified_user</span>الكفلاء<span class="material-icons-round expand-icon">expand_more</span></button><div id="guarantors-submenu" class="submenu hidden"><a href="add_guarantor.html" class="sub-link">إضافة كفيل</a><a href="guarantors.html" class="sub-link">قائمة الكفلاء</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('materials-submenu')" class="nav-btn-3d btn-orange"><span class="material-icons-round">inventory_2</span>المواد<span class="material-icons-round expand-icon">expand_more</span></button><div id="materials-submenu" class="submenu hidden"><a href="materials.html" class="sub-link">المواد</a><a href="add_material.html" class="sub-link">إضافة مادة</a><a href="store.html" class="sub-link">المخزن</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan"><span class="material-icons-round">receipt_long</span>الأقساط<span class="material-icons-round expand-icon">expand_more</span></button><div id="installments-submenu" class="submenu hidden"><a href="add_installment.html" class="sub-link">إضافة قسط</a><a href="installments.html" class="sub-link">الأقساط</a><a href="incomplete_installments.html" class="sub-link">الغير مكتملة</a><a href="due_today_installments.html" class="sub-link">المستحقة اليوم</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal active-link expanded"><span class="material-icons-round">shopping_cart</span>المبيعات<span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="sales-submenu" class="submenu">
+          <a href="sales.html" class="sub-link active-submenu"><span class="material-icons-round">shopping_cart</span>المبيعات</a>
+          <a href="add_sale.html" class="sub-link"><span class="material-icons-round">add_shopping_cart</span>إضافة بيع جديد</a>
+          <a href="archive.html" class="sub-link"><span class="material-icons-round">archive</span>الأرشيف</a>
+        </div>
+      </div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber"><span class="material-icons-round">analytics</span>التقارير<span class="material-icons-round expand-icon">expand_more</span></button><div id="reports-submenu" class="submenu hidden"><a href="monthly_payments_report.html" class="sub-link">تقرير التسديدات الشهري</a><a href="daily_payments_report.html" class="sub-link">تقرير التسديدات اليومية</a><a href="monthly_sales_report.html" class="sub-link">تقرير مبيعات شهري</a><a href="daily_sales_report.html" class="sub-link">تقرير مبيعات يومي</a><a href="monthly_dues_report.html" class="sub-link">تقرير المستحقات الشهري</a><a href="daily_dues_report.html" class="sub-link">تقرير المستحقات اليومي</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple"><span class="material-icons-round">badge</span>المدراء<span class="material-icons-round expand-icon">expand_more</span></button><div id="managers-submenu" class="submenu hidden"><a href="managers.html" class="sub-link">المدراء</a><a href="create_manager.html" class="sub-link">إنشاء مدير</a><a href="permissions_groups.html" class="sub-link">الصلاحيات</a><a href="create_group.html" class="sub-link">إنشاء مجموعة</a></div></div>
+      <a href="support.html" class="nav-btn-3d btn-pink"><span class="material-icons-round">support_agent</span>الدعم الفني</a>
+      <a href="backup.html" class="nav-btn-3d btn-teal"><span class="material-icons-round">backup</span>نسخ احتياطي</a>
+      <a href="settings.html" class="nav-btn-3d btn-amber"><span class="material-icons-round">settings</span>الإعدادات</a>
+      <a href="index.html" class="nav-btn-3d btn-red"><span class="material-icons-round">logout</span>خروج</a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="page-title"><div><span class="material-icons-round">shopping_cart</span>قائمة المبيعات</div><button class="btn-sm" onclick="location.href='add_sale.html'"><span class="material-icons-round">add</span> إضافة</button></div>
+    <div class="controls"><input type="text" id="search" placeholder="بحث بالزبون أو المادة..." oninput="loadSales()"><select id="statusFilter" onchange="loadSales()"><option value="all">كل الحالات</option><option value="completed">مكتمل</option><option value="pending">معلق</option></select><input type="date" id="dateFilter" onchange="loadSales()"></div>
+    <div class="grid" id="salesGrid"></div>
+    <div class="empty" id="emptyState" style="display:none"><span class="material-icons-round" style="font-size:48px;opacity:.5">shopping_cart</span><p>لا توجد مبيعات</p></div>
+  </main>
+
+  <footer class="footer">
+    <a href="home.html"><span class="material-icons-round">dashboard</span>الرئيسية</a>
+    <a href="add_installment.html"><span class="material-icons-round">post_add</span>قسط</a>
+    <a href="monthly_payments_report.html"><span class="material-icons-round">analytics</span>تقارير</a>
+    <a href="installments.html"><span class="material-icons-round">receipt_long</span>أقساط</a>
+    <a href="customers.html" class="active"><span class="material-icons-round">group</span>زبائن</a>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');loadSales()})
+    function toggleSidebar(){document.querySelector('.sidebar').classList.toggle('active');document.querySelector('.sidebar-overlay').classList.toggle('active')}
+    function toggleSubmenu(id){document.getElementById(id).classList.toggle('hidden');document.querySelector(`[onclick*="${id}"]`).classList.toggle('expanded')}
+    function toggleTheme(){document.documentElement.classList.toggle('light-mode');localStorage.setItem('theme',document.documentElement.classList.contains('light-mode')?'light':'dark')}
+    if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-mode');
+    
+    function loadSales(){
+      const sales=JSON.parse(localStorage.getItem('sales')||'[]');
+      const s=document.getElementById('search').value.toLowerCase(),st=document.getElementById('statusFilter').value,dt=document.getElementById('dateFilter').value;
+      const filtered=sales.filter(sale=>{
+        const matchS=sale.customerName.toLowerCase().includes(s)||sale.materialName.toLowerCase().includes(s);
+        const matchSt=st==='all'||sale.status===st;
+        const matchDt=!dt||sale.date===dt;
+        return matchS&&matchSt&&matchDt&&sale.status!=='archived';
+      }).sort((a,b)=>b.id-a.id);
+      
+      const grid=document.getElementById('salesGrid'),empty=document.getElementById('emptyState');
+      if(filtered.length===0){grid.innerHTML='';empty.style.display='block';return}
+      empty.style.display='none';
+      grid.innerHTML=filtered.map(s=>`
+        <div class="card" data-id="${s.id}">
+          <div class="status-badge ${s.status}">${s.status==='completed'?'✅ مكتمل':'⏳ معلق'}</div>
+          <h3>${s.customerName}</h3>
+          <p>📦 المادة: ${s.materialName}</p>
+          <p>💰 المبلغ: ${s.total.toLocaleString()} د.ع (${s.qty} × ${s.unitPrice})</p>
+          <p>📅 التاريخ: ${s.date}</p>
+          <div class="actions">
+            <button class="act-btn" onclick="archiveSale(${s.id})">📦 أرشفة</button>
+            <button class="act-btn" onclick="deleteSale(${s.id})">🗑️ حذف</button>
+            <button class="act-btn" onclick="sendWhatsApp('${s.customerName}',${s.total})">📱 واتساب</button>
+          </div>
+        </div>`).join('')
+    }
+    function archiveSale(id){let s=JSON.parse(localStorage.getItem('sales')||'[]');const i=s.findIndex(x=>x.id===id);if(i!==-1){s[i].status='archived';localStorage.setItem('sales',JSON.stringify(s));loadSales()}}
+    function deleteSale(id){if(confirm('حذف البيع نهائياً؟')){let s=JSON.parse(localStorage.getItem('sales')||'[]');s=s.filter(x=>x.id!==id);localStorage.setItem('sales',JSON.stringify(s));loadSales()}}
+    function sendWhatsApp(name,total){window.open(`https://wa.me/?text=🧾 *فاتورة بيع*%0A👤 الزبون: ${name}%0A💰 المبلغ الإجمالي: ${total.toLocaleString()} د.ع%0A%0Aشكراً لاختيارك نظام التميز!`,'_blank')}
+  </script>
+</body>
+</html>

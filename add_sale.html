@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <title>نظام التميز - إضافة بيع</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <style>
+    :root{--bg:#0b0f19;--glass:rgba(30,41,59,0.4);--border:rgba(255,255,255,0.1);--text:#f8fafc;--text2:#94a3b8;--blue:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--orange:#f97316;--cyan:#06b6d4;--purple:#a855f7;--teal:#14b8a6;--header-h:64px;--footer-h:70px;--sidebar-w:280px}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif;-webkit-tap-highlight-color:transparent}
+    html,body{height:100%;background:linear-gradient(135deg,#111827,#0f172a);color:var(--text)}body{padding-top:calc(var(--header-h)+env(safe-area-inset-top,0px));padding-bottom:calc(var(--footer-h)+env(safe-area-inset-bottom,0px)+20px)}
+    .app-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100}
+    .menu-btn{width:40px;height:40px;background:transparent;border:none;color:var(--text);cursor:pointer;border-radius:10px}.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:190;opacity:0;visibility:hidden;transition:.3s}.sidebar-overlay.active{opacity:1;visibility:visible}
+    .sidebar{position:fixed;top:0;right:0;bottom:0;width:var(--sidebar-w);background:var(--glass);backdrop-filter:blur(16px);border-left:1px solid var(--border);transform:translateX(100%);transition:.3s;z-index:200;display:flex;flex-direction:column}.sidebar.active{transform:translateX(0)}
+    .sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}.sidebar-header h2{font-size:1.1rem;font-weight:700;flex:1}.sidebar-header .material-icons-round{color:var(--blue);font-size:24px}
+    .sidebar-nav{flex:1;overflow-y:auto;padding:16px 12px}.nav-btn-3d{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;margin-bottom:6px;background:linear-gradient(145deg,rgba(30,41,59,0.9),rgba(15,23,42,0.8));border:1px solid var(--border);border-radius:12px;color:var(--text);text-decoration:none;cursor:pointer;font-weight:500;transition:.2s}.nav-btn-3d .expand-icon{margin-right:auto;transition:.3s}.nav-btn-3d.expanded .expand-icon{transform:rotate(180deg)}.submenu{padding-right:16px;max-height:0;overflow:hidden;transition:.3s}.submenu:not(.hidden){max-height:500px}.sub-link{display:flex;align-items:center;gap:10px;padding:10px 12px;color:var(--text2);text-decoration:none;font-size:.9rem;border-radius:8px;margin-bottom:4px;border:1px solid transparent}.sub-link.active-submenu{background:var(--blue);color:#fff !important}.btn-teal{border-color:rgba(20,184,166,0.3) !important}.btn-blue{border-color:rgba(59,130,246,0.3) !important}.btn-green{border-color:rgba(34,197,94,0.3) !important}.btn-cyan{border-color:rgba(6,182,212,0.3) !important}.btn-purple{border-color:rgba(168,85,247,0.3) !important}.btn-lime{border-color:rgba(132,204,22,0.3) !important}.btn-orange{border-color:rgba(249,115,22,0.3) !important}.btn-pink{border-color:rgba(244,114,182,0.3) !important}.btn-red{border-color:rgba(239,68,68,0.3) !important}
+    main{max-width:800px;margin:0 auto;padding:0 16px}.page-title{font-size:1.3rem;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}.page-title .material-icons-round{color:var(--teal)}
+    .form-container{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.35);backdrop-filter:blur(10px)}.form-group{margin-bottom:16px}.form-label{display:block;font-size:.9rem;font-weight:600;margin-bottom:8px;color:var(--text)}.form-label .opt{font-size:.75rem;color:var(--text2);font-weight:400}
+    .form-input,.form-select{width:100%;padding:12px 14px;background:rgba(15,23,42,0.6);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.95rem;outline:none;transition:.2s}.form-input:focus,.form-select:focus{border-color:var(--blue)}.form-input:read-only{opacity:.7}
+    .row{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:640px){.row{grid-template-columns:1fr 1fr}}
+    .calc-box{background:rgba(34,197,94,0.1);border:1px dashed rgba(34,197,94,0.3);border-radius:10px;padding:12px;margin:12px 0;text-align:center;font-size:.9rem;color:var(--green)}
+    .actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}.btn{flex:1;min-width:120px;padding:12px;border:none;border-radius:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}.btn-primary{background:var(--teal);color:#0b0f19}.btn-secondary{background:var(--glass);border:1px solid var(--border);color:var(--text)}
+    .footer{position:fixed;bottom:0;left:0;right:0;height:var(--footer-h);background:rgba(15,23,42,0.9);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90}.footer a{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:var(--text2);font-size:.7rem;padding:8px;border-radius:8px}.footer a.active{color:var(--blue)}
+    html.light-mode{--bg:#f0f9ff;--glass:rgba(255,255,255,0.85);--border:rgba(59,130,246,0.2);--text:#1e293b;--text2:#64748b}html.light-mode body{background:linear-gradient(135deg,#f0f9ff,#e0f2fe)}html.light-mode .app-header{background:rgba(240,245,250,0.8)}html.light-mode .sidebar{background:linear-gradient(165deg,rgba(219,234,254,0.8),rgba(240,249,255,0.7))}html.light-mode .nav-btn-3d{background:rgba(255,255,255,0.8);color:#1e293b}html.light-mode .sub-link{color:#64748b}html.light-mode .sub-link.active-submenu{background:#000 !important;color:#fff !important}html.light-mode .form-input,html.light-mode .form-select{background:rgba(59,130,246,0.05);border-color:rgba(59,130,246,0.2);color:#1e293b}html.light-mode .calc-box{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3)}html.light-mode .btn-secondary{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.2);color:#1e293b}.light-mode-icon{display:none}html.light-mode .light-mode-icon{display:inline-block !important}html.light-mode .dark-mode-icon{display:none !important}
+  </style>
+</head>
+<body>
+  <header class="app-header"><button class="menu-btn" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button><div style="display:flex;align-items:center;gap:12px"><button class="theme-btn" onclick="toggleTheme()"><span class="material-icons-round dark-mode-icon">light_mode</span><span class="material-icons-round light-mode-icon">dark_mode</span></button><div class="user-info"><span>مدير النظام</span><small>admin</small></div></div></header>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar"><div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-btn-3d btn-blue"><span class="material-icons-round">dashboard</span>الرئيسية</a>
+      <div class="submenu-container"><button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green"><span class="material-icons-round">group</span>الزبائن<span class="material-icons-round expand-icon">expand_more</span></button><div id="customers-submenu" class="submenu hidden"><a href="customers.html" class="sub-link">الزبائن</a><a href="add_customer.html" class="sub-link">إضافة زبون</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('guarantors-submenu')" class="nav-btn-3d btn-lime"><span class="material-icons-round">verified_user</span>الكفلاء<span class="material-icons-round expand-icon">expand_more</span></button><div id="guarantors-submenu" class="submenu hidden"><a href="add_guarantor.html" class="sub-link">إضافة كفيل</a><a href="guarantors.html" class="sub-link">قائمة الكفلاء</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('materials-submenu')" class="nav-btn-3d btn-orange"><span class="material-icons-round">inventory_2</span>المواد<span class="material-icons-round expand-icon">expand_more</span></button><div id="materials-submenu" class="submenu hidden"><a href="materials.html" class="sub-link">المواد</a><a href="add_material.html" class="sub-link">إضافة مادة</a><a href="store.html" class="sub-link">المخزن</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan"><span class="material-icons-round">receipt_long</span>الأقساط<span class="material-icons-round expand-icon">expand_more</span></button><div id="installments-submenu" class="submenu hidden"><a href="add_installment.html" class="sub-link">إضافة قسط</a><a href="installments.html" class="sub-link">الأقساط</a><a href="incomplete_installments.html" class="sub-link">الغير مكتملة</a><a href="due_today_installments.html" class="sub-link">المستحقة اليوم</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal active-link expanded"><span class="material-icons-round">shopping_cart</span>المبيعات<span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="sales-submenu" class="submenu">
+          <a href="sales.html" class="sub-link"><span class="material-icons-round">shopping_cart</span>المبيعات</a>
+          <a href="add_sale.html" class="sub-link active-submenu"><span class="material-icons-round">add_shopping_cart</span>إضافة بيع جديد</a>
+          <a href="archive.html" class="sub-link"><span class="material-icons-round">archive</span>الأرشيف</a>
+        </div>
+      </div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber"><span class="material-icons-round">analytics</span>التقارير<span class="material-icons-round expand-icon">expand_more</span></button><div id="reports-submenu" class="submenu hidden"><a href="monthly_payments_report.html" class="sub-link">تقرير التسديدات الشهري</a><a href="daily_payments_report.html" class="sub-link">تقرير التسديدات اليومية</a><a href="monthly_sales_report.html" class="sub-link">تقرير مبيعات شهري</a><a href="daily_sales_report.html" class="sub-link">تقرير مبيعات يومي</a><a href="monthly_dues_report.html" class="sub-link">تقرير المستحقات الشهري</a><a href="daily_dues_report.html" class="sub-link">تقرير المستحقات اليومي</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple"><span class="material-icons-round">badge</span>المدراء<span class="material-icons-round expand-icon">expand_more</span></button><div id="managers-submenu" class="submenu hidden"><a href="managers.html" class="sub-link">المدراء</a><a href="create_manager.html" class="sub-link">إنشاء مدير</a><a href="permissions_groups.html" class="sub-link">الصلاحيات</a><a href="create_group.html" class="sub-link">إنشاء مجموعة</a></div></div>
+      <a href="support.html" class="nav-btn-3d btn-pink"><span class="material-icons-round">support_agent</span>الدعم الفني</a>
+      <a href="backup.html" class="nav-btn-3d btn-teal"><span class="material-icons-round">backup</span>نسخ احتياطي</a>
+      <a href="settings.html" class="nav-btn-3d btn-amber"><span class="material-icons-round">settings</span>الإعدادات</a>
+      <a href="index.html" class="nav-btn-3d btn-red"><span class="material-icons-round">logout</span>خروج</a>
+    </nav>
+  </aside>
+
+  <main>
+    <h1 class="page-title"><span class="material-icons-round">add_shopping_cart</span>إضافة بيع جديد</h1>
+    <form class="form-container" id="saleForm" onsubmit="saveSale(event)">
+      <div class="form-group"><label class="form-label">الزبون *</label><select id="customer" class="form-select" required><option value="">جارٍ التحميل...</option></select></div>
+      <div class="form-group"><label class="form-label">المادة *</label><select id="material" class="form-select" required onchange="updateMaterialInfo()"><option value="">اختر المادة...</option></select></div>
+      <div class="row">
+        <div class="form-group"><label class="form-label">الكمية *</label><input type="number" id="qty" class="form-input" min="1" value="1" required oninput="calcTotal()"></div>
+        <div class="form-group"><label class="form-label">سعر الوحدة (د.ع) *</label><input type="number" id="unitPrice" class="form-input" min="0" required oninput="calcTotal()"></div>
+      </div>
+      <div class="row">
+        <div class="form-group"><label class="form-label">تاريخ البيع</label><input type="date" id="date" class="form-input" required></div>
+        <div class="form-group"><label class="form-label">حالة الدفع</label><select id="status" class="form-select"><option value="completed">مدفوع بالكامل</option><option value="pending">معلق/قسط</option></select></div>
+      </div>
+      <div class="calc-box" id="calcBox" style="display:none">💡 الإجمالي: <strong id="totalDisplay">0</strong> د.ع</div>
+      <div class="form-group"><label class="form-label">ملاحظات <span class="opt">(اختياري)</span></label><input type="text" id="notes" class="form-input" placeholder="أي تفاصيل إضافية..."></div>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary"><span class="material-icons-round">save</span> حفظ البيع</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='sales.html'"><span class="material-icons-round">arrow_back</span> رجوع</button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <a href="home.html"><span class="material-icons-round">dashboard</span>الرئيسية</a>
+    <a href="add_installment.html"><span class="material-icons-round">post_add</span>قسط</a>
+    <a href="monthly_payments_report.html"><span class="material-icons-round">analytics</span>تقارير</a>
+    <a href="installments.html"><span class="material-icons-round">receipt_long</span>أقساط</a>
+    <a href="customers.html" class="active"><span class="material-icons-round">group</span>زبائن</a>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');document.getElementById('date').valueAsDate=new Date();populateSelects();calcTotal()});
+    function toggleSidebar(){document.querySelector('.sidebar').classList.toggle('active');document.querySelector('.sidebar-overlay').classList.toggle('active')}
+    function toggleSubmenu(id){document.getElementById(id).classList.toggle('hidden');document.querySelector(`[onclick*="${id}"]`).classList.toggle('expanded')}
+    function toggleTheme(){document.documentElement.classList.toggle('light-mode');localStorage.setItem('theme',document.documentElement.classList.contains('light-mode')?'light':'dark')}
+    if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-mode');
+    
+    function populateSelects(){
+      const c=JSON.parse(localStorage.getItem('customers')||'[]'),m=JSON.parse(localStorage.getItem('materials')||'[]');
+      document.getElementById('customer').innerHTML='<option value="">اختر الزبون...</option>'+c.filter(x=>x.status!=='inactive').map(x=>`<option value="${x.id}">${x.fullName}</option>`).join('');
+      document.getElementById('material').innerHTML='<option value="">اختر المادة...</option>'+m.filter(x=>x.status!=='inactive').map(x=>`<option value="${x.id}" data-price="${x.price}" data-qty="${x.quantity}">${x.name} (مخزون: ${x.quantity})</option>`).join('');
+    }
+    function updateMaterialInfo(){
+      const sel=document.getElementById('material'),opt=sel.options[sel.selectedIndex];
+      if(opt&&opt.dataset.price)document.getElementById('unitPrice').value=opt.dataset.price;
+      calcTotal();
+    }
+    function calcTotal(){
+      const q=parseFloat(document.getElementById('qty').value)||0,p=parseFloat(document.getElementById('unitPrice').value)||0;
+      const t=q*p;
+      document.getElementById('totalDisplay').textContent=t.toLocaleString();
+      document.getElementById('calcBox').style.display='block';
+    }
+    function saveSale(e){
+      e.preventDefault();
+      const matId=document.getElementById('material').value,qty=parseInt(document.getElementById('qty').value);
+      const matOpt=document.getElementById('material').options[document.getElementById('material').selectedIndex];
+      const available=parseInt(matOpt?.dataset.qty||0);
+      if(qty>available){alert(`⚠️ الكمية المطلوبة (${qty}) أكبر من المخزون المتاح (${available})`);return}
+      
+      const sale={id:Date.now(),customerId:document.getElementById('customer').value,customerName:matOpt?.text||'',materialId:matId,materialName:matOpt?.text.split('(')[0].trim()||'',qty,unitPrice:parseFloat(document.getElementById('unitPrice').value),total:qty*parseFloat(document.getElementById('unitPrice').value),date:document.getElementById('date').value,status:document.getElementById('status').value,notes:document.getElementById('notes').value,createdAt:new Date().toLocaleString('ar-IQ')};
+      
+      let sales=JSON.parse(localStorage.getItem('sales')||'[]');sales.push(sale);localStorage.setItem('sales',JSON.stringify(sales));
+      
+      // خصم من المخزون
+      let mats=JSON.parse(localStorage.getItem('materials')||'[]');const mi=mats.findIndex(m=>m.id==matId);if(mi!==-1){mats[mi].quantity-=qty;mats[mi].updatedAt=new Date().toLocaleString('ar-IQ');localStorage.setItem('materials',JSON.stringify(mats))}
+      
+      alert('✅ تمت عملية البيع بنجاح\n✅ تم تحديث المخزون');location.href='sales.html';
+    }
+  </script>
+</body>
+</html>

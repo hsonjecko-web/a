@@ -517,17 +517,6 @@
         inst.status = 'overdue';
       }
       
-      // ✅ ✅ ✅ خصم الكمية من المواد والمخزن
-      if(inst.materialId) {
-        const matIndex = materials.findIndex(m => m.id == inst.materialId);
-        if(matIndex !== -1 && materials[matIndex].quantity > 0) {
-          materials[matIndex].quantity -= 1;
-          materials[matIndex].updatedAt = new Date().toLocaleString('ar-IQ');
-          localStorage.setItem('materials', JSON.stringify(materials));
-          console.log('📦 تم خصم مادة:', materials[matIndex].name);
-        }
-      }
-      
       // حفظ الأقساط
       installments[instIndex] = inst;
       localStorage.setItem('installments', JSON.stringify(installments));

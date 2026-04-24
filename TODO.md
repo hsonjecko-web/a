@@ -1,12 +1,25 @@
-# PWA Conversion TODO
+# خطة التعديلات - نظام الأقساط
 
-## Progress
-- [x] Create TODO.md
-- [x] Step 1: Create manifest.json
-- [x] Step 2: Generate icon-192.png and icon-512.png (placeholder SVGs)
-- [x] Step 3: Update index.html (manifest link, apple metas, SW register, install prompt)
-- [x] Step 4: Create sw.js (full offline caching)
-- [x] Step 5: Test Lighthouse (manual, provide command)
-- [x] Step 6: Complete - Run attempt_completion with deployment instructions
+## ✅ الموافقة: تمت
 
-**Next step will be marked done after each completion.**
+## الخطوات
+
+- [ ] 1. إنشاء صفحة `completed_installments.html` الجديدة
+- [ ] 2. تعديل `add_installment.html`:
+  - إضافة حقل الكمية
+  - خصم الكمية من المخزن مرة واحدة عند الإنشاء
+  - فحص تكرار الزبون/الكفيل وعرض تنبيه مع طلب موافقة
+- [ ] 3. تعديل `installments.html`:
+  - عند اكتمال الدفعات، نقل القسط إلى `completed_installments`
+  - إزالة رسالة "تم خصم المادة" من الدفع
+- [ ] 4. تعديل `due_today_installments.html`:
+  - نفس منطق النقل عند الاكتمال
+  - إزالة خصم المخزن من الدفع (لأنه صار عند الإنشاء)
+- [ ] 5. تعديل `view_guarantor.html`:
+  - إضافة قسم يعرض الكفالات التي قام بها الكفيل
+- [ ] 6. تعديل `add_customer.html`:
+  - فحص تكرار الاسم أو رقم الهاتف قبل الحفظ مع تنبيه
+- [ ] 7. تعديل `add_guarantor.html`:
+  - فحص تكرار الاسم أو رقم الهاتف قبل الحفظ مع تنبيه
+- [ ] 8. تحديث السايدبار في جميع الصفحات لإضافة رابط "الأقساط المكتملة"
+

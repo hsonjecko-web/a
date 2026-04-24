@@ -4,94 +4,186 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
-  <title>عيادة الأثير للبصريات - تسجيل الدخول</title>
-  <link rel="manifest" href="/a/manifest.json">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-touch-icon" sizes="192x192" href="icon-192.png">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">  
+  <title>نظام التميز - تسجيل الدخول</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <style>
     :root {
       --bg-page: #0b0f19; --bg-main: linear-gradient(135deg, #111827 0%, #0f172a 100%);
       --glass-bg: rgba(30, 41, 59, 0.4); --glass-border: rgba(255, 255, 255, 0.1);
       --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-      --text-primary: #f8fafc; --text-secondary: #94a3b8;
-      --accent-blue: #3b82f6; --accent-red: #ef4444;
+      --text-primary: #f8fafc; --text-secondary: #94a3b8; --text-muted: #64748b;
+      --accent-blue: #3b82f6; --accent-green: #22c55e; --accent-cyan: #06b6d4;
+      --accent-purple: #a855f7; --accent-red: #ef4444; --accent-amber: #f59e0b;
+      --accent-lime: #84cc16; --accent-magenta: #ec4899; --accent-teal: #14b8a6;
+      --accent-orange: #f97316; --accent-pink: #f472b6;
       --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: 'Cairo', sans-serif; }
-    html, body { height: 100%; background: var(--bg-main); color: var(--text-primary); overflow: hidden; }
-    body { display: flex; align-items: center; justify-content: center; padding: 16px; padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
-    .login-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 28px 20px; width: 100%; max-width: 380px; box-shadow: var(--glass-shadow); backdrop-filter: blur(12px); text-align: center; }
-    .login-card h1 { font-size: 1.3rem; margin-bottom: 20px; font-weight: 700; }
-    .form-group { margin-bottom: 14px; text-align: right; }
-    .form-group label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-secondary); }
-    .form-group input { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary); font-size: 1rem; outline: none; transition: 0.2s; }
-    .form-group input:focus { border-color: var(--accent-blue); }
-    .btn-login { width: 100%; padding: 13px; background: var(--accent-blue); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-    .btn-login:active { transform: scale(0.97); }
-    .error-msg { color: var(--accent-red); font-size: 0.8rem; margin-top: 10px; min-height: 18px; }
-    html.light-mode { --bg-page: #f0f9ff; --bg-main: radial-gradient(circle at 50% -20%, #f0f9ff 0%, #e0f2fe 100%) !important; --glass-bg: rgba(255,255,255,0.75) !important; --glass-border: rgba(59,130,246,0.2) !important; --text-primary: #1e293b !important; --text-secondary: #64748b !important; }
-    html.light-mode input { background: rgba(59,130,246,0.05) !important; color: #1e293b !important; }
+    html, body { height: 100%; background: var(--bg-main); color: var(--text-primary); overflow-x: hidden; }
+    
+    /* Login Container & Card */
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at 50% 0%, rgba(59,130,246,0.15), transparent 60%);
+    }
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(12px);
+      text-align: center;
+    }
+    .login-header .logo-icon { font-size: 48px; color: var(--accent-blue); margin-bottom: 8px; }
+    .login-header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+    .login-header p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px; }
+    
+    /* Form Elements */
+    .form-group { text-align: right; margin-bottom: 16px; position: relative; }
+    .form-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-primary); }
+    .form-input { width: 100%; padding: 12px 14px; background: rgba(15,23,42,0.6); border: 1px solid var(--glass-border); border-radius: 10px; color: var(--text-primary); font-size: 0.95rem; outline: none; transition: 0.2s; }
+    .form-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
+    .password-wrapper { position: relative; }
+    .toggle-pass { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted); }
+    .toggle-pass:hover { color: var(--text-primary); }
+    
+    /* Buttons */
+    .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; margin-bottom: 10px; }
+    .btn:active { transform: scale(0.98); }
+    .btn-login { background: var(--accent-blue); color: #fff; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+    .btn-guest { background: transparent; border: 1px dashed var(--glass-border); color: var(--text-secondary); }
+    .btn-guest:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+    
+    /* Error Message */
+    .error-msg { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: var(--accent-red); padding: 10px; border-radius: 8px; margin-bottom: 16px; font-size: 0.9rem; display: none; animation: shake 0.4s ease-in-out; }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+    
+    /* Theme Toggle */
+    .theme-switch { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--glass-border); display: flex; justify-content: center; }
+    .theme-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; padding: 8px 12px; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .light-mode-icon { display: none; }
+    
+    /* Light Mode */
+    html.light-mode { --bg-page: #f0f9ff; --bg-main: radial-gradient(circle at 50% -20%, #f0f9ff 0%, #e0f2fe 100%) !important; --glass-bg: rgba(255,255,255,0.75) !important; --glass-border: rgba(59,130,246,0.2) !important; --glass-shadow: 0 4px 15px rgba(59,130,246,0.08), inset 0 1px 1px rgba(59,130,246,0.1) !important; --text-primary: #1e293b !important; --text-secondary: #64748b !important; --text-muted: rgba(30,41,59,0.5) !important; }
+    html.light-mode body { background: var(--bg-main); }
+    html.light-mode .login-card { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; border-color: rgba(59,130,246,0.2) !important; }
+    html.light-mode .form-input { background: rgba(59,130,246,0.05) !important; border-color: rgba(59,130,246,0.2) !important; color: #1e293b !important; }
+    html.light-mode .btn-guest { border-color: rgba(59,130,246,0.3) !important; color: #64748b !important; }
+    html.light-mode .theme-btn { background: rgba(59,130,246,0.08) !important; border-color: rgba(59,130,246,0.2) !important; color: #1e293b !important; }
+    html.light-mode .error-msg { background: rgba(239,68,68,0.1) !important; border-color: rgba(239,68,68,0.3) !important; color: var(--accent-red); }
+    html.light-mode .light-mode-icon { display: inline-block !important; }
+    html.light-mode .dark-mode-icon { display: none !important; }
   </style>
 </head>
 <body>
-  <div class="login-card">
-    <h1>نظام التميز</h1>
-    <form id="loginForm">
-      <div class="form-group"><label>اسم المستخدم</label><input type="text" id="username" placeholder="admin" required></div>
-      <div class="form-group"><label>كلمة المرور</label><input type="password" id="password" placeholder="••••••" required></div>
-    <button type="submit" class="btn-login">تسجيل الدخول</button>
-      <button type="button" id="installBtn" class="btn-login" style="margin-top:10px; background:#10b981; display:none;">تثبيت التطبيق</button>
-      <div class="error-msg" id="errorMsg"></div>
-    </form>
-  </div>
-  <script>
-    // PWA Service Worker & Install
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/a/sw.js')
-          .then(reg => console.log('SW registered'))
-          .catch(err => console.log('SW failed', err));
-      });
-    }
-    
-   window.addEventListener('beforeinstallprompt', (e) => {
-e.preventDefault();
-deferredPrompt = e;
 
-document.getElementById('installBtn').style.display='block';
-});
-    
-    function installApp() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choice) => {
-          deferredPrompt = null;
-        });
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <span class="material-icons-round logo-icon">account_circle</span>
+        <h1>نظام التميز</h1>
+        <p>سجّل الدخول للمتابعة</p>
+      </div>
+
+      <div id="errorMsg" class="error-msg">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">اسم المستخدم</label>
+          <input type="text" id="username" class="form-input" placeholder="أدخل اسم المستخدم" autocomplete="off" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">كلمة المرور</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" class="form-input" placeholder="أدخل كلمة المرور" required>
+            <span class="toggle-pass material-icons-round" onclick="togglePass()">visibility</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-login">
+          <span class="material-icons-round">login</span> تسجيل الدخول
+        </button>
+      </form>
+
+      <button class="btn btn-guest" onclick="enterAsGuest()">
+        <span class="material-icons-round">person_outline</span> الدخول كزائر
+      </button>
+
+      <div class="theme-switch">
+        <button class="theme-btn" onclick="toggleDarkMode()">
+          <span class="material-icons-round dark-mode-icon">light_mode</span>
+          <span class="material-icons-round light-mode-icon">dark_mode</span>
+          <span id="themeText">الوضع الفاتح</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // مزامنة الوضع الليلي مع باقي الصفحات
+      if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
+      updateThemeText();
+    });
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      const errorDiv = document.getElementById('errorMsg');
+
+      if(user === 'admin' && pass === '002200') {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', 'admin');
+        localStorage.setItem('lastLogin', new Date().toLocaleString('ar-IQ'));
+        window.location.href = 'home.html';
+      } else {
+        errorDiv.style.display = 'block';
+        errorDiv.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+        setTimeout(() => errorDiv.style.display = 'none', 3000);
       }
     }
-    
-    if(localStorage.getItem('isLoggedIn') === 'true') window.location.href = '/a/home.html';
-    if(localStorage.getItem('darkMode') === 'false') document.documentElement.classList.add('light-mode');
-    document.getElementById('loginForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const u = document.getElementById('username').value.trim();
-      const p = document.getElementById('password').value;
-      if(u === 'admin' && p === '123456') {
-        localStorage.setItem('isLoggedIn', 'true');
-        window.location.href = '/a/home.html';
+
+    function enterAsGuest() {
+      localStorage.setItem('isLoggedIn', 'guest');
+      localStorage.setItem('userRole', 'guest');
+      window.location.href = 'home.html';
+    }
+
+    function togglePass() {
+      const passInput = document.getElementById('password');
+      const icon = document.querySelector('.toggle-pass');
+      if(passInput.type === 'password') {
+        passInput.type = 'text';
+        icon.textContent = 'visibility_off';
       } else {
-        document.getElementById('errorMsg').textContent = 'بيانات الدخول غير صحيحة';
-        document.getElementById('password').value = '';
+        passInput.type = 'password';
+        icon.textContent = 'visibility';
       }
-    });
-    
-    document.getElementById('installBtn').addEventListener('click', installApp);
-    window.addEventListener('appinstalled', () => {
-      console.log('App installed');
-    });
+    }
+
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      html.classList.toggle('light-mode');
+      localStorage.setItem('darkMode', html.classList.contains('light-mode') ? 'false' : 'true');
+      updateThemeText();
+    }
+
+    function updateThemeText() {
+      const txt = document.getElementById('themeText');
+      if(document.documentElement.classList.contains('light-mode')) {
+        txt.textContent = 'الوضع الفاتح';
+      } else {
+        txt.textContent = 'الوضع الداكن';
+      }
+    }
   </script>
 </body>
 </html>

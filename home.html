@@ -293,6 +293,9 @@
         <div id="installments-submenu" class="submenu hidden">
           <a href="add_installment.html" class="sub-link"><span class="material-icons-round">add</span>إضافة قسط جديد</a>
           <a href="installments.html" class="sub-link"><span class="material-icons-round">receipt_long</span>الأقساط</a>
+          
+          <a href="completed_installments.html" class="sub-link"><span class="material-icons-round">receipt_long</span> الأقساط المكتملة</a>
+
           <a href="incomplete_installments.html" class="sub-link"><span class="material-icons-round">hourglass_empty</span>الأقساط الغير مكتملة</a>
           <a href="due_today_installments.html" class="sub-link"><span class="material-icons-round">priority_high</span>الأقساط المستحقة اليوم</a>
         </div>
@@ -371,73 +374,73 @@
     
     <!-- بطاقات الإحصائيات -->
     <div class="stats-grid">
-      <div class="glass-premium card-accent-blue">
+      <div class="glass-premium card-accent-blue" onclick="location.href='installments.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(59,130,246,0.15);color:var(--accent-blue)">
           <span class="material-icons-round">payments</span>
         </div>
         <div class="card-label">جميع الأقساط</div>
-        <div class="card-value">124,500,000 <span>د.ع</span></div>
+        <div class="card-value" id="totalInstallmentsAmount">0 <span>د.ع</span></div>
       </div>
-      <div class="glass-premium card-accent-green">
+      <div class="glass-premium card-accent-green" onclick="location.href='completed_installments.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(34,197,94,0.15);color:var(--accent-green)">
           <span class="material-icons-round">task_alt</span>
         </div>
         <div class="card-label">الأقساط المكتملة</div>
-        <div class="card-value">8,200</div>
+        <div class="card-value" id="completedInstallmentsCount">0</div>
       </div>
-      <div class="glass-premium card-accent-cyan">
+      <div class="glass-premium card-accent-cyan" onclick="location.href='incomplete_installments.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(6,182,212,0.15);color:var(--accent-cyan)">
           <span class="material-icons-round">hourglass_empty</span>
         </div>
         <div class="card-label">الاقساط الغير مكتملة</div>
-        <div class="card-value">4,250</div>
+        <div class="card-value" id="incompleteInstallmentsCount">0</div>
       </div>
-      <div class="glass-premium card-accent-purple">
+      <div class="glass-premium card-accent-purple" onclick="location.href='due_today_installments.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(168,85,247,0.15);color:var(--accent-purple)">
           <span class="material-icons-round">priority_high</span>
         </div>
         <div class="card-label">الاقساط المستحقة اليوم</div>
-        <div class="card-value">12</div>
+        <div class="card-value" id="dueTodayCount">0</div>
       </div>
       
       <!-- الكفلاء -->
-      <div class="glass-premium card-accent-lime">
+      <div class="glass-premium card-accent-lime" onclick="location.href='guarantors.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(132,204,22,0.15);color:var(--accent-lime)">
           <span class="material-icons-round">verified_user</span>
         </div>
         <div class="card-label">الكفلاء</div>
-        <div class="card-value">08</div>
+        <div class="card-value" id="guarantorsCount">0</div>
       </div>
       
       <!-- المواد/المخزون -->
-      <div class="glass-premium card-accent-orange">
+      <div class="glass-premium card-accent-orange" onclick="location.href='materials.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(249,115,22,0.15);color:var(--accent-orange)">
           <span class="material-icons-round">inventory_2</span>
         </div>
         <div class="card-label">إجمالي المواد</div>
-        <div class="card-value">342</div>
+        <div class="card-value" id="materialsCount">0</div>
       </div>
       
-      <div class="glass-premium card-accent-red">
+      <div class="glass-premium card-accent-red" onclick="location.href='customers.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(239,68,68,0.15);color:var(--accent-red)">
           <span class="material-icons-round">groups_3</span>
         </div>
         <div class="card-label">الزبائن</div>
-        <div class="card-value">1,200</div>
+        <div class="card-value" id="customersCount">0</div>
       </div>
-      <div class="glass-premium card-accent-amber">
+      <div class="glass-premium card-accent-amber" onclick="location.href='monthly_dues_report.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(245,158,11,0.15);color:var(--accent-amber)">
           <span class="material-icons-round">monetization_on</span>
         </div>
         <div class="card-label">المبلغ الكلي للشهور الغير مدفوعة</div>
-        <div class="card-value">125k <span>د.ع</span></div>
+        <div class="card-value" id="totalUnpaidAmount">0 <span>د.ع</span></div>
       </div>
-      <div class="glass-premium card-accent-magenta">
+      <div class="glass-premium card-accent-magenta" onclick="location.href='monthly_payments_report.html'" style="cursor:pointer">
         <div class="card-icon" style="background:rgba(236,72,153,0.15);color:var(--accent-magenta)">
           <span class="material-icons-round">account_balance_wallet</span>
         </div>
         <div class="card-label">المبلغ الكلي للشهور المدفوعة</div>
-        <div class="card-value">45k <span>د.ع</span></div>
+        <div class="card-value" id="totalPaidAmount">0 <span>د.ع</span></div>
       </div>
     </div>
 
@@ -575,6 +578,7 @@
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
       updateDarkModeIcon(); 
       checkActivePage();
+      loadDashboardStats();
     });
 
     function toggleSidebar() { 
@@ -639,6 +643,66 @@
         if(d) d.classList.add('hidden'); 
         if(l) l.classList.remove('hidden'); 
       }
+    }
+
+    /* ==================== DASHBOARD DATA LOADING ==================== */
+    function formatNumber(num) {
+      if (num === null || num === undefined || isNaN(num)) return '0';
+      return Math.round(num).toLocaleString('en-US');
+    }
+
+    function loadDashboardStats() {
+      const today = new Date().toISOString().split('T')[0];
+
+      // Read from localStorage (same as all other pages)
+      const installments = JSON.parse(localStorage.getItem('installments') || '[]');
+      const customers = JSON.parse(localStorage.getItem('customers') || '[]');
+      const guarantors = JSON.parse(localStorage.getItem('guarantors') || '[]');
+      const materials = JSON.parse(localStorage.getItem('materials') || '[]');
+
+      // 1. Total Installments Amount
+      const totalAmount = installments.reduce((s, i) => s + (parseFloat(i.totalAmount) || 0), 0);
+      document.getElementById('totalInstallmentsAmount').innerHTML = formatNumber(totalAmount) + ' <span>د.ع</span>';
+
+      // 2. Completed Installments Count
+      const completed = installments.filter(i => i.status === 'paid' || (i.paidCount || 0) >= (i.totalCount || 1)).length;
+      document.getElementById('completedInstallmentsCount').textContent = formatNumber(completed);
+
+      // 3. Incomplete Installments Count
+      const incomplete = installments.filter(i => i.status !== 'paid' && (i.paidCount || 0) < (i.totalCount || 1)).length;
+      document.getElementById('incompleteInstallmentsCount').textContent = formatNumber(incomplete);
+
+      // 4. Due Today Count
+      let dueToday = 0;
+      installments.forEach(inst => {
+        if (inst.status === 'paid') return;
+        const nextUnpaid = (inst.schedule || []).find(s => !s.paid);
+        if (nextUnpaid && nextUnpaid.dueDate === today) dueToday++;
+      });
+      document.getElementById('dueTodayCount').textContent = formatNumber(dueToday);
+
+      // 5. Guarantors Count
+      document.getElementById('guarantorsCount').textContent = formatNumber(guarantors.length);
+
+      // 6. Materials Count
+      document.getElementById('materialsCount').textContent = formatNumber(materials.length);
+
+      // 7. Customers Count
+      document.getElementById('customersCount').textContent = formatNumber(customers.length);
+
+      // 8. Total Unpaid Amount (sum of all unpaid schedule items)
+      let totalUnpaid = 0;
+      installments.forEach(inst => {
+        if (inst.status === 'paid') return;
+        (inst.schedule || []).forEach(s => {
+          if (!s.paid) totalUnpaid += parseFloat(s.amount) || 0;
+        });
+      });
+      document.getElementById('totalUnpaidAmount').innerHTML = formatNumber(totalUnpaid) + ' <span>د.ع</span>';
+
+      // 9. Total Paid Amount (sum of paidAmount across all installments)
+      const totalPaid = installments.reduce((s, i) => s + (parseFloat(i.paidAmount) || 0), 0);
+      document.getElementById('totalPaidAmount').innerHTML = formatNumber(totalPaid) + ' <span>د.ع</span>';
     }
   </script>
 </body>

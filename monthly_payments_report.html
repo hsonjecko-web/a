@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <title>نظام التميز - تقرير التسديدات الشهري</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <style>
+    :root{--bg-page:#0b0f19;--bg-main:linear-gradient(135deg,#111827 0%,#0f172a 100%);--glass-bg:rgba(30,41,59,0.4);--glass-border:rgba(255,255,255,0.1);--glass-shadow:0 8px 32px rgba(0,0,0,0.35);--text-primary:#f8fafc;--text-secondary:#94a3b8;--text-muted:#64748b;--accent-blue:#3b82f6;--accent-green:#22c55e;--accent-cyan:#06b6d4;--accent-purple:#a855f7;--accent-red:#ef4444;--accent-amber:#f59e0b;--accent-lime:#84cc16;--accent-magenta:#ec4899;--accent-teal:#14b8a6;--accent-orange:#f97316;--accent-pink:#f472b6;--header-height:64px;--footer-height:70px;--sidebar-width:280px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Cairo',sans-serif}
+    html,body{height:100%;background:var(--bg-main);color:var(--text-primary);overflow-x:hidden}
+    body{padding-top:calc(var(--header-height)+var(--safe-top));padding-bottom:calc(var(--footer-height)+var(--safe-bottom)+20px)}
+    
+    /* Header & Sidebar (نفس الكود الأصلي) */
+    .app-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); padding: 0 16px; padding-top: var(--safe-top); display: flex; align-items: center; justify-content: space-between; background: rgba(15,23,42,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); z-index: 100; }
+    .menu-toggle { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--text-primary); cursor: pointer; border-radius: 10px; }
+    .menu-toggle:active { background: var(--glass-bg); }
+    .header-controls { display: flex; align-items: center; gap: 12px; }
+    .theme-btn, .user-info { display: flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px; padding: 6px 10px; cursor: pointer; }
+    .user-info { flex-direction: column; align-items: flex-end; background: transparent; border: none; padding: 0; }
+    .user-info span { font-weight: 600; font-size: 0.9rem; }
+    .user-info small { font-size: 0.7rem; color: var(--text-muted); }
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 190; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+    .sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: var(--sidebar-width); background: var(--glass-bg); backdrop-filter: blur(16px); border-left: 1px solid var(--glass-border); transform: translateX(100%); transition: transform 0.3s ease; z-index: 200; display: flex; flex-direction: column; padding-top: calc(var(--safe-top) + 16px); }
+    .sidebar.active { transform: translateX(0); }
+    .sidebar-header { padding: 16px 20px; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 10px; }
+    .sidebar-header h2 { font-size: 1.1rem; font-weight: 700; flex: 1; }
+    .sidebar-header .material-icons-round { color: var(--accent-blue); font-size: 24px; }
+    .sidebar-nav { flex: 1; overflow-y: auto; padding: 16px 12px; }
+    .nav-btn-3d { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; margin-bottom: 6px; background: linear-gradient(145deg, rgba(30,41,59,0.9), rgba(15,23,42,0.8)); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary); text-decoration: none; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+    .nav-btn-3d:active { transform: scale(0.98); }
+    .nav-btn-3d .material-icons-round { font-size: 22px; }
+    .nav-btn-3d .expand-icon { margin-right: auto; transition: transform 0.3s; }
+    .nav-btn-3d.expanded .expand-icon { transform: rotate(180deg); }
+    .submenu { padding-right: 16px; overflow: hidden; transition: max-height 0.3s ease; max-height: 0; }
+    .submenu:not(.hidden) { max-height: 500px; }
+    .sub-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; border-radius: 8px; margin-bottom: 4px; border: 1px solid transparent; }
+    .sub-link:active { background: var(--glass-bg); }
+    .sub-link.active-submenu { background: var(--accent-blue); color: #fff !important; border-color: rgba(59,130,246,0.4); box-shadow: 0 0 12px rgba(59,130,246,0.4); }
+    .btn-blue { border-color: rgba(59,130,246,0.3) !important; }
+    .btn-purple { border-color: rgba(168,85,247,0.3) !important; }
+    .btn-green { border-color: rgba(34,197,94,0.3) !important; }
+    .btn-cyan { border-color: rgba(6,182,212,0.3) !important; }
+    .btn-amber { border-color: rgba(245,158,11,0.3) !important; }
+    .btn-red { border-color: rgba(239,68,68,0.3) !important; }
+    .btn-teal { border-color: rgba(20,184,166,0.3) !important; }
+    .btn-lime { border-color: rgba(132,204,22,0.3) !important; }
+    .btn-orange { border-color: rgba(249,115,22,0.3) !important; }
+    .btn-pink { border-color: rgba(244,114,182,0.3) !important; }
+    
+    /* Button Color Classes */
+    .btn-blue{border-color:rgba(59,130,246,0.3) !important}.btn-purple{border-color:rgba(168,85,247,0.3) !important}.btn-green{border-color:rgba(34,197,94,0.3) !important}.btn-cyan{border-color:rgba(6,182,212,0.3) !important}.btn-amber{border-color:rgba(245,158,11,0.3) !important}.btn-red{border-color:rgba(239,68,68,0.3) !important}.btn-teal{border-color:rgba(20,184,166,0.3) !important}.btn-lime{border-color:rgba(132,204,22,0.3) !important}.btn-orange{border-color:rgba(249,115,22,0.3) !important}.btn-pink{border-color:rgba(244,114,182,0.3) !important}
+    
+    /* Report Styles */
+    main{padding:16px;max-width:1200px;margin:0 auto}
+    .page-title{font-size:1.2rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+    .page-title .material-icons-round{color:var(--amber)}
+    .controls{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+    .date-input{padding:10px 14px;background:rgba(15,23,42,0.6);border:1px solid var(--glass-border);border-radius:8px;color:var(--text-primary);outline:none}
+    .date-input:focus{border-color:var(--accent-blue)}
+    .print-btn{padding:10px 20px;background:var(--accent-blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+    .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+    .stat-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;padding:16px;text-align:center}
+    .stat-card h3{font-size:1.5rem;font-weight:700;margin-bottom:4px}.stat-card p{color:var(--text-secondary);font-size:.85rem}
+    .stat-card.amt h3{color:var(--green)}.stat-card.cnt h3{color:var(--blue)}
+    .table-container{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;overflow:hidden}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px 16px;text-align:right;border-bottom:1px solid var(--glass-border)}
+    th{background:rgba(255,255,255,0.05);font-weight:600;color:var(--text-secondary)}
+    .empty-state{text-align:center;padding:40px;color:var(--text-muted)}
+    
+        /* Footer Styles */
+    .mobile-footer { position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-height); padding-bottom: var(--safe-bottom); background: rgba(15,23,42,0.9); backdrop-filter: blur(12px); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-around; z-index: 90; }
+    .footer-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--text-muted); padding: 8px 12px; border-radius: 12px; transition: all 0.2s; flex: 1; max-width: 20%; }
+    .footer-btn .material-icons-round { font-size: 24px; transition: transform 0.2s; }
+    .footer-btn span:last-child { font-size: 0.7rem; font-weight: 500; }
+    .footer-btn:active { transform: scale(0.9); background: var(--glass-bg); }
+    .footer-btn.active { color: var(--accent-blue); }
+    .footer-btn.active .material-icons-round { transform: translateY(-2px); }
+    
+    html.light-mode { --bg-page: #f0f9ff; --bg-main: radial-gradient(circle at 50% -20%, #f0f9ff 0%, #e0f2fe 100%) !important; --glass-bg: rgba(255,255,255,0.75) !important; --glass-border: rgba(59,130,246,0.2) !important; --glass-shadow: 0 4px 15px rgba(59,130,246,0.08), inset 0 1px 1px rgba(59,130,246,0.1) !important; --text-primary: #1e293b !important; --text-secondary: #64748b !important; --text-muted: rgba(30,41,59,0.5) !important; }
+    html.light-mode body { background: var(--bg-main); }
+    html.light-mode main { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; }
+    html.light-mode .app-header { background: rgba(240,245,250,0.8) !important; border-bottom-color: rgba(59,130,246,0.15) !important; }
+    html.light-mode .menu-toggle { color: #1e293b !important; }
+    html.light-mode .theme-btn { background: rgba(59,130,246,0.08) !important; border-color: rgba(59,130,246,0.2) !important; }
+    html.light-mode .user-info span { color: #1e293b !important; }
+    html.light-mode .sidebar { background: linear-gradient(165deg, rgba(219,234,254,0.8) 0%, rgba(240,249,255,0.7) 100%) !important; border-left-color: rgba(59,130,246,0.25) !important; }
+    html.light-mode .nav-btn-3d { background: linear-gradient(145deg, rgba(255,255,255,0.8), rgba(241,245,249,0.6)) !important; border-color: rgba(59,130,246,0.2) !important; color: #1e293b !important; }
+    html.light-mode .sub-link { color: #64748b !important; }
+    html.light-mode .sub-link.active-submenu { background: #000 !important; color: #fff !important; border-color: rgba(0,0,0,0.5) !important; }
+    html.light-mode .mobile-footer { background: rgba(240,245,250,0.9) !important; border-top-color: rgba(59,130,246,0.15) !important; }
+    html.light-mode .footer-btn { color: #64748b !important; }
+    html.light-mode .footer-btn.active { color: #3b82f6 !important; }
+    html.light-mode .card { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; border-color: rgba(59,130,246,0.2) !important; }
+    html.light-mode .action-btn.view { background: rgba(59,130,246,0.1) !important; }
+    html.light-mode .action-btn.whatsapp { background: rgba(37,211,102,0.1) !important; }
+    .light-mode-icon { display: none; }
+    html.light-mode .light-mode-icon { display: inline-block !important; }
+    html.light-mode .dark-mode-icon { display: none !important; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+    html.light-mode ::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.3); }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <button class="menu-toggle" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button>
+    <div class="header-controls">
+      <button class="theme-btn" onclick="toggleDarkMode()"><span class="material-icons-round dark-mode-icon">light_mode</span><span class="material-icons-round light-mode-icon">dark_mode</span></button>
+      <div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
+    <nav class="sidebar-nav">
+      <a href="home.html" class="nav-btn-3d btn-blue"><span class="material-icons-round">dashboard</span>لوحة التحكم</a>
+      <div class="submenu-container"><button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green"><span class="material-icons-round">group</span>الزبائن<span class="material-icons-round expand-icon">expand_more</span></button><div id="customers-submenu" class="submenu hidden"><a href="customers.html" class="sub-link">الزبائن</a><a href="add_customer.html" class="sub-link">إضافة زبون</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('guarantors-submenu')" class="nav-btn-3d btn-lime"><span class="material-icons-round">verified_user</span>الكفلاء<span class="material-icons-round expand-icon">expand_more</span></button><div id="guarantors-submenu" class="submenu hidden"><a href="add_guarantor.html" class="sub-link">إضافة كفيل</a><a href="guarantors.html" class="sub-link">قائمة الكفلاء</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('materials-submenu')" class="nav-btn-3d btn-orange"><span class="material-icons-round">inventory_2</span>المواد<span class="material-icons-round expand-icon">expand_more</span></button><div id="materials-submenu" class="submenu hidden"><a href="materials.html" class="sub-link">المواد</a><a href="add_material.html" class="sub-link">إضافة مادة</a><a href="store.html" class="sub-link">المخزن</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan"><span class="material-icons-round">receipt_long</span>الأقساط<span class="material-icons-round expand-icon">expand_more</span></button><div id="installments-submenu" class="submenu hidden"><a href="add_installment.html" class="sub-link">إضافة قسط</a><a href="installments.html" class="sub-link">الأقساط</a><a href="incomplete_installments.html" class="sub-link">الغير مكتملة</a><a href="due_today_installments.html" class="sub-link">المستحقة اليوم</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal"><span class="material-icons-round">shopping_cart</span>المبيعات<span class="material-icons-round expand-icon">expand_more</span></button><div id="sales-submenu" class="submenu hidden"><a href="sales.html" class="sub-link">المبيعات</a><a href="add_sale.html" class="sub-link">إضافة بيع</a><a href="archive.html" class="sub-link">الأرشيف</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber active-link expanded"><span class="material-icons-round">analytics</span>التقارير<span class="material-icons-round expand-icon">expand_more</span></button><div id="reports-submenu" class="submenu"><a href="monthly_payments_report.html" class="sub-link active-submenu">تقرير التسديدات الشهري</a><a href="daily_payments_report.html" class="sub-link">تقرير التسديدات اليومية</a><a href="monthly_sales_report.html" class="sub-link">تقرير مبيعات شهري</a><a href="daily_sales_report.html" class="sub-link">تقرير مبيعات يومي</a><a href="monthly_dues_report.html" class="sub-link">تقرير المستحقات الشهري</a><a href="daily_dues_report.html" class="sub-link">تقرير المستحقات اليومي</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple"><span class="material-icons-round">badge</span>المدراء<span class="material-icons-round expand-icon">expand_more</span></button><div id="managers-submenu" class="submenu hidden"><a href="managers.html" class="sub-link">المدراء</a><a href="create_manager.html" class="sub-link">إنشاء مدير</a><a href="permissions_groups.html" class="sub-link">مجموعات الصلاحيات</a><a href="create_group.html" class="sub-link">إنشاء مجموعة</a></div></div>
+      <a href="support.html" class="nav-btn-3d btn-pink"><span class="material-icons-round">support_agent</span>الدعم الفني</a>
+      <a href="backup.html" class="nav-btn-3d btn-teal"><span class="material-icons-round">backup</span>نسخ احتياطي</a>
+      <a href="settings.html" class="nav-btn-3d btn-amber"><span class="material-icons-round">settings</span>الإعدادات</a>
+      <a href="index.html" class="nav-btn-3d btn-red"><span class="material-icons-round">logout</span>خروج</a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="page-title"><span class="material-icons-round">calendar_month</span>تقرير التسديدات الشهري</div>
+    <div class="controls">
+      <input type="month" id="monthFilter" class="date-input" onchange="loadReport()">
+      <button class="print-btn" onclick="window.print()"><span class="material-icons-round" style="font-size:18px;vertical-align:middle;margin-left:4px">print</span> طباعة</button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card amt"><h3 id="totalPaid">0</h3><p>إجمالي المبلغ المدفوع</p></div>
+      <div class="stat-card cnt"><h3 id="countPaid">0</h3><p>عدد عمليات الدفع</p></div>
+    </div>
+    <div class="table-container"><table><thead><tr><th>التاريخ</th><th>اسم الزبون</th><th>المادة</th><th>المبلغ</th></tr></thead><tbody id="reportBody"></tbody></table></div>
+    <div class="empty-state" id="emptyState" style="display:none"><span class="material-icons-round" style="font-size:48px;opacity:.5">payments</span><p>لا توجد بيانات لهذا الشهر</p></div>
+  </main>
+
+    <footer class="mobile-footer"><a href="home.html" class="footer-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a><a href="add_installment.html" class="footer-btn"><span class="material-icons-round">post_add</span><span>إضافة قسط</span></a><a href="monthly_payments_report.html" class="footer-btn"><span class="material-icons-round">analytics</span><span>التقارير</span></a><a href="installments.html" class="footer-btn"><span class="material-icons-round">receipt_long</span><span>الأقساط</span></a><a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a></footer>
+
+  
+
+  <script>
+    // === Core System Functions (Identical to base code) ===
+    document.addEventListener('DOMContentLoaded', function() {
+      if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
+      updateDarkModeIcon(); checkActivePage(); loadReport();
+    });
+    function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('sidebar-overlay').classList.toggle('active')}
+    const allSubmenus=['guarantors-submenu','materials-submenu','managers-submenu','customers-submenu','installments-submenu','sales-submenu','reports-submenu'];
+    function toggleSubmenu(id){const sub=document.getElementById(id);if(!sub)return;const hidden=sub.classList.contains('hidden');allSubmenus.forEach(s=>{const m=document.getElementById(s);if(m&&s!==id)m.classList.add('hidden')});sub.classList.toggle('hidden',!hidden);const btn=sub.previousElementSibling;if(btn)btn.classList.toggle('expanded',hidden)}
+    function checkActivePage(){const page=window.location.pathname.split('/').pop()||'home.html';document.querySelectorAll('.nav-btn-3d,.sub-link,.footer-btn').forEach(el=>{if(el.getAttribute('href')===page){el.classList.add('active');if(el.classList.contains('sub-link'))el.classList.add('active-submenu')}})}
+    function toggleDarkMode(){const h=document.documentElement;h.classList.toggle('light-mode');localStorage.setItem('darkMode',h.classList.contains('light-mode')?'false':'true');updateDarkModeIcon()}
+    function updateDarkModeIcon(){const d=document.querySelector('.dark-mode-icon'),l=document.querySelector('.light-mode-icon');if(document.documentElement.classList.contains('light-mode')){if(d)d.classList.add('hidden');if(l)l.classList.remove('hidden')}else{if(d)d.classList.remove('hidden');if(l)l.classList.add('hidden')}}
+
+    // === Report Logic ===
+    function loadReport(){
+      const m = document.getElementById('monthFilter').value;
+      if(!m) return;
+      const insts = JSON.parse(localStorage.getItem('installments')||'[]');
+      let total = 0, count = 0, html = '';
+      
+      insts.forEach(inst => {
+        (inst.schedule||[]).forEach(p => {
+          if(p.paid && p.dueDate && p.dueDate.startsWith(m)){
+            total += (p.amount||0);
+            count++;
+            html += `<tr><td>${p.dueDate}</td><td>${inst.customerName||'-'}</td><td>${inst.materialName||'-'}</td><td>${(p.amount||0).toLocaleString()} د.ع</td></tr>`;
+          }
+        });
+      });
+
+      document.getElementById('totalPaid').textContent = total.toLocaleString();
+      document.getElementById('countPaid').textContent = count;
+      const body = document.getElementById('reportBody');
+      const empty = document.getElementById('emptyState');
+      
+      if(count === 0){ body.innerHTML=''; empty.style.display='block'; }
+      else { body.innerHTML = html; empty.style.display='none'; }
+    }
+  </script>
+</body>
+</html>

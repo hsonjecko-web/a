@@ -2,65 +2,97 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f172a">
-  <title>نظام التميز - إنشاء مدير</title>
+  <title>نظام التميز - إضافة مدير</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <style>
-    /* ⚠️ انسخ نفس <style> من ملف managers.html بالكامل هنا ⚠️ */
-    :root{--bg:#0b0f19;--main:linear-gradient(135deg,#111827,#0f172a);--glass:rgba(30,41,59,0.4);--border:rgba(255,255,255,0.1);--shadow:0 8px 32px rgba(0,0,0,0.35);--text:#f8fafc;--text2:#94a3b8;--muted:#64748b;--blue:#3b82f6;--green:#22c55e;--cyan:#06b6d4;--purple:#a855f7;--red:#ef4444;--amber:#f59e0b;--magenta:#ec4899;--teal:#14b8a6;--h:64px;--f:70px;--s:280px;--st:env(safe-area-inset-top,0);--sb:env(safe-area-inset-bottom,0)}
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Cairo',sans-serif}
-    html,body{height:100%;background:var(--main);color:var(--text);overflow-x:hidden}body{padding-top:calc(var(--h)+var(--st));padding-bottom:calc(var(--f)+var(--sb)+20px)}
-    .app-h{position:fixed;top:0;left:0;right:0;height:var(--h);padding:0 16px;padding-top:var(--st);display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100}
-    .menu-btn,.theme-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text);cursor:pointer}
-    .user-info{display:flex;flex-direction:column;align-items:flex-end}.user-info span{font-weight:600;font-size:0.9rem}.user-info small{font-size:0.7rem;color:var(--muted)}
-    .s-ov{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:190;opacity:0;visibility:hidden;transition:0.3s}.s-ov.active{opacity:1;visibility:visible}
-    .sidebar{position:fixed;top:0;right:0;bottom:0;width:var(--s);background:var(--glass);backdrop-filter:blur(16px);border-left:1px solid var(--border);transform:translateX(100%);transition:transform 0.3s;z-index:200;display:flex;flex-direction:column;padding-top:calc(var(--st)+16px)}.sidebar.active{transform:translateX(0)}
-    .s-h{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}.s-h h2{font-size:1.1rem;font-weight:700;flex:1}
-    .nav-btn{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;margin-bottom:6px;background:linear-gradient(145deg,rgba(30,41,59,0.9),rgba(15,23,42,0.8));border:1px solid var(--border);border-radius:12px;color:var(--text);text-decoration:none;cursor:pointer;font-weight:500}.nav-btn:active{transform:scale(0.98)}.nav-btn .mat{font-size:22px}.nav-btn .exp{margin-right:auto;transition:0.3s}.nav-btn.exp .exp{transform:rotate(180deg)}
-    .sub{padding-right:16px;overflow:hidden;transition:max-height 0.3s;max-height:0}.sub:not(.hid){max-height:500px}
-    .sub-a{display:flex;align-items:center;gap:10px;padding:10px 12px;color:var(--text2);text-decoration:none;font-size:0.9rem;border-radius:8px;margin-bottom:4px;border:1px solid transparent}.sub-a:active{background:var(--glass)}.sub-a.act{background:var(--blue);color:#fff!important;border-color:rgba(59,130,246,0.4)}
-    .b-blue{border-color:rgba(59,130,246,0.3)!important}.b-purple{border-color:rgba(168,85,247,0.3)!important}.b-green{border-color:rgba(34,197,94,0.3)!important}.b-cyan{border-color:rgba(6,182,212,0.3)!important}.b-amber{border-color:rgba(245,158,11,0.3)!important}.b-red{border-color:rgba(239,68,68,0.3)!important}.b-teal{border-color:rgba(20,184,166,0.3)!important}
-    main{padding:16px;max-width:1200px;margin:0 auto}.sec-t{font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.sec-t span{font-size:0.8rem;font-weight:400;color:var(--text2)}
-    .form-card{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:20px}
-    .form-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-    .form-in{flex:1;min-width:140px;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.9rem;outline:none}
-    .form-in:focus{border-color:var(--blue)}
-    .btn-add{padding:10px 20px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer}
-    .btn-add:active{transform:scale(0.97)}
-    html.light-mode{--bg:#f0f9ff;--main:radial-gradient(circle at 50% -20%,#f0f9ff,#e0f2fe)!important;--glass:rgba(255,255,255,0.75)!important;--border:rgba(59,130,246,0.2)!important;--shadow:0 4px 15px rgba(59,130,246,0.08),inset 0 1px 1px rgba(59,130,246,0.1)!important;--text:#1e293b!important;--text2:#64748b!important;--muted:rgba(30,41,59,0.5)!important}
-    html.light-mode body{background:var(--main)}html.light-mode main{background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(240,248,255,0.9))!important}
-    html.light-mode .app-h{background:rgba(240,245,250,0.8)!important;border-bottom-color:rgba(59,130,246,0.15)!important}
-    html.light-mode .menu-btn,html.light-mode .theme-btn{background:rgba(59,130,246,0.08)!important;color:#1e293b!important}
-    html.light-mode .sidebar{background:linear-gradient(165deg,rgba(219,234,254,0.8),rgba(240,249,255,0.7))!important;border-left-color:rgba(59,130,246,0.25)!important}
-    html.light-mode .nav-btn{background:linear-gradient(145deg,rgba(255,255,255,0.8),rgba(241,245,249,0.6))!important;color:#1e293b!important}
-    html.light-mode .sub-a{color:#64748b!important}html.light-mode .sub-a.act{background:#000!important;color:#fff!important}
-    html.light-mode .f-bar{background:rgba(240,245,250,0.9)!important;border-top-color:rgba(59,130,246,0.15)!important}
-    html.light-mode .f-btn{color:#64748b!important}html.light-mode .f-btn.act{color:#3b82f6!important}
-    html.light-mode .form-in{background:rgba(59,130,246,0.05)!important;border-color:rgba(59,130,246,0.2)!important;color:#1e293b!important}
-    .light-ic{display:none}html.light-mode .light-ic{display:inline-block!important}html.light-mode .dark-ic{display:none!important}
+    :root {--bg:#0b0f19;--glass:rgba(30,41,59,0.4);--border:rgba(255,255,255,0.1);--text:#f8fafc;--text2:#94a3b8;--blue:#3b82f6;--green:#22c55e;--purple:#a855f7;--header-h:64px;--footer-h:70px;--sidebar-w:280px}*{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}html,body{height:100%;background:linear-gradient(135deg,#111827,#0f172a);color:var(--text)}body{padding-top:calc(var(--header-h)+env(safe-area-inset-top,0px));padding-bottom:calc(var(--footer-h)+env(safe-area-inset-bottom,0px)+20px)}.app-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100}.menu-btn{width:40px;height:40px;background:transparent;border:none;color:var(--text);cursor:pointer;border-radius:10px}.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:190;opacity:0;visibility:hidden;transition:.3s}.sidebar-overlay.active{opacity:1;visibility:visible}.sidebar{position:fixed;top:0;right:0;bottom:0;width:var(--sidebar-w);background:var(--glass);backdrop-filter:blur(16px);border-left:1px solid var(--border);transform:translateX(100%);transition:.3s;z-index:200;display:flex;flex-direction:column}.sidebar.active{transform:translateX(0)}.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}.sidebar-header h2{font-size:1.1rem;font-weight:700;flex:1}.sidebar-header .material-icons-round{color:var(--blue);font-size:24px}.sidebar-nav{flex:1;overflow-y:auto;padding:16px 12px}.nav-btn-3d{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;margin-bottom:6px;background:linear-gradient(145deg,rgba(30,41,59,0.9),rgba(15,23,42,0.8));border:1px solid var(--border);border-radius:12px;color:var(--text);text-decoration:none;cursor:pointer;font-weight:500;transition:.2s}.nav-btn-3d .expand-icon{margin-right:auto;transition:.3s}.nav-btn-3d.expanded .expand-icon{transform:rotate(180deg)}.submenu{padding-right:16px;max-height:0;overflow:hidden;transition:.3s}.submenu:not(.hidden){max-height:500px}.sub-link{display:flex;align-items:center;gap:10px;padding:10px 12px;color:var(--text2);text-decoration:none;font-size:.9rem;border-radius:8px;margin-bottom:4px;border:1px solid transparent}.sub-link.active-submenu{background:var(--blue);color:#fff !important}.btn-purple{border-color:rgba(168,85,247,0.3) !important}.btn-blue{border-color:rgba(59,130,246,0.3) !important}.btn-green{border-color:rgba(34,197,94,0.3) !important}.btn-cyan{border-color:rgba(6,182,212,0.3) !important}.btn-amber{border-color:rgba(245,158,11,0.3) !important}.btn-red{border-color:rgba(239,68,68,0.3) !important}.btn-teal{border-color:rgba(20,184,166,0.3) !important}.btn-lime{border-color:rgba(132,204,22,0.3) !important}.btn-orange{border-color:rgba(249,115,22,0.3) !important}.btn-pink{border-color:rgba(244,114,182,0.3) !important}main{max-width:800px;margin:0 auto;padding:0 16px}.page-title{font-size:1.3rem;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}.page-title .material-icons-round{color:var(--purple)}.form-container{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.35);backdrop-filter:blur(10px)}.form-group{margin-bottom:16px}.form-label{display:block;font-size:.9rem;font-weight:600;margin-bottom:8px;color:var(--text)}.form-label .opt{font-size:.75rem;color:var(--text2);font-weight:400}.form-input,.form-select{width:100%;padding:12px 14px;background:rgba(15,23,42,0.6);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.95rem;outline:none;transition:.2s}.form-input:focus,.form-select:focus{border-color:var(--blue)}.row{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:640px){.row{grid-template-columns:1fr 1fr}}.actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}.btn{flex:1;min-width:120px;padding:12px;border:none;border-radius:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}.btn-primary{background:var(--purple);color:#fff}.btn-secondary{background:var(--glass);border:1px solid var(--border);color:var(--text)}
+    .footer{position:fixed;bottom:0;left:0;right:0;height:var(--footer-h);background:rgba(15,23,42,0.9);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90}.footer a{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:var(--text2);font-size:.7rem;padding:8px;border-radius:8px}.footer a.active{color:var(--blue)}
+    html.light-mode{--bg:#f0f9ff;--glass:rgba(255,255,255,0.85);--border:rgba(59,130,246,0.2);--text:#1e293b;--text2:#64748b}html.light-mode body{background:linear-gradient(135deg,#f0f9ff,#e0f2fe)}html.light-mode .app-header{background:rgba(240,245,250,0.8)}html.light-mode .sidebar{background:linear-gradient(165deg,rgba(219,234,254,0.8),rgba(240,249,255,0.7))}html.light-mode .nav-btn-3d{background:rgba(255,255,255,0.8);color:#1e293b}html.light-mode .sub-link{color:#64748b}html.light-mode .sub-link.active-submenu{background:#000 !important;color:#fff !important}html.light-mode .form-input,html.light-mode .form-select{background:rgba(59,130,246,0.05);border-color:rgba(59,130,246,0.2);color:#1e293b}html.light-mode .btn-secondary{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.2);color:#1e293b}.light-mode-icon{display:none}html.light-mode .light-mode-icon{display:inline-block !important}html.light-mode .dark-mode-icon{display:none !important}
   </style>
 </head>
 <body>
-  <header class="app-h"><button class="menu-btn" onclick="toggleS()"><span class="material-icons-round">menu</span></button><div style="display:flex;align-items:center;gap:12px"><button class="theme-btn" onclick="toggleDM()"><span class="material-icons-round dark-ic">light_mode</span><span class="material-icons-round light-ic">dark_mode</span></button><div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div></div></header>
-  <div class="s-ov" id="s-ov" onclick="toggleS()"></div>
-  <aside class="sidebar" id="sb"><div class="s-h"><span class="material-icons-round">shield</span><h2>نظام التميز</h2></div><nav style="flex:1;overflow-y:auto;padding:16px 12px"><a href="index.html" class="nav-btn b-blue"><span class="material-icons-round mat">dashboard</span><span>لوحة التحكم</span></a><div><button onclick="toggleSub('mgr-sm')" class="nav-btn b-purple act"><span class="material-icons-round mat">badge</span><span>المدراء</span><span class="material-icons-round mat exp">expand_more</span></button><div id="mgr-sm" class="sub"><a href="managers.html" class="sub-a"><span class="material-icons-round">badge</span>المدراء</a><a href="create_manager.html" class="sub-a act"><span class="material-icons-round">person_add</span>إنشاء مدير</a></div></div><a href="settings.html" class="nav-btn b-amber"><span class="material-icons-round mat">settings</span><span>الإعدادات</span></a><a href="index.html" class="nav-btn b-red" onclick="localStorage.removeItem('isLoggedIn');location.href='index.html'"><span class="material-icons-round mat">logout</span><span>تسجيل خروج</span></a></nav></aside>
+  <header class="app-header"><button class="menu-btn" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button><div style="display:flex;align-items:center;gap:12px"><button class="theme-btn" onclick="toggleTheme()"><span class="material-icons-round dark-mode-icon">light_mode</span><span class="material-icons-round light-mode-icon">dark_mode</span></button><div class="user-info"><span>مدير النظام</span><small>admin</small></div></div></header>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar"><div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
+    <nav class="sidebar-nav"><a href="home.html" class="nav-btn-3d btn-blue"><span class="material-icons-round">dashboard</span>الرئيسية</a>
+      <div class="submenu-container"><button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green"><span class="material-icons-round">group</span>الزبائن<span class="material-icons-round expand-icon">expand_more</span></button><div id="customers-submenu" class="submenu hidden"><a href="customers.html" class="sub-link">الزبائن</a><a href="add_customer.html" class="sub-link">إضافة زبون</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('guarantors-submenu')" class="nav-btn-3d btn-lime"><span class="material-icons-round">verified_user</span>الكفلاء<span class="material-icons-round expand-icon">expand_more</span></button><div id="guarantors-submenu" class="submenu hidden"><a href="add_guarantor.html" class="sub-link">إضافة كفيل</a><a href="guarantors.html" class="sub-link">قائمة الكفلاء</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('materials-submenu')" class="nav-btn-3d btn-orange"><span class="material-icons-round">inventory_2</span>المواد<span class="material-icons-round expand-icon">expand_more</span></button><div id="materials-submenu" class="submenu hidden"><a href="materials.html" class="sub-link">المواد</a><a href="add_material.html" class="sub-link">إضافة مادة</a><a href="store.html" class="sub-link">المخزن</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan"><span class="material-icons-round">receipt_long</span>الأقساط<span class="material-icons-round expand-icon">expand_more</span></button><div id="installments-submenu" class="submenu hidden"><a href="add_installment.html" class="sub-link">إضافة قسط</a><a href="installments.html" class="sub-link">الأقساط</a><a href="incomplete_installments.html" class="sub-link">الغير مكتملة</a><a href="due_today_installments.html" class="sub-link">المستحقة اليوم</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal"><span class="material-icons-round">shopping_cart</span>المبيعات<span class="material-icons-round expand-icon">expand_more</span></button><div id="sales-submenu" class="submenu hidden"><a href="sales.html" class="sub-link">المبيعات</a><a href="add_sale.html" class="sub-link">إضافة بيع</a><a href="archive.html" class="sub-link">الأرشيف</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber"><span class="material-icons-round">analytics</span>التقارير<span class="material-icons-round expand-icon">expand_more</span></button><div id="reports-submenu" class="submenu hidden"><a href="monthly_payments_report.html" class="sub-link">تقرير التسديدات</a><a href="daily_payments_report.html" class="sub-link">تقرير يومي</a><a href="monthly_sales_report.html" class="sub-link">تقرير مبيعات</a><a href="daily_sales_report.html" class="sub-link">تقرير يومي</a><a href="monthly_dues_report.html" class="sub-link">المستحقات</a><a href="daily_dues_report.html" class="sub-link">المستحقات اليوم</a></div></div>
+      <div class="submenu-container"><button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple active-link expanded"><span class="material-icons-round">badge</span>المدراء<span class="material-icons-round expand-icon">expand_more</span></button>
+        <div id="managers-submenu" class="submenu">
+          <a href="managers.html" class="sub-link"><span class="material-icons-round">badge</span>قائمة المدراء</a>
+          <a href="create_manager.html" class="sub-link active-submenu"><span class="material-icons-round">person_add</span>إضافة مدير</a>
+          <a href="permissions_groups.html" class="sub-link"><span class="material-icons-round">group</span>مجموعات الصلاحيات</a>
+          <a href="create_group.html" class="sub-link"><span class="material-icons-round">group_add</span>إنشاء مجموعة</a>
+        </div>
+      </div>
+      <a href="support.html" class="nav-btn-3d btn-pink"><span class="material-icons-round">support_agent</span>الدعم الفني</a>
+      <a href="backup.html" class="nav-btn-3d btn-teal"><span class="material-icons-round">backup</span>نسخ احتياطي</a>
+      <a href="settings.html" class="nav-btn-3d btn-amber"><span class="material-icons-round">settings</span>الإعدادات</a>
+      <a href="index.html" class="nav-btn-3d btn-red"><span class="material-icons-round">logout</span>تسجيل خروج</a>
+    </nav>
+  </aside>
+
   <main>
-    <h2 class="sec-t">إنشاء مدير جديد</h2>
-    <div class="form-card">
-      <div class="form-row"><input type="text" id="newMName" class="form-in" placeholder="الاسم الكامل"><input type="email" id="newMEmail" class="form-in" placeholder="البريد الإلكتروني"></div>
-      <div class="form-row"><input type="text" id="newMRole" class="form-in" placeholder="نوع الصلاحية"><input type="password" id="newMPass" class="form-in" placeholder="كلمة المرور المؤقتة"></div>
-      <button class="btn-add" onclick="createMgr()">💾 حفظ المدير</button>
-    </div>
+    <h1 class="page-title" id="pageTitle"><span class="material-icons-round">person_add</span>إضافة مدير جديد</h1>
+    <form class="form-container" id="managerForm" onsubmit="saveManager(event)">
+      <div class="row">
+        <div class="form-group"><label class="form-label">الاسم الكامل *</label><input type="text" id="name" class="form-input" required></div>
+        <div class="form-group"><label class="form-label">رقم الهاتف</label><input type="tel" id="phone" class="form-input" placeholder="07XXXXXXXXX"></div>
+      </div>
+      <div class="row">
+        <div class="form-group"><label class="form-label">البريد الإلكتروني *</label><input type="email" id="email" class="form-input" required></div>
+        <div class="form-group"><label class="form-label">كلمة المرور <span class="opt">(اتركها فارغة إذا لم ترد التغيير)</span></label><input type="password" id="password" class="form-input" placeholder="******"></div>
+      </div>
+      <div class="row">
+        <div class="form-group"><label class="form-label">مجموعة الصلاحيات</label><select id="role" class="form-select"></select></div>
+        <div class="form-group"><label class="form-label">حالة الحساب</label><select id="status" class="form-select"><option value="active">نشط</option><option value="inactive">معطل</option></select></div>
+      </div>
+      <div class="actions"><button type="submit" class="btn btn-primary"><span class="material-icons-round">save</span> حفظ المدير</button><button type="button" class="btn btn-secondary" onclick="location.href='managers.html'"><span class="material-icons-round">arrow_back</span> رجوع</button></div>
+    </form>
   </main>
-  <footer class="f-bar"><a href="index.html" class="f-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a><a href="settings.html" class="f-btn act"><span class="material-icons-round">settings</span><span>الإعدادات</span></a></footer>
+
+  <footer class="footer"><a href="home.html"><span class="material-icons-round">dashboard</span>الرئيسية</a><a href="add_installment.html"><span class="material-icons-round">post_add</span>قسط</a><a href="monthly_payments_report.html"><span class="material-icons-round">analytics</span>تقارير</a><a href="installments.html"><span class="material-icons-round">receipt_long</span>أقساط</a><a href="customers.html" class="active"><span class="material-icons-round">group</span>زبائن</a></footer>
+
   <script>
-    if(localStorage.getItem('isLoggedIn')!=='true')location.href='index.html';if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');
-    function toggleS(){document.getElementById('sb').classList.toggle('active');document.getElementById('s-ov').classList.toggle('active');}function toggleSub(id){const sub=document.getElementById(id);if(!sub)return;const hid=sub.classList.contains('hid');sub.classList.toggle('hid',!hid);const btn=sub.previousElementSibling;if(btn)btn.classList.toggle('exp',hid);}
-    function toggleDM(){const h=document.documentElement;h.classList.toggle('light-mode');localStorage.setItem('darkMode',h.classList.contains('light-mode')?'false':'true');updateIcons();}function updateIcons(){const d=document.querySelector('.dark-ic'),l=document.querySelector('.light-ic');if(document.documentElement.classList.contains('light-mode')){if(d)d.classList.remove('hidden');if(l)l.classList.add('hidden');}else{if(d)d.classList.add('hidden');if(l)l.classList.remove('hidden');}}
-    function createMgr(){const n=document.getElementById('newMName').value.trim(),e=document.getElementById('newMEmail').value.trim(),r=document.getElementById('newMRole').value.trim();if(!n||!e)return alert('أكمل البيانات المطلوبة');const d=JSON.parse(localStorage.getItem('sys_mgrs')||'[]');d.push({id:Date.now(),name:n,email:e,role:r,date:new Date().toLocaleDateString('ar-IQ')});localStorage.setItem('sys_mgrs',JSON.stringify(d));toast('تم إنشاء المدير بنجاح');setTimeout(()=>location.href='managers.html',1000);}
-    function toast(m){const t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(34,197,94,0.9);color:#fff;padding:10px 18px;border-radius:20px;font-size:0.85rem;z-index:999';document.body.appendChild(t);setTimeout(()=>t.remove(),2000);}
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');loadGroups();loadData()});
+    function toggleSidebar(){document.querySelector('.sidebar').classList.toggle('active');document.querySelector('.sidebar-overlay').classList.toggle('active')}
+    function toggleSubmenu(id){document.getElementById(id).classList.toggle('hidden');document.querySelector(`[onclick*="${id}"]`).classList.toggle('expanded')}
+    function toggleTheme(){document.documentElement.classList.toggle('light-mode');localStorage.setItem('theme',document.documentElement.classList.contains('light-mode')?'light':'dark')}
+    if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-mode');
+    
+    let currentId = new URLSearchParams(window.location.search).get('id');
+    function loadGroups(){
+      const g=JSON.parse(localStorage.getItem('managerGroups')||[]);
+      document.getElementById('role').innerHTML=g.map(x=>`<option value="${x.name}">${x.name}</option>`).join('');
+    }
+    function loadData(){
+      if(!currentId)return;
+      const m=JSON.parse(localStorage.getItem('managers')||[]).find(x=>x.id==currentId);
+      if(!m)return;
+      document.getElementById('pageTitle').innerHTML=`<span class="material-icons-round">edit</span>تعديل بيانات المدير`;
+      document.getElementById('name').value=m.name;document.getElementById('phone').value=m.phone||'';document.getElementById('email').value=m.email;
+      document.getElementById('role').value=m.role||'';document.getElementById('status').value=m.status;
+      document.getElementById('password').placeholder='اتركه فارغاً للإبقاء على القديمة';
+    }
+    function saveManager(e){
+      e.preventDefault();
+      let managers=JSON.parse(localStorage.getItem('managers')||[]);
+      const data={id:currentId?parseInt(currentId):Date.now(),name:document.getElementById('name').value,phone:document.getElementById('phone').value,email:document.getElementById('email').value,role:document.getElementById('role').value,status:document.getElementById('status').value,updatedAt:new Date().toLocaleString('ar-IQ')};
+      
+      const pass=document.getElementById('password').value;
+      const existing=managers.find(m=>m.id==data.id);
+      if(existing){if(pass)data.password=pass;data.password=existing.password||pass;const idx=managers.findIndex(m=>m.id==data.id);managers[idx]=data;}
+      else{data.password=pass||'123456';data.createdAt=new Date().toLocaleString('ar-IQ');managers.push(data);}
+      
+      localStorage.setItem('managers',JSON.stringify(managers));alert('✅ تم حفظ المدير بنجاح');location.href='managers.html';
+    }
   </script>
 </body>
 </html>

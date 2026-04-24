@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
-  <title>نظام التميز - الأقساط غير المكتملة</title>
+  <title>نظام التميز - الأقساط المستحقة اليوم</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <style>
@@ -24,7 +24,7 @@
     html, body { height: 100%; background: var(--bg-main); color: var(--text-primary); overflow-x: hidden; }
     body { padding-top: calc(var(--header-height) + var(--safe-top)); padding-bottom: calc(var(--footer-height) + var(--safe-bottom) + 20px); }
     
-    /* Header & Sidebar (نفس الكود الأصلي) */
+    /* Header & Sidebar */
     .app-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); padding: 0 16px; padding-top: var(--safe-top); display: flex; align-items: center; justify-content: space-between; background: rgba(15,23,42,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); z-index: 100; }
     .menu-toggle { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--text-primary); cursor: pointer; border-radius: 10px; }
     .menu-toggle:active { background: var(--glass-bg); }
@@ -62,43 +62,44 @@
     .btn-orange { border-color: rgba(249,115,22,0.3) !important; }
     .btn-pink { border-color: rgba(244,114,182,0.3) !important; }
     
-    /* Main Styles */
+    /* Main & Cards */
     main { padding: 16px; max-width: 1200px; margin: 0 auto; }
-    .page-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .page-title .material-icons-round { color: var(--accent-amber); margin-left: 10px; }
-    
-    .section-title { font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
-    .section-title .material-icons-round { color: var(--accent-amber); }
-    
-    .grid-container { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
+    .page-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .page-title .material-icons-round { color: var(--accent-red); }
+    .grid-container { display: grid; grid-template-columns: 1fr; gap: 12px; }
     @media (min-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 1024px) { .grid-container { grid-template-columns: repeat(3, 1fr); } }
-    
-    .card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px; box-shadow: var(--glass-shadow); backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 10px; transition: transform 0.2s; position: relative; }
+    .card { background: var(--glass-bg); border: 2px solid rgba(239,68,68,0.5); border-radius: 16px; padding: 16px; box-shadow: 0 0 20px rgba(239,68,68,0.2), var(--glass-shadow); backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 10px; transition: transform 0.2s; position: relative; }
     .card:active { transform: scale(0.98); }
-    .card.urgent { border: 2px solid rgba(239,68,68,0.5); }
-    .card.urgent::before { content: '🔴 مستحق اليوم'; position: absolute; top: 12px; left: 12px; background: var(--accent-red); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; z-index: 2; }
-    
-    .card-title { font-weight: 700; font-size: 1.05rem; color: var(--text-primary); }
+    .due-badge { position: absolute; top: 12px; left: 12px; background: var(--accent-red); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; z-index: 2; box-shadow: 0 2px 8px rgba(239,68,68,0.5); }
+    .card-title { font-weight: 700; font-size: 1.05rem; color: var(--text-primary); margin-top: 16px; }
     .card-info { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); }
     .card-info span { display: flex; align-items: center; gap: 6px; }
     .card-info .material-icons-round { font-size: 16px; color: var(--text-muted); }
-    
-    .due-badge { display: inline-flex; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-top: 4px; }
-    .due-badge.today { background: rgba(239,68,68,0.2); color: var(--accent-red); }
-    .due-badge.soon { background: rgba(245,158,11,0.2); color: var(--accent-amber); }
-    .due-badge.later { background: rgba(59,130,246,0.2); color: var(--accent-blue); }
-    
-    .card-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .card-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
     .action-btn { flex: 1; min-width: 32px; padding: 8px; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 0.75rem; }
     .action-btn:active { transform: scale(0.95); }
     .action-btn.view { background: rgba(59,130,246,0.2); color: var(--accent-blue); }
+    .action-btn.edit { background: rgba(245,158,11,0.2); color: var(--accent-amber); }
+    .action-btn.pay { background: rgba(34,197,94,0.25); color: var(--accent-green); font-weight: 600; }
     .action-btn.whatsapp { background: rgba(37,211,102,0.2); color: #25D366; }
-    
     .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
     .empty-state .material-icons-round { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
     
-     /* Footer Styles */
+    /* Modal */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; display: none; align-items: center; justify-content: center; padding: 16px; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; max-width: 400px; width: 100%; backdrop-filter: blur(10px); }
+    .modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .modal-body { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .modal-row { display: flex; justify-content: space-between; font-size: 0.9rem; }
+    .modal-row strong { color: var(--accent-green); }
+    .modal-actions { display: flex; gap: 10px; }
+    .modal-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .modal-btn.confirm { background: var(--accent-green); color: #0b0f19; }
+    .modal-btn.cancel { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); }
+    
+    /* Footer */
     .mobile-footer { position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-height); padding-bottom: var(--safe-bottom); background: rgba(15,23,42,0.9); backdrop-filter: blur(12px); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-around; z-index: 90; }
     .footer-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--text-muted); padding: 8px 12px; border-radius: 12px; transition: all 0.2s; flex: 1; max-width: 20%; }
     .footer-btn .material-icons-round { font-size: 24px; transition: transform 0.2s; }
@@ -122,9 +123,12 @@
     html.light-mode .mobile-footer { background: rgba(240,245,250,0.9) !important; border-top-color: rgba(59,130,246,0.15) !important; }
     html.light-mode .footer-btn { color: #64748b !important; }
     html.light-mode .footer-btn.active { color: #3b82f6 !important; }
-    html.light-mode .card { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; border-color: rgba(59,130,246,0.2) !important; }
+    html.light-mode .card { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; border-color: rgba(239,68,68,0.4) !important; box-shadow: 0 4px 15px rgba(239,68,68,0.1) !important; }
     html.light-mode .action-btn.view { background: rgba(59,130,246,0.1) !important; }
+    html.light-mode .action-btn.edit { background: rgba(245,158,11,0.1) !important; }
+    html.light-mode .action-btn.pay { background: rgba(34,197,94,0.15) !important; }
     html.light-mode .action-btn.whatsapp { background: rgba(37,211,102,0.1) !important; }
+    html.light-mode .modal-content { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.9) 100%) !important; border-color: rgba(59,130,246,0.2) !important; }
     .light-mode-icon { display: none; }
     html.light-mode .light-mode-icon { display: inline-block !important; }
     html.light-mode .dark-mode-icon { display: none !important; }
@@ -136,7 +140,7 @@
 </head>
 <body>
 
-  <!-- Header & Sidebar (نفس الكود الأصلي) -->
+  <!-- ==================== HEADER ==================== -->
   <header class="app-header">
     <button class="menu-toggle" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button>
     <div class="header-controls">
@@ -144,13 +148,22 @@
         <span class="material-icons-round dark-mode-icon">light_mode</span>
         <span class="material-icons-round light-mode-icon">dark_mode</span>
       </button>
-      <div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div>
+      <div class="user-info">
+        <span>الحسن الساعدي</span>
+        <small>مدير النظام</small>
+      </div>
     </div>
   </header>
 
+  <!-- ==================== SIDEBAR ==================== -->
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
+    <div class="sidebar-header">
+      <span class="material-icons-round">shield</span>
+      <span class="material-icons-round">account_balance</span>
+      <span class="material-icons-round">trending_up</span>
+      <h2>نظام التميز</h2>
+    </div>
     <nav class="sidebar-nav">
       <a href="home.html" class="nav-btn-3d btn-blue"><span class="material-icons-round">dashboard</span><span>لوحة التحكم</span></a>
       <div class="submenu-container">
@@ -188,8 +201,8 @@
         <div id="installments-submenu" class="submenu">
           <a href="add_installment.html" class="sub-link"><span class="material-icons-round">add</span>إضافة قسط جديد</a>
           <a href="installments.html" class="sub-link"><span class="material-icons-round">receipt_long</span>الأقساط</a>
-          <a href="incomplete_installments.html" class="sub-link active-submenu"><span class="material-icons-round">hourglass_empty</span>الأقساط الغير مكتملة</a>
-          <a href="due_today_installments.html" class="sub-link"><span class="material-icons-round">priority_high</span>الأقساط المستحقة اليوم</a>
+          <a href="incomplete_installments.html" class="sub-link"><span class="material-icons-round">hourglass_empty</span>الأقساط الغير مكتملة</a>
+          <a href="due_today_installments.html" class="sub-link active-submenu"><span class="material-icons-round">priority_high</span>الأقساط المستحقة اليوم</a>
         </div>
       </div>
       <div class="submenu-container">
@@ -236,35 +249,51 @@
   <!-- ==================== MAIN CONTENT ==================== -->
   <main>
     <div class="page-title">
-      <div><span class="material-icons-round">hourglass_empty</span>الأقساط غير المكتملة</div>
+      <span class="material-icons-round">priority_high</span> الأقساط المستحقة اليوم
     </div>
-
-    <!-- الأقساط المستحقة اليوم -->
-    <h2 class="section-title"><span class="material-icons-round">priority_high</span>مستحقة اليوم</h2>
-    <div class="grid-container" id="todayGrid"></div>
-    <div class="empty-state" id="todayEmpty" style="display:none"><span class="material-icons-round">check_circle</span><p>لا توجد أقساط مستحقة اليوم 🎉</p></div>
-
-    <!-- الأقساط غير المكتملة الأخرى -->
-    <h2 class="section-title"><span class="material-icons-round">hourglass_empty</span>غير مكتملة الأخرى</h2>
-    <div class="grid-container" id="incompleteGrid"></div>
-    <div class="empty-state" id="incompleteEmpty" style="display:none"><span class="material-icons-round">check_circle</span><p>جميع الأقساط مكتملة ✅</p></div>
+    <div class="grid-container" id="dueGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <span class="material-icons-round">check_circle</span>
+      <p>لا توجد أقساط مستحقة اليوم 🎉</p>
+    </div>
   </main>
+
+  <!-- ==================== PAYMENT MODAL ==================== -->
+  <div class="modal" id="payModal">
+    <div class="modal-content">
+      <div class="modal-title"><span class="material-icons-round">payments</span>تسجيل دفع قسط اليوم</div>
+      <div class="modal-body">
+        <div class="modal-row"><span>الزبون:</span><strong id="payCustomer">-</strong></div>
+        <div class="modal-row"><span>المادة:</span><strong id="payMaterial">-</strong></div>
+        <div class="modal-row"><span>مبلغ القسط:</span><strong id="payAmount">0</strong> د.ع</div>
+        <div class="modal-row"><span>المدفوع سابقاً:</span><strong id="payPaid">0</strong> د.ع</div>
+        <div class="modal-row"><span>المتبقي بعد الدفع:</span><strong id="payRemaining">0</strong> د.ع</div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" onclick="closePayModal()">إلغاء</button>
+        <button class="modal-btn confirm" onclick="confirmPayment()">✅ تأكيد الدفع وخصم المادة</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== FOOTER ==================== -->
   <footer class="mobile-footer">
     <a href="home.html" class="footer-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a>
     <a href="add_installment.html" class="footer-btn"><span class="material-icons-round">post_add</span><span>إضافة قسط</span></a>
     <a href="monthly_payments_report.html" class="footer-btn"><span class="material-icons-round">analytics</span><span>التقارير</span></a>
-    <a href="installments.html" class="footer-btn"><span class="material-icons-round">receipt_long</span><span>الأقساط</span></a>
-    <a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a>
+    <a href="installments.html" class="footer-btn active"><span class="material-icons-round">receipt_long</span><span>الأقساط</span></a>
+    <a href="customers.html" class="footer-btn"><span class="material-icons-round">group</span><span>الزبائن</span></a>
   </footer>
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
+    let currentPaymentData = null;
+    
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); loadIncomplete();
+      updateDarkModeIcon(); checkActivePage(); loadDueToday();
     });
+    
     function toggleSidebar() { 
       document.getElementById('sidebar').classList.toggle('active'); 
       document.getElementById('sidebar-overlay').classList.toggle('active'); 
@@ -294,76 +323,126 @@
       else { if(d)d.classList.add('hidden'); if(l)l.classList.remove('hidden'); }
     }
     
-    function loadIncomplete() {
+    function loadDueToday() {
       const today = new Date().toISOString().split('T')[0];
       const all = JSON.parse(localStorage.getItem('installments')||'[]');
-      
-      const todayGrid = document.getElementById('todayGrid');
-      const incompleteGrid = document.getElementById('incompleteGrid');
-      const todayEmpty = document.getElementById('todayEmpty');
-      const incompleteEmpty = document.getElementById('incompleteEmpty');
-      
-      const todayDue = [], incomplete = [];
+      const dueToday = [];
       
       all.forEach(inst => {
         if(inst.status === 'paid') return;
-        const nextDue = (inst.schedule||[]).find(p => !p.paid)?.dueDate;
-        if(!nextDue) return;
-        
-        if(nextDue === today) todayDue.push({...inst, dueDate: nextDue});
-        else incomplete.push({...inst, dueDate: nextDue});
+        const payment = inst.schedule?.find(p => p.dueDate === today && !p.paid);
+        if(payment) dueToday.push({...inst, duePayment: payment});
       });
       
-      // عرض مستحقات اليوم
-      if(todayDue.length === 0) { todayGrid.innerHTML = ''; todayEmpty.style.display = 'block'; }
-      else {
-        todayEmpty.style.display = 'none';
-        todayGrid.innerHTML = todayDue.map(inst => renderCard(inst, true)).join('');
-      }
+      const grid = document.getElementById('dueGrid');
+      const empty = document.getElementById('emptyState');
       
-      // عرض غير المكتملة الأخرى
-      if(incomplete.length === 0) { incompleteGrid.innerHTML = ''; incompleteEmpty.style.display = 'block'; }
-      else {
-        incompleteEmpty.style.display = 'none';
-        incompleteGrid.innerHTML = incomplete.map(inst => renderCard(inst, false)).join('');
-      }
+      if(dueToday.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      
+      grid.innerHTML = dueToday.map(inst => {
+        const remaining = inst.totalAmount - (inst.paidAmount||0);
+        return `
+          <div class="card" data-id="${inst.id}">
+            <div class="due-badge">🔴 مستحق اليوم</div>
+            <div class="card-title" style="margin-top:16px">${inst.customerName}</div>
+            <div class="card-info">
+              <span><span class="material-icons-round">inventory_2</span> ${inst.materialName}</span>
+              ${inst.guarantorName ? `<span><span class="material-icons-round">verified_user</span> ${inst.guarantorName}</span>` : ''}
+              <span><span class="material-icons-round">payments</span> قسط اليوم: ${inst.duePayment.amount.toLocaleString()} د.ع</span>
+              <span><span class="material-icons-round">calendar_today</span> ${inst.type === 'daily' ? 'يومي' : inst.type === 'weekly' ? 'أسبوعي' : 'شهري'}</span>
+              <span style="color:var(--accent-amber)">⏳ المتبقي من الإجمالي: ${remaining.toLocaleString()} د.ع</span>
+            </div>
+            <div class="card-actions">
+              <button class="action-btn pay" data-act="pay"><span class="material-icons-round" style="font-size:16px">payments</span> دفع</button>
+              <button class="action-btn view" data-act="view"><span class="material-icons-round" style="font-size:16px">visibility</span></button>
+              <button class="action-btn edit" data-act="edit"><span class="material-icons-round" style="font-size:16px">edit</span></button>
+              <button class="action-btn whatsapp" data-act="whatsapp"><span class="material-icons-round" style="font-size:16px">whatsapp</span> تذكير</button>
+            </div>
+          </div>`;
+      }).join('');
     }
     
-    function renderCard(inst, isToday) {
+    document.getElementById('dueGrid').addEventListener('click', function(e) {
+      const btn = e.target.closest('.action-btn');
+      if(!btn) return;
+      const card = btn.closest('.card');
+      if(!card) return;
+      const id = parseInt(card.dataset.id);
+      const act = btn.dataset.act;
+      
+      const all = JSON.parse(localStorage.getItem('installments')||'[]');
+      const inst = all.find(i => i.id === id);
+      if(!inst) return;
+      
+      const today = new Date().toISOString().split('T')[0];
+      const duePayment = inst.schedule.find(p => p.dueDate === today && !p.paid);
+      
+      switch(act) {
+        case 'view': location.href = `view_installment.html?id=${id}`; break;
+        case 'edit': location.href = `edit_installment.html?id=${id}`; break;
+        case 'pay': if(duePayment) openPayModal(inst, duePayment); break;
+        case 'whatsapp': sendWhatsApp(inst, duePayment); break;
+      }
+    });
+    
+    function openPayModal(inst, payment) {
+      currentPaymentData = { instId: inst.id, paymentIndex: inst.schedule.indexOf(payment) };
+      document.getElementById('payCustomer').textContent = inst.customerName;
+      document.getElementById('payMaterial').textContent = inst.materialName;
+      document.getElementById('payAmount').textContent = payment.amount.toLocaleString();
+      document.getElementById('payPaid').textContent = (inst.paidAmount||0).toLocaleString();
+      document.getElementById('payRemaining').textContent = (inst.totalAmount - ((inst.paidAmount||0) + payment.amount)).toLocaleString();
+      document.getElementById('payModal').classList.add('active');
+    }
+    
+    function closePayModal() {
+      document.getElementById('payModal').classList.remove('active');
+      currentPaymentData = null;
+    }
+    
+    function confirmPayment() {
+      if(!currentPaymentData) return;
+      
+      let installments = JSON.parse(localStorage.getItem('installments')||'[]');
+      let materials = JSON.parse(localStorage.getItem('materials')||'[]');
+      const instIndex = installments.findIndex(i => i.id === currentPaymentData.instId);
+      if(instIndex === -1) return;
+      
+      const inst = installments[instIndex];
+      const payment = inst.schedule[currentPaymentData.paymentIndex];
+      
+      payment.paid = true;
+      inst.paidCount = (inst.paidCount||0) + 1;
+      inst.paidAmount = (inst.paidAmount||0) + payment.amount;
+      inst.status = inst.paidCount >= inst.totalCount ? 'paid' : 'pending';
+      
+      // ✅ خصم المادة من المخزون
+      if(inst.materialId) {
+        const matIndex = materials.findIndex(m => m.id == inst.materialId);
+        if(matIndex !== -1 && materials[matIndex].quantity > 0) {
+          materials[matIndex].quantity -= 1;
+          materials[matIndex].updatedAt = new Date().toLocaleString('ar-IQ');
+          localStorage.setItem('materials', JSON.stringify(materials));
+        }
+      }
+      
+      installments[instIndex] = inst;
+      localStorage.setItem('installments', JSON.stringify(installments));
+      
+      alert('✅ تم تسجيل الدفعة بنجاح!\nتم خصم المادة من المخزون.');
+      closePayModal();
+      loadDueToday();
+    }
+    
+    function sendWhatsApp(inst, payment) {
       const remaining = inst.totalAmount - (inst.paidAmount||0);
-      const dueBadge = isToday ? `<span class="due-badge today">🔴 اليوم</span>` : 
-                      (new Date(inst.dueDate) < new Date() ? `<span class="due-badge today">⚠️ متأخر</span>` : `<span class="due-badge soon">⏳ ${inst.dueDate}</span>`);
-      
-      return `
-        <div class="card ${isToday?'urgent':''}">
-          ${dueBadge}
-          <div class="card-title" style="margin-top:16px">${inst.customerName}</div>
-          <div class="card-info">
-            <span><span class="material-icons-round">inventory_2</span> ${inst.materialName}</span>
-            ${inst.guarantorName ? `<span><span class="material-icons-round">verified_user</span> ${inst.guarantorName}</span>` : ''}
-            <span><span class="material-icons-round">payments</span> المتبقي: ${remaining.toLocaleString()} د.ع</span>
-            <span><span class="material-icons-round">calendar_today</span> ${inst.type === 'daily' ? 'يومي' : inst.type === 'weekly' ? 'أسبوعي' : 'شهري'}</span>
-          </div>
-          <div class="card-actions">
-            <button class="action-btn view" onclick="location.href='view_installment.html?id=${inst.id}'">👁️ عرض</button>
-            <button class="action-btn whatsapp" onclick="sendReminder(${inst.id}, '${inst.customerName}', ${remaining}, '${inst.dueDate}')">📱 تذكير واتساب</button>
-          </div>
-        </div>`;
-    }
-    
-    function sendReminder(id, name, amount, dueDate) {
-      const isToday = dueDate === new Date().toISOString().split('T')[0];
-      const isOverdue = new Date(dueDate) < new Date();
-      const msg = isOverdue ? 
-        `⚠️ *تنبيه تأخير*%0A%0Aعزيزي ${name}،%0Aنود تذكيركم بأن قسطكم بقيمة ${amount.toLocaleString()} د.ع كان مستحقاً في ${dueDate}.%0A%0Aيرجى السداد في أقرب وقت لتجنب أي رسوم تأخير.%0A%0Aشكراً لتعاونكم!` :
-        isToday ? 
-        `🔔 *تذكير استحقاق*%0A%0Aعزيزي ${name}،%0Aنود تذكيركم بأن قسطكم بقيمة ${amount.toLocaleString()} د.ع مستحق اليوم ${dueDate}.%0A%0Aشكراً لالتزامكم!` :
-        `📅 *تذكير مسبق*%0A%0Aعزيزي ${name}،%0Aنود تذكيركم بأن قسطكم بقيمة ${amount.toLocaleString()} د.ع سيكون مستحقاً في ${dueDate}.%0A%0Aشكراً لثقتكم بنا!`;
-      
+      const msg = `🔔 *تذكير استحقاق فوري*%0A%0Aعزيزي ${inst.customerName}،%0Aنود تذكيركم بأن قسطكم مستحق اليوم:%0A📦 المادة: ${inst.materialName}%0A💰 مبلغ القسط: ${payment.amount.toLocaleString()} د.ع%0A⏳ المتبقي من الإجمالي: ${remaining.toLocaleString()} د.ع%0A%0Aيرجى السداد للحفاظ على حسن العلاقة.%0Aشكراً لالتزامكم!`;
       window.open(`https://wa.me/?text=${msg}`, '_blank');
     }
     
-    window.addEventListener('focus', loadIncomplete);
+    document.getElementById('payModal').addEventListener('click', function(e) { if(e.target === this) closePayModal(); });
+    window.addEventListener('focus', loadDueToday);
   </script>
 </body>
 </html>
