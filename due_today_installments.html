@@ -286,12 +286,13 @@
   </footer>
 
   <!-- ==================== JAVASCRIPT ==================== -->
+  <script src="auth.js"></script>
   <script>
     let currentPaymentData = null;
     
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); loadDueToday();
+      updateDarkModeIcon(); checkActivePage(); initAuth(); loadDueToday();
     });
     
     function toggleSidebar() { 
@@ -325,7 +326,8 @@
     
     function loadDueToday() {
       const today = new Date().toISOString().split('T')[0];
-      const all = JSON.parse(localStorage.getItem('installments')||'[]');
+      let all = JSON.parse(localStorage.getItem('installments')||'[]');
+      all = filterDataByUser(all, 'createdBy');
       const dueToday = [];
       
       all.forEach(inst => {

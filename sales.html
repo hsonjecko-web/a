@@ -58,15 +58,17 @@
     <a href="customers.html" class="active"><span class="material-icons-round">group</span>زبائن</a>
   </footer>
 
+  <script src="auth.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');loadSales()})
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');initAuth();loadSales()})
     function toggleSidebar(){document.querySelector('.sidebar').classList.toggle('active');document.querySelector('.sidebar-overlay').classList.toggle('active')}
     function toggleSubmenu(id){document.getElementById(id).classList.toggle('hidden');document.querySelector(`[onclick*="${id}"]`).classList.toggle('expanded')}
     function toggleTheme(){document.documentElement.classList.toggle('light-mode');localStorage.setItem('theme',document.documentElement.classList.contains('light-mode')?'light':'dark')}
     if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-mode');
     
     function loadSales(){
-      const sales=JSON.parse(localStorage.getItem('sales')||'[]');
+      let sales=JSON.parse(localStorage.getItem('sales')||'[]');
+      sales=filterDataByUser(sales,'createdBy');
       const s=document.getElementById('search').value.toLowerCase(),st=document.getElementById('statusFilter').value,dt=document.getElementById('dateFilter').value;
       const filtered=sales.filter(sale=>{
         const matchS=sale.customerName.toLowerCase().includes(s)||sale.materialName.toLowerCase().includes(s);

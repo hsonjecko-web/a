@@ -353,10 +353,11 @@
   </footer>
 
   <!-- ==================== JAVASCRIPT ==================== -->
+  <script src="auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage();
+      updateDarkModeIcon(); checkActivePage(); initAuth();
     });
 
     function toggleSidebar() { 

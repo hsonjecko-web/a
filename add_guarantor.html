@@ -190,6 +190,7 @@
     // حفظ الكفيل
     function saveGuarantor(e) {
       e.preventDefault();
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
       const guarantor = {
         id: Date.now(),
         fullName: document.getElementById('fullName').value,
@@ -199,6 +200,7 @@
         jobTitle: document.getElementById('workAddress').value,
         notes: document.getElementById('notes').value,
         status: 'active',
+        createdBy: currentUser?.id || null,
         createdAt: new Date().toLocaleString('ar-IQ')
       };
       

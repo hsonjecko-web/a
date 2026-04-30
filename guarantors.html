@@ -127,8 +127,9 @@
     <a href="customers.html" class="footer-btn"><span class="material-icons-round">group</span><span>الزبائن</span></a>
   </footer>
 
+  <script src="auth.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');updateDarkModeIcon();checkActivePage();loadData()})
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');updateDarkModeIcon();checkActivePage();initAuth();loadData()})
     function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('sidebar-overlay').classList.toggle('active')}
     const allSubmenus=['guarantors-submenu','materials-submenu','managers-submenu','customers-submenu','installments-submenu','sales-submenu','reports-submenu']
     function toggleSubmenu(id){const s=document.getElementById(id);if(!s)return;const h=s.classList.contains('hidden');allSubmenus.forEach(x=>{const m=document.getElementById(x);if(m&&x!==id)m.classList.add('hidden')});s.classList.toggle('hidden',!h);const b=s.previousElementSibling;if(b)b.classList.toggle('expanded',h)}
@@ -137,7 +138,8 @@
     function updateDarkModeIcon(){const d=document.querySelector('.dark-mode-icon'),l=document.querySelector('.light-mode-icon');if(document.documentElement.classList.contains('light-mode')){if(d)d.classList.remove('hidden');if(l)l.classList.add('hidden')}else{if(d)d.classList.add('hidden');if(l)l.classList.remove('hidden')}}
     
     function loadData(){
-      const data=JSON.parse(localStorage.getItem('guarantors')||'[]');
+      let data=JSON.parse(localStorage.getItem('guarantors')||'[]');
+      data=filterDataByUser(data,'createdBy');
       const grid=document.getElementById('dataGrid'),empty=document.getElementById('emptyState');
       if(data.length===0){grid.innerHTML='';empty.style.display='block';return}
       empty.style.display='none';

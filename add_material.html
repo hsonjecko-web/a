@@ -282,7 +282,7 @@
     <a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a>
   </footer>
 
-  <!-- ==================== JAVASCRIPT ==================== -->
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
@@ -322,6 +322,7 @@
     
     function saveMaterial(e) {
       e.preventDefault();
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
       const material = {
         id: Date.now(),
         name: document.getElementById('name').value.trim(),
@@ -330,6 +331,7 @@
         color: document.getElementById('color').value.trim(),
         model: document.getElementById('model').value.trim(),
         status: 'active',
+        createdBy: currentUser?.id || null,
         createdAt: new Date().toLocaleString('ar-IQ')
       };
       let materials = JSON.parse(localStorage.getItem('materials') || '[]');

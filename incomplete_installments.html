@@ -260,10 +260,11 @@
   </footer>
 
   <!-- ==================== JAVASCRIPT ==================== -->
+  <script src="auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); loadIncomplete();
+      updateDarkModeIcon(); checkActivePage(); initAuth(); loadIncomplete();
     });
     function toggleSidebar() { 
       document.getElementById('sidebar').classList.toggle('active'); 
@@ -296,7 +297,8 @@
     
     function loadIncomplete() {
       const today = new Date().toISOString().split('T')[0];
-      const all = JSON.parse(localStorage.getItem('installments')||'[]');
+      let all = JSON.parse(localStorage.getItem('installments')||'[]');
+      all = filterDataByUser(all, 'createdBy');
       
       const todayGrid = document.getElementById('todayGrid');
       const incompleteGrid = document.getElementById('incompleteGrid');

@@ -275,10 +275,11 @@
   </footer>
 
   <!-- ==================== JAVASCRIPT ==================== -->
+  <script src="auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); loadStore();
+      updateDarkModeIcon(); checkActivePage(); initAuth(); loadStore();
     });
     function toggleSidebar() { 
       document.getElementById('sidebar').classList.toggle('active'); 
@@ -313,7 +314,8 @@
     }
     
     function loadStore() {
-      const materials = JSON.parse(localStorage.getItem('materials') || '[]').filter(m => m.status !== 'inactive');
+      let materials = JSON.parse(localStorage.getItem('materials') || '[]');
+      materials = filterDataByUser(materials, 'createdBy').filter(m => m.status !== 'inactive');
       const grid = document.getElementById('storeGrid');
       const empty = document.getElementById('emptyState');
       if(materials.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }

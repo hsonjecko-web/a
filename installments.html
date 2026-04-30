@@ -328,13 +328,14 @@
   </footer>
 
   <!-- ==================== JAVASCRIPT ==================== -->
+  <script src="auth.js"></script>
   <script>
     // Global variable for payment
     let currentPayment = null;
     
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); loadInstallments();
+      updateDarkModeIcon(); checkActivePage(); initAuth(); loadInstallments();
     });
     
     function toggleSidebar() { 
@@ -367,7 +368,8 @@
     }
     
     function loadInstallments() {
-      const installments = JSON.parse(localStorage.getItem('installments') || '[]');
+      let installments = JSON.parse(localStorage.getItem('installments') || '[]');
+      installments = filterDataByUser(installments, 'createdBy');
       const grid = document.getElementById('dataGrid');
       const empty = document.getElementById('emptyState');
       const search = document.getElementById('searchInput').value.toLowerCase();

@@ -305,10 +305,11 @@
 
   <footer class="mobile-footer"><a href="home.html" class="footer-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a><a href="add_installment.html" class="footer-btn"><span class="material-icons-round">post_add</span><span>إضافة قسط</span></a><a href="monthly_payments_report.html" class="footer-btn"><span class="material-icons-round">analytics</span><span>التقارير</span></a><a href="installments.html" class="footer-btn"><span class="material-icons-round">receipt_long</span><span>الأقساط</span></a><a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a></footer>
 
+  <script src="auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); syncThemeToggle();
+      updateDarkModeIcon(); checkActivePage(); initAuth(); syncThemeToggle();
     });
     function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('sidebar-overlay').classList.toggle('active')}
     const allSubmenus=['guarantors-submenu','materials-submenu','managers-submenu','customers-submenu','installments-submenu','sales-submenu','reports-submenu'];

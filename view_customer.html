@@ -349,11 +349,12 @@
     <a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a>
   </footer>
 
+  <script src="auth.js"></script>
   <script>
     // Dark/Light & Sidebar (نفس الكود السابق)
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); loadCustomerDetails();
+      updateDarkModeIcon(); checkActivePage(); initAuth(); loadCustomerDetails();
     });
     function toggleSidebar() { 
       document.getElementById('sidebar').classList.toggle('active'); 
@@ -388,11 +389,12 @@
     function loadCustomerDetails() {
       const params = new URLSearchParams(window.location.search);
       const id = parseInt(params.get('id'));
-      const customers = JSON.parse(localStorage.getItem('customers') || '[]');
+      let customers = JSON.parse(localStorage.getItem('customers') || '[]');
+      customers = filterDataByUser(customers, 'createdBy');
       const customer = customers.find(c => c.id === id);
       
       if(!customer) {
-        alert('❌ لم يتم العثور على الزبون');
+        alert('❌ لم يتم العثور على الزبون أو ليس لديك صلاحية');
         window.location.href = 'customers.html';
         return;
       }

@@ -60,8 +60,9 @@
 
   <footer class="footer"><a href="home.html"><span class="material-icons-round">dashboard</span>الرئيسية</a><a href="add_installment.html"><span class="material-icons-round">post_add</span>قسط</a><a href="monthly_payments_report.html"><span class="material-icons-round">analytics</span>تقارير</a><a href="installments.html"><span class="material-icons-round">receipt_long</span>أقساط</a><a href="customers.html" class="active"><span class="material-icons-round">group</span>زبائن</a></footer>
 
+  <script src="auth.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');loadGroups();loadData()});
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');initAuth();loadGroups();loadData()});
     function toggleSidebar(){document.querySelector('.sidebar').classList.toggle('active');document.querySelector('.sidebar-overlay').classList.toggle('active')}
     function toggleSubmenu(id){document.getElementById(id).classList.toggle('hidden');document.querySelector(`[onclick*="${id}"]`).classList.toggle('expanded')}
     function toggleTheme(){document.documentElement.classList.toggle('light-mode');localStorage.setItem('theme',document.documentElement.classList.contains('light-mode')?'light':'dark')}

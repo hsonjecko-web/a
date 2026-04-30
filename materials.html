@@ -293,10 +293,11 @@
   </footer>
 
   <!-- ==================== JAVASCRIPT ==================== -->
+  <script src="auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); loadMaterials();
+      updateDarkModeIcon(); checkActivePage(); initAuth(); loadMaterials();
     });
     function toggleSidebar() { 
       document.getElementById('sidebar').classList.toggle('active'); 
@@ -331,7 +332,8 @@
     }
     
     function loadMaterials() {
-      const materials = JSON.parse(localStorage.getItem('materials') || '[]');
+      let materials = JSON.parse(localStorage.getItem('materials') || '[]');
+      materials = filterDataByUser(materials, 'createdBy');
       const grid = document.getElementById('dataGrid');
       const empty = document.getElementById('emptyState');
       if(materials.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }

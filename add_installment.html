@@ -129,6 +129,7 @@
 </head>
 <body>
 
+  <!-- ==================== HEADER ==================== -->
   <header class="app-header">
     <button class="menu-toggle" onclick="toggleSidebar()"><span class="material-icons-round">menu</span></button>
     <div class="header-controls">
@@ -137,13 +138,16 @@
         <span class="material-icons-round light-mode-icon">dark_mode</span>
       </button>
       <div class="user-info"><span>الحسن الساعدي</span><small>مدير النظام</small></div>
+    </div>
   </header>
 
+  <!-- ==================== SIDEBAR ==================== -->
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header"><span class="material-icons-round">shield</span><span class="material-icons-round">account_balance</span><span class="material-icons-round">trending_up</span><h2>نظام التميز</h2></div>
     <nav class="sidebar-nav">
       <a href="home.html" class="nav-btn-3d btn-blue"><span class="material-icons-round">dashboard</span><span>لوحة التحكم</span></a>
+      
       <div class="submenu-container">
         <button onclick="toggleSubmenu('customers-submenu')" class="nav-btn-3d btn-green">
           <span class="material-icons-round">group</span><span>الزبائن</span><span class="material-icons-round expand-icon">expand_more</span>
@@ -152,6 +156,8 @@
           <a href="customers.html" class="sub-link"><span class="material-icons-round">group</span>الزبائن</a>
           <a href="add_customer.html" class="sub-link"><span class="material-icons-round">person_add</span>إضافة زبون جديد</a>
         </div>
+      </div>
+      
       <div class="submenu-container">
         <button onclick="toggleSubmenu('guarantors-submenu')" class="nav-btn-3d btn-lime">
           <span class="material-icons-round">verified_user</span><span>الكفلاء</span><span class="material-icons-round expand-icon">expand_more</span>
@@ -160,6 +166,8 @@
           <a href="add_guarantor.html" class="sub-link"><span class="material-icons-round">person_add</span>إضافة كفيل</a>
           <a href="guarantors.html" class="sub-link"><span class="material-icons-round">badge</span>قائمة الكفلاء</a>
         </div>
+      </div>
+      
       <div class="submenu-container">
         <button onclick="toggleSubmenu('materials-submenu')" class="nav-btn-3d btn-orange">
           <span class="material-icons-round">inventory_2</span><span>المواد</span><span class="material-icons-round expand-icon">expand_more</span>
@@ -169,6 +177,8 @@
           <a href="add_material.html" class="sub-link"><span class="material-icons-round">add_circle</span>إضافة مادة</a>
           <a href="store.html" class="sub-link"><span class="material-icons-round">warehouse</span>المخزن</a>
         </div>
+      </div>
+      
       <div class="submenu-container">
         <button onclick="toggleSubmenu('installments-submenu')" class="nav-btn-3d btn-cyan active-link expanded">
           <span class="material-icons-round">receipt_long</span><span>الأقساط</span><span class="material-icons-round expand-icon">expand_more</span>
@@ -180,6 +190,8 @@
           <a href="due_today_installments.html" class="sub-link"><span class="material-icons-round">priority_high</span>الأقساط المستحقة اليوم</a>
           <a href="completed_installments.html" class="sub-link"><span class="material-icons-round">task_alt</span>الأقساط المكتملة</a>
         </div>
+      </div>
+      
       <div class="submenu-container">
         <button onclick="toggleSubmenu('sales-submenu')" class="nav-btn-3d btn-teal">
           <span class="material-icons-round">shopping_cart</span><span>المبيعات</span><span class="material-icons-round expand-icon">expand_more</span>
@@ -189,6 +201,8 @@
           <a href="add_sale.html" class="sub-link"><span class="material-icons-round">add_shopping_cart</span>إضافة بيع جديد</a>
           <a href="archive.html" class="sub-link"><span class="material-icons-round">archive</span>الأرشيف</a>
         </div>
+      </div>
+      
       <div class="submenu-container">
         <button onclick="toggleSubmenu('reports-submenu')" class="nav-btn-3d btn-amber">
           <span class="material-icons-round">analytics</span><span>التقارير</span><span class="material-icons-round expand-icon">expand_more</span>
@@ -201,6 +215,8 @@
           <a href="monthly_dues_report.html" class="sub-link"><span class="material-icons-round">pending</span>تقرير المستحقات الشهري</a>
           <a href="daily_dues_report.html" class="sub-link"><span class="material-icons-round">schedule</span>تقرير المستحقات اليومي</a>
         </div>
+      </div>
+      
       <div class="submenu-container">
         <button onclick="toggleSubmenu('managers-submenu')" class="nav-btn-3d btn-purple">
           <span class="material-icons-round">badge</span><span>المدراء</span><span class="material-icons-round expand-icon">expand_more</span>
@@ -211,6 +227,8 @@
           <a href="permissions_groups.html" class="sub-link"><span class="material-icons-round">group</span>مجموعات الصلاحيات</a>
           <a href="create_group.html" class="sub-link"><span class="material-icons-round">group_add</span>إنشاء مجموعة جديدة</a>
         </div>
+      </div>
+      
       <a href="support.html" class="nav-btn-3d btn-pink"><span class="material-icons-round">support_agent</span><span>الدعم الفني</span></a>
       <a href="backup.html" class="nav-btn-3d btn-teal"><span class="material-icons-round">backup</span><span>نسخ احتياطي</span></a>
       <a href="settings.html" class="nav-btn-3d btn-amber"><span class="material-icons-round">settings</span><span>الإعدادات</span></a>
@@ -218,6 +236,7 @@
     </nav>
   </aside>
 
+  <!-- ==================== MAIN CONTENT ==================== -->
   <main>
     <h1 class="page-title"><span class="material-icons-round">add</span>إضافة قسط جديد</h1>
     
@@ -252,6 +271,7 @@
           <label class="form-label">المبلغ الكلي (د.ع) *</label>
           <input type="number" class="form-input" id="totalAmount" placeholder="0" min="1" required>
         </div>
+      </div>
       
       <div class="form-group">
         <label class="form-label">عدد الدفعات *</label>
@@ -271,6 +291,7 @@
             <input type="radio" name="type" value="daily"> يومي
           </label>
         </div>
+      </div>
       
       <div class="form-group">
         <label class="form-label">تاريخ البدء *</label>
@@ -302,6 +323,7 @@
     </form>
   </main>
 
+  <!-- ==================== FOOTER ==================== -->
   <footer class="mobile-footer">
     <a href="home.html" class="footer-btn"><span class="material-icons-round">dashboard</span><span>الرئيسية</span></a>
     <a href="add_installment.html" class="footer-btn active"><span class="material-icons-round">post_add</span><span>إضافة قسط</span></a>
@@ -310,12 +332,16 @@
     <a href="customers.html" class="footer-btn"><span class="material-icons-round">group</span><span>الزبائن</span></a>
   </footer>
 
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script src="auth.js"></script>
   <script>
     let duplicateApproved = { customer: false, guarantor: false };
     
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage();
+      updateDarkModeIcon(); 
+      checkActivePage();
+      initAuth();
       populateSelects();
       document.getElementById('startDate').valueAsDate = new Date();
       calculateInstallment();
@@ -325,7 +351,9 @@
       document.getElementById('sidebar').classList.toggle('active'); 
       document.getElementById('sidebar-overlay').classList.toggle('active'); 
     }
+    
     const allSubmenus = ['guarantors-submenu','materials-submenu','managers-submenu','customers-submenu','installments-submenu','sales-submenu','reports-submenu'];
+    
     function toggleSubmenu(id) {
       const sub = document.getElementById(id); if(!sub) return;
       const hidden = sub.classList.contains('hidden');
@@ -333,17 +361,189 @@
       sub.classList.toggle('hidden', !hidden);
       const btn = sub.previousElementSibling; if(btn) btn.classList.toggle('expanded', hidden);
     }
+    
     function checkActivePage() {
       const page = window.location.pathname.split('/').pop() || 'home.html';
       document.querySelectorAll('.nav-btn-3d, .sub-link, .footer-btn').forEach(el => {
         if(el.getAttribute('href')===page) { el.classList.add('active'); if(el.classList.contains('sub-link')) el.classList.add('active-submenu'); }
       });
     }
+    
     function toggleDarkMode() {
       const h = document.documentElement; h.classList.toggle('light-mode');
       localStorage.setItem('darkMode', h.classList.contains('light-mode') ? 'false' : 'true');
       updateDarkModeIcon();
     }
+    
     function updateDarkModeIcon() {
       const d = document.querySelector('.dark-mode-icon'), l = document.querySelector('.light-mode-icon');
-      if(document.documentElement.classList.contains('light-mode
+      if(document.documentElement.classList.contains('light-mode')) { if(d)d.classList.remove('hidden'); if(l)l.classList.add('hidden'); }
+      else { if(d)d.classList.add('hidden'); if(l)l.classList.remove('hidden'); }
+    }
+    
+    function populateSelects() {
+      const customers = JSON.parse(localStorage.getItem('customers')||'[]');
+      const guarantors = JSON.parse(localStorage.getItem('guarantors')||'[]');
+      const materials = JSON.parse(localStorage.getItem('materials')||'[]');
+      
+      const custSel = document.getElementById('customer');
+      custSel.innerHTML = '<option value="">اختر الزبون...</option>' + 
+        customers.filter(c=>c.status!=='inactive').map(c=>`<option value="${c.id}">${c.fullName}</option>`).join('');
+      
+      const guarSel = document.getElementById('guarantor');
+      guarSel.innerHTML = '<option value="">بدون كفيل</option>' + 
+        guarantors.filter(g=>g.status!=='inactive').map(g=>`<option value="${g.id}">${g.fullName}</option>`).join('');
+      
+      const matSel = document.getElementById('material');
+      matSel.innerHTML = '<option value="">اختر المادة...</option>' + 
+        materials.filter(m=>m.status!=='inactive').map(m=>`<option value="${m.id}" data-price="${m.price}">${m.name} - ${m.price} د.ع</option>`).join('');
+    }
+    
+    function updateFromMaterial() {
+      const mat = document.getElementById('material');
+      const price = mat.options[mat.selectedIndex]?.dataset.price;
+      if(price) document.getElementById('totalAmount').value = price;
+      calculateInstallment();
+    }
+    
+    function selectType(type, el) {
+      document.querySelectorAll('.type-option').forEach(e => e.classList.remove('active'));
+      el.classList.add('active');
+      document.querySelector(`input[name="type"][value="${type}"]`).checked = true;
+      calculateInstallment();
+    }
+    
+    function calculateInstallment() {
+      const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+      const count = parseInt(document.getElementById('totalCount').value) || 1;
+      const type = document.querySelector('input[name="type"]:checked').value;
+      const per = total / count;
+      
+      document.getElementById('calcTotal').textContent = total.toLocaleString();
+      document.getElementById('calcCount').textContent = count;
+      document.getElementById('calcPer').textContent = per.toLocaleString(undefined, {maximumFractionDigits:0});
+      document.getElementById('calcType').textContent = type === 'daily' ? 'يوم' : type === 'weekly' ? 'أسبوع' : 'شهر';
+      document.getElementById('calcResult').style.display = 'block';
+    }
+    
+    document.getElementById('totalAmount').addEventListener('input', calculateInstallment);
+    document.getElementById('totalCount').addEventListener('input', calculateInstallment);
+    
+    function checkDuplicateCustomer() {
+      const custId = document.getElementById('customer').value;
+      if(!custId) { duplicateApproved.customer = false; return; }
+      
+      const installments = JSON.parse(localStorage.getItem('installments')||'[]');
+      const exists = installments.some(i => i.customerId == custId && i.status !== 'paid');
+      
+      const warn = document.getElementById('duplicateWarning');
+      const warnText = document.getElementById('warningText');
+      
+      if(exists) {
+        warnText.textContent = '⚠️ لهذا الزبون أقساط غير مكتملة. هل تريد المتابعة؟';
+        warn.classList.add('show');
+        duplicateApproved.customer = false;
+      } else {
+        warn.classList.remove('show');
+        duplicateApproved.customer = true;
+      }
+    }
+    
+    function checkDuplicateGuarantor() {
+      const guarId = document.getElementById('guarantor').value;
+      if(!guarId) { duplicateApproved.guarantor = true; return; }
+      
+      const installments = JSON.parse(localStorage.getItem('installments')||'[]');
+      const exists = installments.some(i => i.guarantorId == guarId && i.status !== 'paid');
+      
+      const warn = document.getElementById('duplicateWarning');
+      const warnText = document.getElementById('warningText');
+      
+      if(exists) {
+        warnText.textContent = '⚠️ لهذا الكفيل أقساط غير مكتملة. هل تريد المتابعة؟';
+        warn.classList.add('show');
+        duplicateApproved.guarantor = false;
+      } else {
+        if(!warn.classList.contains('show')) duplicateApproved.guarantor = true;
+      }
+    }
+    
+    function saveInstallment(e) {
+      e.preventDefault();
+      
+      // تحقق من الموافقة على التكرار
+      if(!duplicateApproved.customer || !duplicateApproved.guarantor) {
+        if(!confirm('⚠️ يوجد أقساط غير مكتملة لهذا الزبون/الكفيل. هل تريد المتابعة وإنشاء قسط جديد؟')) {
+          return;
+        }
+      }
+      
+      const total = parseFloat(document.getElementById('totalAmount').value);
+      const count = parseInt(document.getElementById('totalCount').value);
+      const type = document.querySelector('input[name="type"]:checked').value;
+      const per = total / count;
+      const start = new Date(document.getElementById('startDate').value);
+      
+      // إنشاء جدول الدفعات
+      const schedule = [];
+      for(let i=0; i<count; i++) {
+        const due = new Date(start);
+        if(type === 'daily') due.setDate(due.getDate() + i);
+        else if(type === 'weekly') due.setDate(due.getDate() + i*7);
+        else due.setMonth(due.getMonth() + i);
+        
+        schedule.push({
+          index: i+1,
+          dueDate: due.toISOString().split('T')[0],
+          amount: Math.round(per),
+          paid: false
+        });
+      }
+      
+      const custOpt = document.getElementById('customer').options[document.getElementById('customer').selectedIndex];
+      const matOpt = document.getElementById('material').options[document.getElementById('material').selectedIndex];
+      const guarOpt = document.getElementById('guarantor').options[document.getElementById('guarantor').selectedIndex];
+      
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      const installment = {
+        id: Date.now(),
+        customerName: custOpt?.text || '',
+        customerId: document.getElementById('customer').value,
+        guarantorName: guarOpt?.value ? guarOpt.text : null,
+        guarantorId: document.getElementById('guarantor').value || null,
+        materialName: matOpt?.text.split(' - ')[0] || '',
+        materialId: document.getElementById('material').value,
+        quantity: parseInt(document.getElementById('quantity').value) || 1,
+        totalAmount: total,
+        totalCount: count,
+        paidCount: 0,
+        paidAmount: 0,
+        type: type,
+        startDate: document.getElementById('startDate').value,
+        notes: document.getElementById('notes').value,
+        status: 'pending',
+        schedule: schedule,
+        createdBy: currentUser?.id || null,
+        createdAt: new Date().toLocaleString('ar-IQ')
+      };
+      
+      // حفظ القسط
+      let data = JSON.parse(localStorage.getItem('installments') || '[]');
+      data.push(installment);
+      localStorage.setItem('installments', JSON.stringify(data));
+      
+      // ✅ خصم الكمية من المخزون
+      let materials = JSON.parse(localStorage.getItem('materials')||'[]');
+      const matIndex = materials.findIndex(m => m.id == installment.materialId);
+      if(matIndex !== -1 && materials[matIndex].quantity >= installment.quantity) {
+        materials[matIndex].quantity -= installment.quantity;
+        materials[matIndex].updatedAt = new Date().toLocaleString('ar-IQ');
+        localStorage.setItem('materials', JSON.stringify(materials));
+      }
+      
+      alert('✅ تم إضافة القسط بنجاح!\n✅ تم خصم الكمية من المخزون');
+      location.href = 'installments.html';
+    }
+  </script>
+</body>
+</html>

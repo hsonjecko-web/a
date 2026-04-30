@@ -245,10 +245,11 @@
     <a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a>
   </footer>
 
+  <script src="auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if(localStorage.getItem('darkMode')==='false') document.documentElement.classList.add('light-mode');
-      updateDarkModeIcon(); checkActivePage(); loadCompleted();
+      updateDarkModeIcon(); checkActivePage(); initAuth(); loadCompleted();
     });
     
     function toggleSidebar() { 
@@ -281,14 +282,17 @@
     }
     
     function loadCompleted() {
-      const completed = JSON.parse(localStorage.getItem('completed_installments') || '[]');
+      let all = JSON.parse(localStorage.getItem('installments') || '[]');
+      all = filterDataByUser(all, 'createdBy');
       const grid = document.getElementById('dataGrid');
       const empty = document.getElementById('emptyState');
       const search = document.getElementById('searchInput').value.toLowerCase();
       
+      const completed = all.filter(inst => inst.status === 'paid' || (inst.paidCount || 0) >= (inst.totalCount || 1));
+      
       const filtered = completed.filter(inst => {
-        return inst.customerName.toLowerCase().includes(search) || 
-               inst.materialName.toLowerCase().includes(search) ||
+        return (inst.customerName || '').toLowerCase().includes(search) || 
+               (inst.materialName || '').toLowerCase().includes(search) ||
                (inst.guarantorName && inst.guarantorName.toLowerCase().includes(search));
       });
       
@@ -296,22 +300,28 @@
       empty.style.display = 'none';
       
       grid.innerHTML = filtered.map(inst => {
+        // Calculate completion date from last paid schedule item
+        const paidSchedule = (inst.schedule || []).filter(s => s.paid);
+        const lastPaid = paidSchedule.length > 0 ? paidSchedule[paidSchedule.length - 1].dueDate : null;
+        const completedAt = inst.completedAt || lastPaid || '-';
+        
         return `
           <div class="card" data-id="${inst.id}">
             <span class="status-badge">✅ مكتمل</span>
-            <div class="card-title">${inst.customerName}</div>
+            <div class="card-title">${inst.customerName || '-'}</div>
             <div class="card-info">
-              <span><span class="material-icons-round">inventory_2</span> ${inst.materialName}</span>
+              <span><span class="material-icons-round">inventory_2</span> ${inst.materialName || '-'}</span>
               ${inst.guarantorName ? `<span><span class="material-icons-round">verified_user</span> ${inst.guarantorName}</span>` : ''}
-              <span><span class="material-icons-round">payments</span> ${inst.totalAmount.toLocaleString()} د.ع</span>
+              <span><span class="material-icons-round">payments</span> ${(inst.totalAmount || 0).toLocaleString()} د.ع</span>
               <span><span class="material-icons-round">calendar_today</span> ${inst.type === 'daily' ? 'يومي' : inst.type === 'weekly' ? 'أسبوعي' : 'شهري'}</span>
-              <span style="font-size:0.75rem">دفعات: ${inst.totalCount}/${inst.totalCount} | تم الإكمال في: ${inst.completedAt || '-'}</span>
+              <span style="font-size:0.75rem">دفعات: ${inst.totalCount}/${inst.totalCount} | تم الإكمال في: ${completedAt}</span>
             </div>
             <div class="card-actions">
               <button class="action-btn view" onclick="location.href='view_installment.html?id=${inst.id}'" title="عرض"><span class="material-icons-round" style="font-size:16px">visibility</span></button>
               <button class="action-btn delete" onclick="deleteInst(${inst.id})" title="حذف"><span class="material-icons-round" style="font-size:16px">delete</span></button>
               <button class="action-btn whatsapp" onclick="sendWhatsApp(${inst.id})" title="واتساب"><span class="material-icons-round" style="font-size:16px">whatsapp</span></button>
-            </div>`;
+            </div>
+          </div>`;
       }).join('');
     }
     
@@ -319,18 +329,18 @@
     
     function deleteInst(id) {
       if(confirm('⚠️ حذف هذا القسط المكتمل؟ لا يمكن التراجع!')) {
-        let data = JSON.parse(localStorage.getItem('completed_installments')||'[]');
+        let data = JSON.parse(localStorage.getItem('installments')||'[]');
         data = data.filter(i => i.id !== id);
-        localStorage.setItem('completed_installments', JSON.stringify(data));
+        localStorage.setItem('installments', JSON.stringify(data));
         loadCompleted();
       }
     }
     
     function sendWhatsApp(id) {
-      const completed = JSON.parse(localStorage.getItem('completed_installments')||'[]');
-      const inst = completed.find(i => i.id === id);
+      const all = JSON.parse(localStorage.getItem('installments')||'[]');
+      const inst = all.find(i => i.id === id);
       if(!inst) return;
-      const msg = `*نظام التميز - تهانينا!*%0A%0A👤 الزبون: ${inst.customerName}%0A📦 المادة: ${inst.materialName}%0A%0A✅ تم اكتمال جميع الدفعات بنجاح!%0A💰 المبلغ الكلي: ${inst.totalAmount.toLocaleString()} د.ع%0A📊 الدفعات: ${inst.totalCount}/${inst.totalCount} مكتملة%0A%0Aشكراً لثقتكم بنا ونتطلع للتعامل معكم دائماً!`;
+      const msg = `*نظام التميز - تهانينا!*%0A%0A👤 الزبون: ${inst.customerName || '-'}%0A📦 المادة: ${inst.materialName || '-'}%0A%0A✅ تم اكتمال جميع الدفعات بنجاح!%0A💰 المبلغ الكلي: ${(inst.totalAmount || 0).toLocaleString()} د.ع%0A📊 الدفعات: ${inst.totalCount || 0}/${inst.totalCount || 0} مكتملة%0A%0Aشكراً لثقتكم بنا ونتطلع للتعامل معكم دائماً!`;
       window.open(`https://wa.me/?text=${msg}`, '_blank');
     }
     

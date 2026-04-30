@@ -51,8 +51,9 @@
     <a href="customers.html" class="footer-btn active"><span class="material-icons-round">group</span><span>الزبائن</span></a>
   </footer>
 
+  <script src="auth.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');updateDarkModeIcon();checkActivePage();loadData()})
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');updateDarkModeIcon();checkActivePage();initAuth();loadData()})
     function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('sidebar-overlay').classList.toggle('active')}
     const allSubmenus=['guarantors-submenu','materials-submenu','managers-submenu','customers-submenu','installments-submenu','sales-submenu','reports-submenu']
     function toggleSubmenu(id){const s=document.getElementById(id);if(!s)return;const h=s.classList.contains('hidden');allSubmenus.forEach(x=>{const m=document.getElementById(x);if(m&&x!==id)m.classList.add('hidden')});s.classList.toggle('hidden',!h);const b=s.previousElementSibling;if(b)b.classList.toggle('expanded',h)}
@@ -62,8 +63,8 @@
     
     function getId(){return new URLSearchParams(window.location.search).get('id')}
     function loadData(){
-      const id=getId();const d=JSON.parse(localStorage.getItem('materials')||'[]').find(c=>c.id==id);
-      if(!d){alert('❌ لم يتم العثور على المادة');window.location.href='materials.html';return}
+      const id=getId();let all=JSON.parse(localStorage.getItem('materials')||'[]');all=filterDataByUser(all,'createdBy');const d=all.find(c=>c.id==id);
+      if(!d){alert('❌ لم يتم العثور على المادة أو ليس لديك صلاحية');window.location.href='materials.html';return}
       document.getElementById('name').value=d.name;document.getElementById('quantity').value=d.quantity||0;document.getElementById('price').value=d.price||0;document.getElementById('color').value=d.color||'';document.getElementById('model').value=d.model||'';
     }
     function saveMaterial(e){

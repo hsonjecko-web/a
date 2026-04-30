@@ -82,8 +82,9 @@
     <a href="customers.html" class="active"><span class="material-icons-round">group</span>زبائن</a>
   </footer>
 
+  <script src="auth.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');document.getElementById('date').valueAsDate=new Date();populateSelects();calcTotal()});
+    document.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('darkMode')==='false')document.documentElement.classList.add('light-mode');initAuth();document.getElementById('date').valueAsDate=new Date();populateSelects();calcTotal()});
     function toggleSidebar(){document.querySelector('.sidebar').classList.toggle('active');document.querySelector('.sidebar-overlay').classList.toggle('active')}
     function toggleSubmenu(id){document.getElementById(id).classList.toggle('hidden');document.querySelector(`[onclick*="${id}"]`).classList.toggle('expanded')}
     function toggleTheme(){document.documentElement.classList.toggle('light-mode');localStorage.setItem('theme',document.documentElement.classList.contains('light-mode')?'light':'dark')}
@@ -112,7 +113,8 @@
       const available=parseInt(matOpt?.dataset.qty||0);
       if(qty>available){alert(`⚠️ الكمية المطلوبة (${qty}) أكبر من المخزون المتاح (${available})`);return}
       
-      const sale={id:Date.now(),customerId:document.getElementById('customer').value,customerName:matOpt?.text||'',materialId:matId,materialName:matOpt?.text.split('(')[0].trim()||'',qty,unitPrice:parseFloat(document.getElementById('unitPrice').value),total:qty*parseFloat(document.getElementById('unitPrice').value),date:document.getElementById('date').value,status:document.getElementById('status').value,notes:document.getElementById('notes').value,createdAt:new Date().toLocaleString('ar-IQ')};
+      const currentUser=JSON.parse(localStorage.getItem('currentUser')||'null');
+      const sale={id:Date.now(),customerId:document.getElementById('customer').value,customerName:matOpt?.text||'',materialId:matId,materialName:matOpt?.text.split('(')[0].trim()||'',qty,unitPrice:parseFloat(document.getElementById('unitPrice').value),total:qty*parseFloat(document.getElementById('unitPrice').value),date:document.getElementById('date').value,status:document.getElementById('status').value,notes:document.getElementById('notes').value,createdBy:currentUser?.id||null,createdAt:new Date().toLocaleString('ar-IQ')};
       
       let sales=JSON.parse(localStorage.getItem('sales')||'[]');sales.push(sale);localStorage.setItem('sales',JSON.stringify(sales));
       

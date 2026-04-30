@@ -24,7 +24,6 @@
     html, body { height: 100%; background: var(--bg-main); color: var(--text-primary); overflow-x: hidden; }
     body { padding-top: calc(var(--header-height) + var(--safe-top)); padding-bottom: calc(var(--footer-height) + var(--safe-bottom) + 20px); }
     
-    /* Header & Sidebar */
     .app-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); padding: 0 16px; padding-top: var(--safe-top); display: flex; align-items: center; justify-content: space-between; background: rgba(15,23,42,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); z-index: 100; }
     .menu-toggle { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--text-primary); cursor: pointer; border-radius: 10px; }
     .menu-toggle:active { background: var(--glass-bg); }
@@ -53,7 +52,6 @@
     .sub-link.active-submenu { background: var(--accent-blue); color: #fff !important; border-color: rgba(59,130,246,0.4); box-shadow: 0 0 12px rgba(59,130,246,0.4); }
     .btn-blue { border-color: rgba(59,130,246,0.3) !important; } .btn-purple { border-color: rgba(168,85,247,0.3) !important; } .btn-green { border-color: rgba(34,197,94,0.3) !important; } .btn-cyan { border-color: rgba(6,182,212,0.3) !important; } .btn-amber { border-color: rgba(245,158,11,0.3) !important; } .btn-red { border-color: rgba(239,68,68,0.3) !important; } .btn-teal { border-color: rgba(20,184,166,0.3) !important; } .btn-lime { border-color: rgba(132,204,22,0.3) !important; } .btn-orange { border-color: rgba(249,115,22,0.3) !important; } .btn-pink { border-color: rgba(244,114,182,0.3) !important; }
     
-    /* Logout Specific Styles */
     main { padding: 16px; max-width: 600px; margin: 0 auto; display: flex; align-items: center; justify-content: center; min-height: 80vh; }
     .logout-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 24px; text-align: center; box-shadow: var(--glass-shadow); backdrop-filter: blur(10px); width: 100%; }
     .logout-card .icon { font-size: 64px; color: var(--accent-red); margin-bottom: 16px; }
@@ -65,7 +63,6 @@
     .btn-secondary { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); }
     .btn-danger { background: var(--accent-red); color: #fff; }
     
-    /* Footer */
     .mobile-footer { position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-height); padding-bottom: var(--safe-bottom); background: rgba(15,23,42,0.9); backdrop-filter: blur(12px); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-around; z-index: 90; }
     .footer-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--text-muted); padding: 8px 12px; border-radius: 12px; transition: all 0.2s; flex: 1; max-width: 20%; }
     .footer-btn .material-icons-round { font-size: 24px; transition: transform 0.2s; }
@@ -74,7 +71,6 @@
     .footer-btn.active { color: var(--accent-blue); }
     .footer-btn.active .material-icons-round { transform: translateY(-2px); }
     
-    /* Light Mode */
     html.light-mode { --bg-page: #f0f9ff; --bg-main: radial-gradient(circle at 50% -20%, #f0f9ff 0%, #e0f2fe 100%) !important; --glass-bg: rgba(255,255,255,0.75) !important; --glass-border: rgba(59,130,246,0.2) !important; --glass-shadow: 0 4px 15px rgba(59,130,246,0.08), inset 0 1px 1px rgba(59,130,246,0.1) !important; --text-primary: #1e293b !important; --text-secondary: #64748b !important; --text-muted: rgba(30,41,59,0.5) !important; }
     html.light-mode body { background: var(--bg-main); }
     html.light-mode .app-header { background: rgba(240,245,250,0.8) !important; border-bottom-color: rgba(59,130,246,0.15) !important; }
@@ -130,12 +126,17 @@
     function toggleDarkMode(){const h=document.documentElement;h.classList.toggle('light-mode');localStorage.setItem('darkMode',h.classList.contains('light-mode')?'false':'true');updateDarkModeIcon()}
     function updateDarkModeIcon(){const d=document.querySelector('.dark-mode-icon'),l=document.querySelector('.light-mode-icon');if(document.documentElement.classList.contains('light-mode')){if(d)d.classList.remove('hidden');if(l)l.classList.add('hidden')}else{if(d)d.classList.add('hidden');if(l)l.classList.remove('hidden')}}
     
-    // Logout Logic
+    // ✅ Logout Logic - FIXED
     function confirmLogout() {
-      // يمكن هنا إضافة مسح بيانات الجلسة إذا لزم الأمر
-      // sessionStorage.clear();
+      // 🔥 مسح بيانات الجلسة تماماً
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('userRole');
+      
+      // تسجيل وقت الخروج (اختياري)
       localStorage.setItem('lastLogout', new Date().toLocaleString('ar-IQ'));
-      window.location.href = 'index.html'; // التوجيه لصفحة تسجيل الدخول
+      
+      // 🔁 التوجيه لصفحة الدخول مع منع العودة بالكاش
+      window.location.replace('index.html');
     }
   </script>
 </body>
